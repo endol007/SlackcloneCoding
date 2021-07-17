@@ -1,7 +1,14 @@
 import React, { useState, useCallback } from "react";
+
 import styled from "styled-components";
+import gravatar from "gravatar";
 
 const Header = (props) => {
+  const userData = {
+    email: "seanstainability@gmail.com",
+    nickname: "sean",
+  };
+
   const [showProfile, setShowProfile] = useState(false);
 
   const onClickProfile = useCallback(() => {
@@ -10,30 +17,33 @@ const Header = (props) => {
 
   const onLogOut = useCallback(() => {}, []);
 
-  const userData = {
-    email: "seanstainability@gmail.com",
-    nickname: "sean",
-  };
-
   return (
     <>
       <HeaderWrapper>
         <RightMenu>
           <span onClick={onClickProfile}>
-            <ProfileImg />
+            <ProfileImg
+              src={gravatar.url(userData.email, { s: "28px", d: "retro" })}
+              alt={userData.nickname}
+            />
           </span>
           {showProfile && (
             <ProfileModal>
-              <div style={{ display: "flex" }}>
+              <div>
                 <img
-                  // src={}
+                  src={gravatar.url(userData.email, {
+                    s: "28px",
+                    d: "retro",
+                  })}
                   alt={userData.nickname}
-                  style={{ backgroundColor: "#fff" }}
                 />
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div>
                   <span id="profile-name">{userData.nickname}</span>
                   <span id="profile-active">Active</span>
                 </div>
+              </div>
+              <div style={{ padding: "8px 0", margin: "0" }}>
+                <hr style={{ margin: "0", width: "100%" }} />
               </div>
               <LogOutButton onClick={onLogOut}>로그아웃</LogOutButton>
             </ProfileModal>
@@ -62,56 +72,72 @@ const ProfileImg = styled.img`
   position: absolute;
   top: 5px;
   right: 16px;
-  background-color: #fff;
 `;
 
 const ProfileModal = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px;
-  height: 77px;
-  padding: 20px 20px 12px 24px;
-  border: 1px solid rgb(29, 28, 29);
-  border-radius: 8px;
+  height: 76px;
+  padding: 20px 0px;
+  border: 1px solid gray;
+  box-shadow: 0 0 0 1px var(--saf-0), 0 4px 12px 0 rgba(0, 0, 0, 0.12);
+  background-color: rgba(var(--sk_foreground_min_solid, 248, 248, 248), 1);
+  max-width: 360px;
+  min-width: 200px;
+  z-index: 1012;
+  max-height: calc(100vh - 20px);
+  border-radius: 6px;
   color: rgb(29, 28, 29);
   position: absolute;
   top: 38px;
   right: 16px;
 
   & img {
-    display: flex;
+    display: inline-flex;
     width: 36px;
     height: 36px;
   }
 
   & > div {
     display: flex;
+    margin: "0";
+    padding: 0px 20px 0px 24px;
+  }
+
+  & > div > div {
+    display: inline-flex;
     flex-direction: column;
-    margin-left: 10px;
+    width: 80%;
+    margin-left: 12px;
   }
 
   & #profile-name {
     font-weight: bold;
-    display: inline-flex;
+    // display: inline-flex;
   }
 
   & #profile-active {
     font-size: 13px;
     padding: 4px 0;
-    display: inline-flex;
+    // display: inline-flex;
   }
 `;
 
 const LogOutButton = styled.button`
   border: none;
   width: 100%;
-  border-top: 1px solid rgb(29, 28, 29);
   background: transparent;
   display: block;
-  height: 36px;
+  height: 28px;
   padding: 5px 24px 5px 24px;
   outline: none;
   cursor: pointer;
+
+  &:hover {
+    background-color: #1363a3;
+    color: #fff;
+  }
 `;
 
 export default Header;

@@ -1,13 +1,13 @@
-import React, { useCallback } from "react";
+import React from "react";
 
 import styled from "styled-components";
 import Header from "../components/Header";
 
 import { Route, Switch } from "react-router-dom";
-import Channels from "./Channels";
-import Chats from "./Chats";
 import ChannelList from "../components/ChannelList";
 import DMList from "../components/DMList";
+import Channels from "./Channels";
+import Chats from "./Chats";
 
 const Workspace = (props) => {
   return (
@@ -23,8 +23,8 @@ const Workspace = (props) => {
         </ChannelsWrapper>
         <ChatsWrapper>
           <Switch>
-            <Route path="/channel/:channel" component={Channels} />
-            <Route path="/chat/:id" component={Chats} />
+            <Route path="/workspace/channels" component={Channels} />
+            <Route path="/workspace/chats" component={Chats} />
           </Switch>
         </ChatsWrapper>
       </WorkspaceWrapper>
