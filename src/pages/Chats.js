@@ -8,11 +8,11 @@ import ChatHeader from "../components/ChatHeader";
 const Chats = (props) => {
   return (
     <React.Fragment>
-          <ChatHeader></ChatHeader>
-        <ChatsWrap width="100%" display="flex">
-          <ChatList></ChatList>
-          <ChatBox></ChatBox>
-        </ChatsWrap>
+      <ChatHeader></ChatHeader>
+      <ChatsWrap width="100%" display="flex">
+        <ChatList></ChatList>
+        <ChatBox></ChatBox>
+      </ChatsWrap>
     </React.Fragment>
   );
 };
