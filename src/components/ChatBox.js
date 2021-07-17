@@ -42,10 +42,11 @@ const ChatBox = (props) => {
         </React.Fragment>
     )
 }
-const ChatBoxWrap = styled.div`
-    height: 10vh;
+const ChatBoxWrap = styled.div`   
+    width: 100%;
 `;
 const InputBox = styled.div`
+    
     border: 1px solid rgba(var(--sk_foreground_high_solid, 134, 134, 134), 1);
     border-radius: 4px;
     height: 79px;

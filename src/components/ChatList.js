@@ -24,6 +24,7 @@ const ChatList = (props) => {
                             <div>내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
                         </ChatListUserInfo>
                     </ChatListBoxInfo>
+                    
                 </ChatListBox>
             </ChatListWrap>
         </React.Fragment>
@@ -31,7 +32,7 @@ const ChatList = (props) => {
 }
 
 const ChatListWrap = styled.div`
-    overflow: auto;
+    overflow-y: scroll;
     height: 75vh;
     display: grid;
     grid-template-rows: 10% 90%;
@@ -60,6 +61,7 @@ const ChatListUserInfo = styled.div`
     }
     & > div{
         padding-top: 8px;
+        font-size: 15px;
     }
 
 `;
