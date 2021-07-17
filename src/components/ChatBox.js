@@ -74,6 +74,7 @@ const SendButton = styled.button`
     height: 30px;
     float: right;
     background-color: tansparent;
+    pointer: cursor;
     border: none;
 `;
 const SendImage = styled.img`

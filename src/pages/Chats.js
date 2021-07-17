@@ -18,6 +18,7 @@ const Chats = (props) => {
 };
 const ChatsWrap = styled.div`
   width: 100%;
+  height: calc(100% -38px);
   display: flex;
   flex-direction: column;
 `;

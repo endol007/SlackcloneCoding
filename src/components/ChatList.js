@@ -19,7 +19,10 @@ const ChatList = (props) => {
                                 alt={userData.nickname}>
                             </UserImage>
                         </ChatListUserImageWrap>
-                        
+                        <ChatListUserInfo>
+                            <text>사용자ID</text> <span>오후 3:16</span><br/>
+                            <div>내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
+                        </ChatListUserInfo>
                     </ChatListBoxInfo>
                 </ChatListBox>
             </ChatListWrap>
@@ -29,14 +32,11 @@ const ChatList = (props) => {
 
 const ChatListWrap = styled.div`
     overflow: auto;
-    width: 100%;
-    height: 80vh;
+    height: 75vh;
     display: grid;
     grid-template-rows: 10% 90%;
 `;
 const ChatListBox = styled.div`
-    position: absolute;
-    width: 100%;
     margin-bottom: 16px;
 `;
 const ChatListBoxInfo = styled.div`
@@ -48,6 +48,19 @@ const ChatListUserImageWrap = styled.div`
 
 `;
 const UserImage = styled.img`
+`;
+const ChatListUserInfo = styled.div`
+    margin-left: 10px;
+    & > text{
+        font-size: 15px;
+    }
+    & > span{
+        font-size: 12px;
+        color: rgba(var(--sk_foreground_max_solid,97,96,97),1);
+    }
+    & > div{
+        padding-top: 8px;
+    }
 
 `;
 
