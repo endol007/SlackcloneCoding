@@ -12,7 +12,8 @@ const Grid =(props) => {
             position,
             height,
             display,
-            _onClick
+            _onClick,
+            children,
     } = props;
     const styles = {
         is_center: is_center,
@@ -31,7 +32,7 @@ const Grid =(props) => {
             <GridBox
                 {...styles}
                 onClick={_onClick}
-            ></GridBox>
+            >{children}</GridBox>
         </React.Fragment>
     )
 }
