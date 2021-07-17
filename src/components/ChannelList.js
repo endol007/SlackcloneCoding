@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ArrowDropDown, ArrowDropUp } from "@styled-icons/material-outlined";
 import { Add } from "@styled-icons/fluentui-system-filled";
 import Channel from "./Channel";
+import CreateChannelModal from "./CreateChannelModal";
 
 const ChannelList = (props) => {
   const channelData = [
@@ -16,14 +17,18 @@ const ChannelList = (props) => {
     },
   ];
 
-  const [collapse, setCollapse] = useState(false);
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [collapse, setCollapse] = useState(true);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const toggleCollapse = useCallback(() => {
     setCollapse((prev) => !prev);
-  }, []);
-
-  const onClickAddChannel = useCallback(() => {
-    console.log("채널 추가");
   }, []);
 
   return (
@@ -33,10 +38,14 @@ const ChannelList = (props) => {
           {collapse ? <ArrowDropDown /> : <ArrowDropUp />}
         </CollapseButton>
         <span>채널</span>
-        <AddWrapper onClick={onClickAddChannel}>
+        <AddWrapper onClick={openModal}>
           <Add style={{ width: "16px", height: "16px" }} />
         </AddWrapper>
       </h2>
+      <CreateChannelModal
+        open={modalOpen}
+        close={closeModal}
+      ></CreateChannelModal>
       <div>
         {collapse &&
           channelData?.map((channel) => {

@@ -48,7 +48,7 @@ const DMList = (props) => {
     console.log("DM 추가");
   }, []);
 
-  const [collapse, setCollapse] = useState(false);
+  const [collapse, setCollapse] = useState(true);
 
   const toggleCollapse = useCallback(() => {
     setCollapse((prev) => !prev);
@@ -61,9 +61,9 @@ const DMList = (props) => {
           {collapse ? <ArrowDropDown /> : <ArrowDropUp />}
         </CollapseButton>
         <span>다이렉트 메시지</span>
-        <AddWrapper onClick={onClickAddDM}>
+        {/* <AddWrapper onClick={onClickAddDM}>
           <Add style={{ width: "16px", height: "16px" }} />
-        </AddWrapper>
+        </AddWrapper> */}
       </h2>
       <div>
         {collapse &&
