@@ -20,6 +20,7 @@ const Workspace = (props) => {
             <ChannelList />
             <DMList />
           </MenuScroll>
+          <div></div>
         </ChannelsWrapper>
         <ChatsWrapper>
           <Switch>
