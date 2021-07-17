@@ -15,7 +15,7 @@ const Workspace = (props) => {
       <Header />
       <WorkspaceWrapper>
         <ChannelsWrapper>
-          <WorkspaceName>동우</WorkspaceName>
+          <WorkspaceName>항해99</WorkspaceName>
           <MenuScroll>
             <ChannelList />
             <DMList />
