@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "../elements/Grid";
 import ChannelInfoModal from "./ChannelInfoModal";
 import styled from "styled-components";
+import gravatar from "gravatar"
 
 const ChatHeader = (props) => {
     const [ modalOpen, setModalOpen ] = React.useState(false);
@@ -12,6 +13,10 @@ const ChatHeader = (props) => {
     const closeModal = () => {
         setModalOpen(false);
     }
+    const userData = {
+        email: "seanstainability@gmail.com",
+        nickname: "sean",
+      };
 
     return (
         <React.Fragment>
@@ -19,7 +24,8 @@ const ChatHeader = (props) => {
                 <ChatHeaderTextbox>#일반</ChatHeaderTextbox>
                 <Wrap>
                     <ModalBtn onClick={openModal}>
-                    <I></I>
+                    <I src={gravatar.url(userData.email, { s: "28px", d: "retro" })}
+                        alt={userData.nickname}></I>
                     <T>4</T>
                     </ModalBtn>
                     <ChannelInfoModal open={modalOpen} close={closeModal}></ChannelInfoModal>
@@ -44,7 +50,7 @@ const ChatHeaderTextbox = styled.div`
     flex: 1 1 0;
     align-items: baseline;
     font-size: 20px;
-    line-height: 1.46668;
+    line-height: 2.5;
     font-weight: 600;
 `;
 const Wrap = styled.div`
@@ -57,7 +63,7 @@ const Wrap = styled.div`
 const ModalBtn = styled.button`
     background: none;
     border: 0;
-    margin: 0;
+    margin: 10px;
     cursor: pointer;
     --saf-0: rgba(var(--sk_foreground_max,29,28,29),0.13);
     box-shadow: 0 0 0 1px  var(--saf-0);
@@ -66,9 +72,7 @@ const ModalBtn = styled.button`
     width: 44px;
     align-items: center;
 `;
-const I = styled.div`
-    background-image: url("https://image.flaticon.com/icons/png/128/709/709579.png");
-    background-size: cover;
+const I = styled.img`
     width: 18px;
     height: 18px;
     display: inline-block;
