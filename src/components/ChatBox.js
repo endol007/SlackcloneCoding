@@ -1,27 +1,22 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import {sendChat, receiveChat} from "../redux/async/dm"
+import {getOneDM, sendDM} from "../redux/async/dm"
 import socket from "socket.io-client/lib/socket";
 
 const ChatBox = (props) => {
     const dispatch = useDispatch();
-    const [chat, setChat] = React.useState(); // 인풋값 받아오는부분
-
-    useEffect(()=> {
-        
-    })   //socket연결
+    const [chat, setChat] = React.useState(); 
 
     const editChat = (e) => {
         setChat(e.target.value);
     }
     const chatInfo = {
         chat: chat,
-        userId: "1"
+        nickname: "dh"
         }
     const sendChatInfo = (e) => {
-        e.preventDefault();
-        dispatch(sendChat(chatInfo));
+        dispatch(sendDM(chatInfo));
         setChat("");
     }
     return(

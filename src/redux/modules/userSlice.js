@@ -1,27 +1,52 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { logIn } from "../async/user";
+import { signUp, logIn, getUser, dupCheckUser } from "../async/user";
 
 const initialState = {
-  isLoggingIn: false,
-  data: null,
+  userList: null,
+  currentUser: null,
+  isLoading: false,
+  isDone: false,
+  isError: false,
+  dupCheck: false,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    logOut: (state, action) => {
+      sessionStorage.removeItem("access_token");
+      state.currentUser = null;
+    },
+  },
   extraReducers: (builder) =>
     builder
+      .addCase(signUp.pending, (state, action) => {
+        state.currentUser = null;
+      })
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.currentUser = action.payload;
+      })
       .addCase(logIn.pending, (state, action) => {
-        state.data = null;
-        state.isLoggingIn = true;
+        state.userList = null;
       })
       .addCase(logIn.fulfilled, (state, action) => {
-        state.data = action.payload;
-        state.isLoggingIn = false;
+        sessionStorage.setItem("access_token", action.payload.result);
       })
-      .addCase(logIn.rejected, (state, action) => {
-        state.error = action.payload;
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.userList.find(
+          (user) => user.id === parseInt(action.payload.userId)
+        );
+      })
+      .addCase(dupCheckUser.pending, (state, action) => {
+        state.dupCheck = false;
+      })
+      .addCase(dupCheckUser.fulfilled, (state, action) => {
+        if (action.payload === "ok") {
+          state.dupCheck = true;
+        } else {
+          state.dupCheck = false;
+        }
       })
       .addMatcher(
         (action) => {
@@ -49,8 +74,11 @@ const userSlice = createSlice({
         (state, action) => {
           state.isLoading = false;
           state.isError = action.error;
+          console.log(action.error);
         }
       ),
 });
+
+export const { logOut } = userSlice.actions;
 
 export default userSlice;

@@ -1,9 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { ArrowDropDown, ArrowDropUp } from "@styled-icons/material-outlined";
 import { Add } from "@styled-icons/fluentui-system-filled";
 import Channel from "./Channel";
 import CreateChannelModal from "./CreateChannelModal";
+import useSocket from "../useSocket";
+import { useParams } from "react-router";
 
 const ChannelList = (props) => {
   const channelData = [
@@ -16,9 +18,21 @@ const ChannelList = (props) => {
       title: "일반",
     },
   ];
-
+  const { channel } = useParams();
+  const [socket] = useSocket(channel);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [collapse, setCollapse] = useState(true);
+
+  useEffect(() => {
+    socket?.on("message", onMessage);
+    return () => {
+      socket?.off("dm", onMessage);
+    };
+  }, [socket]);
+
+  const onMessage = (data) => {
+    console.log("message", data);
+  };
 
   const openModal = () => {
     setModalOpen(true);

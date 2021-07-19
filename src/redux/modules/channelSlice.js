@@ -1,41 +1,42 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDmUsers, createDM, getAllDM, sendDM } from "../async/dm";
+import {
+  createChannel,
+  getChannels,
+  getOneChannel,
+  exitChannel,
+} from "../async/channel";
 
 const initialState = {
-  dmList: null,
-  sendDM: [],
-  currentDM: null,
+  channelList: null,
+  currentChannel: null,
   isLoading: false,
   isDone: false,
   isError: false,
 };
 
-const dmSlice = createSlice({
-  name: "dm",
+const channelSlice = createSlice({
+  name: "channel",
   initialState,
   reducers: {},
   extraReducers: (builder) =>
     builder
-      .addCase(getDmUsers.pending, (state, action) => {
-        state.dmList = null;
+      .addCase(getChannels.pending, (state, action) => {
+        state.channelList = null;
       })
-      .addCase(getDmUsers.fulfilled, (state, action) => {
-        state.dmList = action.payload;
+      .addCase(getChannels.fulfilled, (state, action) => {
+        state.channelList = action.payload;
       })
-      .addCase(createDM.fulfilled, (state, action) => {
-        state.dmList.push(action.payload);
+      .addCase(createChannel.fulfilled, (state, action) => {
+        state.channelList.push(action.payload);
       })
-      .addCase(getAllDM.pending, (state, action) => {
-        state.currentDM = null;
+      .addCase(getOneChannel.pending, (state, action) => {
+        state.currentChannel = null;
       })
-      .addCase(getAllDM.fulfilled, (state, action) => {
-          console.log()
-        state.currentDM = action.payload;
+      .addCase(getOneChannel.fulfilled, (state, action) => {
+        state.currentChannel = action.payload;
       })
-      .addCase(sendDM.fulfilled, (state, action) => {
-          console.log(action.payload);
-         state.sendDM.unshift(action.payload);
-         
+      .addCase(exitChannel.fulfilled, (state, action) => {
+        state.currentChannel = null;
       })
       .addMatcher(
         (action) => {
@@ -68,4 +69,4 @@ const dmSlice = createSlice({
       ),
 });
 
-export default dmSlice;
+export default channelSlice;

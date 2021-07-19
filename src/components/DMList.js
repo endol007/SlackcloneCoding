@@ -1,9 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 import { ArrowDropDown, ArrowDropUp } from "@styled-icons/material-outlined";
 import { CollapseButton } from "./ChannelList";
-import { AddWrapper } from "./ChannelList";
-import { Add } from "@styled-icons/fluentui-system-filled";
 
 import DM from "./DM";
 
@@ -44,11 +42,12 @@ const DMList = (props) => {
     },
   ];
 
-  const onClickAddDM = useCallback(() => {
-    console.log("DM 추가");
-  }, []);
-
+  const [onlineList, setOnlineList] = useState([]);
   const [collapse, setCollapse] = useState(true);
+
+  useEffect(() => {
+    setOnlineList([]);
+  }, []);
 
   const toggleCollapse = useCallback(() => {
     setCollapse((prev) => !prev);
@@ -68,7 +67,8 @@ const DMList = (props) => {
       <div>
         {collapse &&
           dmData?.map((dm) => {
-            return <DM key={dm.id} dm={dm} />;
+            const isOnline = onlineList.includes(dm.id);
+            return <DM key={dm.id} dm={dm} isOnline={isOnline} />;
           })}
       </div>
     </>

@@ -1,21 +1,20 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import socketio from "socket.io-client";
+import io from "socket.io-client";
 
 import ChatBox from "../components/ChatBox";
 import ChatList from "../components/ChatList";
 import ChatHeader from "../components/ChatHeader";
-import socket from "socket.io-client/lib/socket";
 
 const Chats = (props) => {
-  const soclet = socketio.connect("http:localhost:5000");
-  const connect = (() => {
-    socket.emit("init", {name: "donghwan"});
+  const socket = io.connect("http:localhost:4000");
 
-    socket.on("welcome", (msg) => {
-      console.log(msg);
-    });
-  })();
+  useEffect(() => {
+    socket.on("message",({message})  => {
+      
+    })
+  })
+  
 
   return (
     <React.Fragment>
