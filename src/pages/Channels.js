@@ -17,10 +17,14 @@ const Channels = (props) => {
   const dispatch = useDispatch();
   const { channel } = useParams();
   const [socket] = useSocket(channel);
-  const { currentUser } = useSelector((state) => state.user);
+  // const { currentUser } = useSelector((state) => state.user);
   // const { currentChannel, currentChannelUsers } = useSelector(
   //   (state) => state.channel
   // );
+  const currentUser = {
+    id: 1,
+    nickname: "동우",
+  };
   const currentChannel = {
     id: 1,
     title: "일반",
@@ -39,7 +43,7 @@ const Channels = (props) => {
       nickname: "동환",
     },
   ];
-  const [chat, setChat] = useState();
+  const [chat, setChat] = useState("");
 
   useEffect(() => {
     dispatch(getChannels());
@@ -62,8 +66,7 @@ const Channels = (props) => {
     setChat(e.target.value);
   }, []);
 
-  const onSubmitForm = useCallback((e) => {
-    console.log(chat);
+  const onSubmitForm = (e) => {
     dispatch(
       sendMessage({
         channelId: channel,
@@ -71,7 +74,8 @@ const Channels = (props) => {
         message: chat,
       })
     );
-  }, []);
+    setChat("");
+  };
 
   return (
     <React.Fragment>
