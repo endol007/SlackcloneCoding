@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-
-const ChatBox = ({onSubmitForm, onChangeChat, chat}) => {
-
+const ChatBox = (props) => {
   return (
     <React.Fragment>
       <ChatBoxWrap>
         <InputBox>
           <InputText
-            onChange={onChangeChat}
-            value={chat}
+            onChange={props.onChangeChat}
+            value={props.chat}
             placeholder="#일반에게 메세지보내기"
           ></InputText>
           <IconBox>
@@ -18,9 +16,7 @@ const ChatBox = ({onSubmitForm, onChangeChat, chat}) => {
             </IconBoxItem>
             <IconBoxItem></IconBoxItem>
             <IconBoxItem>
-              <SendButton
-                onClick={onSubmitForm}
-              >
+              <SendButton onClick={props.onSubmitForm}>
                 <SendImage src="https://image.flaticon.com/icons/png/512/2391/2391067.png"></SendImage>
               </SendButton>
             </IconBoxItem>

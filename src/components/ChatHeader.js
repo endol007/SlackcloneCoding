@@ -4,13 +4,12 @@ import styled from "styled-components";
 import gravatar from "gravatar";
 import { useSelector } from "react-redux";
 
-const ChatHeader = ({ current }) => {
+const ChatHeader = ({ current, currentUsers }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
-  // const { currentUser } = useSelector((state) => state.user);
-  const currentUser = {
-      email: "seanstainability@gmail.com",
-      nickname: "sean",
-    };
+  const currentUser = [{
+    email: "seanstainability@gmail.com",
+    nickname: "sean",
+  }];
 
   const openModal = () => {
     setModalOpen(true);
@@ -29,7 +28,7 @@ const ChatHeader = ({ current }) => {
               src={gravatar.url(currentUser.email, { s: "28px", d: "retro" })}
               alt={currentUser.nickname}
             ></I>
-            <T>4</T>
+            <T>{currentUsers.length}</T>
           </ModalBtn>
           <ChannelInfoModal
             open={modalOpen}
@@ -84,7 +83,7 @@ const I = styled.img`
   display: inline-block;
 `;
 const T = styled.span`
-  margin: "0 0 4px 4px";
+  margin: "4px";
   --saf-0: rgba(var(--sk_foreground_low, 29, 28, 29), 0.13);
   color: rgba(var(--sk_foreground_max, 29, 28, 29), 0.7);
 `;

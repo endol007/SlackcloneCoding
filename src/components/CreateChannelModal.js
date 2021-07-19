@@ -11,11 +11,11 @@ const CreateChannelModal = (props) => {
 
   const userList = [
     {
-      id: 2,
+      id: 1,
       nickname: "민영",
     },
     {
-      id: 3,
+      id: 2,
       nickname: "동환",
     },
   ];
@@ -44,11 +44,21 @@ const CreateChannelModal = (props) => {
     // if (!channelTitle) {
     //   return;
     // }
-    const query = 'input[name="member"]:checked';
-    const selectedEls = document.querySelectorAll(query);
+    // const query = 'input[name="member"]:checked';
+    // const selectedEls = document.querySelectorAll(query);
     let channelUsers = [];
-    // dispatch(createChannel({ title: channelTitle, userList: channelUsers }));
+    dispatch(createChannel({ title: channelTitle, userList: channelUsers }));
   }, []);
+  const [membersChecked, setmembersChecked] = useState([]);
+
+  function checkedMember() {
+    let member_length = document.getElementsByName("member").length;
+    for (var i=0; i<member_length; i++) {
+        if (document.getElementsByName("member")[i].checked == true) {
+            setmembersChecked.push(document.getElementsByName("member")[i].value)
+        }
+    }
+}
 
   return (
     <React.Fragment>
@@ -141,7 +151,7 @@ const CreateChannelModal = (props) => {
                 >
                   지금은 건너뛰기
                 </ButtonWrapper>
-                <ButtonWrapper>생성</ButtonWrapper>
+                <ButtonWrapper onClick={checkedMember}>생성</ButtonWrapper>
               </div>
             </FormWrapper>
           </section>

@@ -15,8 +15,8 @@ const ChannelList = (props) => {
   const [socket] = useSocket(channel);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [collapse, setCollapse] = useState(true);
-  const { channelList } = useSelector((state) => state.channel);
-  const channelData = [
+  // const { channelList } = useSelector((state) => state.channel);
+  const channelList = [
     {
       id: 1,
       title: "랜덤",

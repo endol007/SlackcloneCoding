@@ -1,65 +1,72 @@
 import React, { useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
-import io from "socket.io-client";
-
-import { sendDM, getAllDM} from "../redux/async/dm";
+import { sendDM, getAllDM } from "../redux/async/dm";
 import ChatBox from "../components/ChatBox";
 import ChatList from "../components/ChatList";
 import ChatHeader from "../components/ChatHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router"
+import { useParams } from "react-router";
 import useSocket from "../useSocket";
 
 const Chats = (props) => {
   const dispatch = useDispatch();
   const { chats } = useParams();
   const [socket] = useSocket(chats);
-
+  // const { currentUser } = useSelector((state) => state.user);
+  // const { currentDM } = useSelector((state) => state.dm);
+  const currentUser = [{
+    id: 1,
+    nickname: "동우",
+  }, {
+    id: 2,
+    nickname: "동환",
+  }];
+  const currentDM = {
+    id: 1,
+    title: "일반",
+  };
+  const [chat, setChat] = useState("");
   const dm_list = useSelector((state) => state.dm.sendDM);
 
-  const [chat, setChat] = useState();
-
   useEffect(() => {
-   dispatch(getAllDM());
+    dispatch(getAllDM());
   }, []);
 
-
   useEffect(() => {
-    socket?.on("message", onMessage);
+    socket?.on("dm", onDM);
     return () => {
-      socket?.off("message", onMessage);
-    }
+      socket?.off("dm", onDM);
+    };
   }, [socket]);
 
-  const onMessage = (data) => {
+  const onDM = (data) => {
     console.log("message", data);
-  }
+  };
 
-  const onChangeChat = useCallback((e)=> {
+  const onChangeChat = useCallback((e) => {
     setChat(e.target.value);
   }, []);
-  
-
 
   const onSubmitForm = () => {
     const dmData = {
+      dmsId: chats,
       userId: "1",
-      message: chat,
-    } 
+      chat: chat,
+    };
     dispatch(sendDM(dmData));
     setChat("");
-  }
+  };
 
   return (
     <React.Fragment>
-      <ChatHeader></ChatHeader>
+      <ChatHeader current={currentDM} currentUsers={currentUser}></ChatHeader>
       <ChatsWrap width="100%" display="flex">
         <ChatList chatData={dm_list}></ChatList>
-          <ChatBox
-            onSubmitForm={onSubmitForm}
-            chat={chat}
-            onChangeChat={onChangeChat}
-          ></ChatBox>
+        <ChatBox
+          onSubmitForm={onSubmitForm}
+          chat={chat}
+          onChangeChat={onChangeChat}
+        ></ChatBox>
       </ChatsWrap>
     </React.Fragment>
   );
@@ -70,5 +77,4 @@ const ChatsWrap = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
 export default Chats;

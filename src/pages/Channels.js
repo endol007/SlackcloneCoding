@@ -69,7 +69,7 @@ const Channels = (props) => {
 
   return (
     <React.Fragment>
-      <ChatHeader current={currentChannel}></ChatHeader>
+      <ChatHeader current={currentChannel} currentUsers={currentChannelUsers}></ChatHeader>
       <ChannelsWrap width="100%" display="flex">
         <ChatList chatData={currentChannel}></ChatList>
         <ChatBox

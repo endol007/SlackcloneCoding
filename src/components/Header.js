@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import gravatar from "gravatar";
 import { useDispatch, useSelector } from "react-redux";
-import logout from "../redux/modules/userSlice";
+import { logOut } from "../redux/modules/userSlice";
 import { getUser } from "../redux/async/user";
 
 const Header = (props) => {
@@ -15,13 +15,13 @@ const Header = (props) => {
   };
   useEffect(() => {
     dispatch(getUser());
-  })
+  }, []);
   const onClickProfile = useCallback(() => {
     setShowProfile((prev) => !prev);
   }, []);
 
   const onLogOut = useCallback(() => {
-    dispatch(logout());
+    dispatch(logOut());
   }, []);
 
   return (

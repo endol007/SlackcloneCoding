@@ -32,6 +32,28 @@ export const getOneChannel = createAsyncThunk(
   }
 );
 
+export const getOneChannelUsers = createAsyncThunk(
+  "channel/getOneChannelUsers",
+  async (data, thunkAPI) => {
+    const response = await axios.get(`/channels/${data.channelId}/user`);
+    console.log("response", response.data.result);
+    return response.data.result;
+  }
+);
+
+export const sendMessage = createAsyncThunk(
+  "channel/sendMessage",
+  async (data, thunkAPI) => {
+    const chatData = {
+      userId: data.userId,
+      message: data.message,
+    };
+    console.log("chatData", chatData);
+    // const response = await axios.post(`/channels/${data.channelId}`, chatData);
+    return chatData;
+  }
+);
+
 export const exitChannel = createAsyncThunk(
   "channel/exitChannel",
   async (data, thunkAPI) => {
