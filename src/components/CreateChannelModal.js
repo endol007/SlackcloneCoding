@@ -3,14 +3,11 @@ import "./modal.css";
 import styled from "styled-components";
 import Input from "../elements/Input";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
 import { createChannel } from "../redux/async/channel";
 
 const CreateChannelModal = (props) => {
   const dispatch = useDispatch();
   const { open, close } = props;
-  const { title } = useParams();
-  // console.log(title);
 
   const userList = [];
   const [channelTitle, setChannelTitle] = useState("");
