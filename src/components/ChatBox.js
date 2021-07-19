@@ -1,35 +1,47 @@
-import React from "react";
-import styled from "styled-components"
-import Grid from "../elements/Grid"
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import {sendChat, receiveChat} from "../redux/async/dm"
+import socket from "socket.io-client/lib/socket";
+
 const ChatBox = (props) => {
+    const dispatch = useDispatch();
+    const [chat, setChat] = React.useState(); // 인풋값 받아오는부분
+
+    useEffect(()=> {
+        
+    })   //socket연결
+
+    const editChat = (e) => {
+        setChat(e.target.value);
+    }
+    const chatInfo = {
+        chat: chat,
+        userId: "1"
+        }
+    const sendChatInfo = (e) => {
+        e.preventDefault();
+        dispatch(sendChat(chatInfo));
+        setChat("");
+    }
     return(
         <React.Fragment>
                 <ChatBoxWrap>
                     <InputBox>
-                        <InputText placeholder="#일반에게 메세지보내기"></InputText>
+                        <InputText onChange={editChat} value={chat} placeholder="#일반에게 메세지보내기"></InputText>
                         <IconBox>
                             <IconBoxItem>
                                 <Image1 src="https://image.flaticon.com/icons/png/512/1330/1330254.png">
                                 </Image1>
                             </IconBoxItem>
                             <IconBoxItem>
-                                <Image1 src="https://image.flaticon.com/icons/png/512/1330/1330254.png">
-                                </Image1>
-                                <Image1 src="https://image.flaticon.com/icons/png/512/1330/1330254.png">
-                                </Image1>
-                                <Image1 src="https://image.flaticon.com/icons/png/512/1330/1330254.png">
-                                </Image1>
+                                
                             </IconBoxItem>
                             <IconBoxItem>
-                                <Image1 src="https://image.flaticon.com/icons/png/512/1330/1330254.png">
-                                </Image1>
-                                <Image1 src="https://image.flaticon.com/icons/png/512/1330/1330254.png">
-                                </Image1>
-                                <Image1 src="https://image.flaticon.com/icons/png/512/1330/1330254.png">
-                                </Image1>
-                                <Image1 src="https://image.flaticon.com/icons/png/512/1330/1330254.png">
-                                </Image1>
-                                <SendButton>
+                                
+                                <SendButton onClick={()=> {
+                                    sendChatInfo();
+                                }}>
                                     <SendImage src="https://image.flaticon.com/icons/png/512/2391/2391067.png">
                                     
                                     </SendImage>

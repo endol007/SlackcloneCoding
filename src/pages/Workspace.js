@@ -112,7 +112,12 @@ const WorkspaceName = styled.button`
 `;
 
 const MenuScroll = styled.div`
+<<<<<<< HEAD
   height: 90vh;
+=======
+  height: calc(100vh - 38px);
+  // overflow-y: auto;
+>>>>>>> 638446fece34b1f89880212590cd3f07e5118180
 `;
 
 const ChatsWrapper = styled.div`

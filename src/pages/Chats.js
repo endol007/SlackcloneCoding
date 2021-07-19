@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import socketio from "socket.io-client";
 
-import Grid from "../elements/Grid";
 import ChatBox from "../components/ChatBox";
 import ChatList from "../components/ChatList";
 import ChatHeader from "../components/ChatHeader";
+import socket from "socket.io-client/lib/socket";
+
 const Chats = (props) => {
+  const soclet = socketio.connect("http:localhost:5000");
+  const connect = (() => {
+    socket.emit("init", {name: "donghwan"});
+
+    socket.on("welcome", (msg) => {
+      console.log(msg);
+    });
+  })();
+
   return (
     <React.Fragment>
-          <ChatHeader></ChatHeader>
-        <ChatsWrap width="100%" display="flex">
-          <ChatList></ChatList>
+      <ChatHeader></ChatHeader>
+      <ChatsWrap width="100%" display="flex">
+        <ChatList></ChatList>
           <ChatBox></ChatBox>
-        </ChatsWrap>
+      </ChatsWrap>
     </React.Fragment>
   );
 };
