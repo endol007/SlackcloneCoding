@@ -8,7 +8,7 @@ import { history } from "./redux/configureStore";
 import { ConnectedRouter } from "connected-react-router";
 import axios from "axios";
 
-axios.defaults.baseURL = "localhist:8005";
+axios.defaults.baseURL = "http://3.35.214.41/";
 axios.defaults.withCredentials = true;
 
 function App(props) {

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// 사용자 조회
 export const getDmUsers = createAsyncThunk(
   "channel/getDmUsers",
   async (data, thunkAPI) => {

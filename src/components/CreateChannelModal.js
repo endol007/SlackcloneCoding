@@ -1,27 +1,32 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import "./modal.css";
 import styled from "styled-components";
 import Input from "../elements/Input";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createChannel } from "../redux/async/channel";
 
 const CreateChannelModal = (props) => {
   const dispatch = useDispatch();
   const { open, close } = props;
-
-  const userList = [
-    {
-      id: 1,
-      nickname: "민영",
-    },
-    {
-      id: 2,
-      nickname: "동환",
-    },
-  ];
   const [certain, setCertain] = useState(false);
   const [channelTitle, setChannelTitle] = useState("");
-  const [channelUsers, setChannelUsers] = useState(userList);
+  const { dmList: userList } = useSelector((state) => state.dm);
+  // const { currentUser } = useSelector((state) => state.user);
+  const currentUser = {
+    id: 1,
+    email: "seanstainability@gmail.com",
+    nickname: "sean",
+  };
+  // const userList = [
+  //   {
+  //     id: 1,
+  //     nickname: "민영",
+  //   },
+  //   {
+  //     id: 2,
+  //     nickname: "동환",
+  //   },
+  // ];
 
   const onChangeInput = useCallback((e) => {
     if (e.target.value === "certain") {
@@ -31,34 +36,58 @@ const CreateChannelModal = (props) => {
     }
   }, []);
 
-  const onChangeChannelTitle = useCallback((e) => {
-    setChannelTitle(e.target.value);
-  }, []);
+  // const onChangeChannelTitle = useCallback((e) => {
+  //   console.log(e.target.value);
+  //   setChannelTitle(e.target.value);
+  // }, []);
 
-  const onChangeChannelUsers = useCallback((e) => {
-    setChannelUsers(e.target.value);
-  }, []);
-
-  const onSubmitCreateChannel = useCallback((e) => {
-    console.log("채널 생성하기", channelTitle);
-    // if (!channelTitle) {
-    //   return;
-    // }
-    // const query = 'input[name="member"]:checked';
-    // const selectedEls = document.querySelectorAll(query);
-    let channelUsers = [];
-    dispatch(createChannel({ title: channelTitle, userList: channelUsers }));
-  }, []);
-  const [membersChecked, setmembersChecked] = useState([]);
-
-  function checkedMember() {
+  const checkedMember = () => {
     let member_length = document.getElementsByName("member").length;
-    for (var i=0; i<member_length; i++) {
-        if (document.getElementsByName("member")[i].checked == true) {
-            setmembersChecked.push(document.getElementsByName("member")[i].value)
+    let membersChecked = [];
+    if (document.getElementsByName("case")[0].value === "total") {
+      userList.forEach((user) => {
+        membersChecked.push(user.id);
+      });
+    } else {
+      for (var i = 0; i < member_length; i++) {
+        if (document.getElementsByName("member")[i].checked === true) {
+          let target = document.getElementsByName("member")[i].value;
+          membersChecked.push(target);
         }
+      }
     }
-}
+    return membersChecked;
+  };
+
+  const onSkip = () => {
+    if (channelTitle.trim() === "") {
+      alert("채널명은 필수 입력사항입니다.");
+      return;
+    }
+    dispatch(
+      createChannel({
+        title: channelTitle,
+        userList: [],
+        userId: currentUser.id,
+      })
+    );
+  };
+
+  const onSubmitCreateChannel = (e) => {
+    if (channelTitle.trim() === "") {
+      alert("채널명은 필수 입력사항입니다.");
+      return;
+    }
+    let channelUsers = checkedMember();
+    alert(channelUsers);
+    dispatch(
+      createChannel({
+        title: channelTitle,
+        userList: channelUsers,
+        userId: currentUser.id,
+      })
+    );
+  };
 
   return (
     <React.Fragment>
@@ -75,7 +104,7 @@ const CreateChannelModal = (props) => {
                 &times;{" "}
               </button>
             </header>
-            <FormWrapper onSubmit={onSubmitCreateChannel}>
+            <FormWrapper>
               <div style={{ color: "#A9A9A9", lineHeight: "1.5" }}>
                 채널은 팀이 소통하는 공간입니다. 채널은 주제(예: 마케팅)를
                 중심으로 구성하는 것이 가장 좋습니다.
@@ -88,8 +117,10 @@ const CreateChannelModal = (props) => {
                   margin="0 0 20px 0"
                   padding="4px 46px 4px 16px"
                   font_size="18px !important"
-                  value={channelTitle}
-                  onChange={onChangeChannelTitle}
+                  _onChange={(e) => {
+                    // console.log(e.target.value);
+                    setChannelTitle(e.target.value);
+                  }}
                 ></Input>
               </div>
               <div>
@@ -100,7 +131,7 @@ const CreateChannelModal = (props) => {
                       <input
                         id="total"
                         type="radio"
-                        name="member"
+                        name="case"
                         value="total"
                         onChange={onChangeInput}
                       />
@@ -112,7 +143,7 @@ const CreateChannelModal = (props) => {
                       <input
                         id="certain"
                         type="radio"
-                        name="member"
+                        name="case"
                         value="certain"
                         onChange={onChangeInput}
                       />
@@ -121,7 +152,7 @@ const CreateChannelModal = (props) => {
                   </div>
                   {certain && (
                     <div style={{ marginLeft: "20px" }}>
-                      {userList.map((user) => {
+                      {userList?.map((user) => {
                         return (
                           <div>
                             <label htmlFor={user.id}>
@@ -148,10 +179,13 @@ const CreateChannelModal = (props) => {
                     color: "#000",
                     marginRight: "6px",
                   }}
+                  onClick={onSkip}
                 >
                   지금은 건너뛰기
                 </ButtonWrapper>
-                <ButtonWrapper onClick={checkedMember}>생성</ButtonWrapper>
+                <ButtonWrapper onClick={onSubmitCreateChannel}>
+                  생성
+                </ButtonWrapper>
               </div>
             </FormWrapper>
           </section>

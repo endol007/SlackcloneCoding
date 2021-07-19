@@ -1,34 +1,38 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+//채널 조회
 export const getChannels = createAsyncThunk(
   "channel/getChannels",
   async (data, thunkAPI) => {
     const response = await axios.get("/channels");
-    console.log("response", response.data);
-    return response.data;
+    console.log("response", response.data.result);
+    return response.data.result;
   }
 );
 
+//채널 생성
 export const createChannel = createAsyncThunk(
   "channel/createChannel",
   async (data, thunkAPI) => {
     const createdData = {
       title: data.title,
       userList: data.userList,
+      userId: data.userId,
     };
     const response = await axios.post("/channels", createdData);
-    console.log("response", response.data);
+    console.log("response", response.data.message);
     return createdData;
   }
 );
 
+//게시글 조회
 export const getOneChannel = createAsyncThunk(
   "channel/getOneChannel",
   async (data, thunkAPI) => {
     const response = await axios.get(`/channels/${data.channelId}`);
-    console.log("response", response.data);
-    return response.data;
+    console.log("response", response.data.result);
+    return response.data.result;
   }
 );
 
@@ -66,14 +70,14 @@ export const exitChannel = createAsyncThunk(
 export const sendMessageChannel = createAsyncThunk(
   "channel/sendMessageChannel",
   async (data, thunkAPI) => {
-      const chats = {
-        title: data.title,
-        description: data.description,
-        img: data.img,
-        channelId: data.channelId,
-        userId: data.userId, 
-      }
-      //const response = await axios.post(`/chats/1`, chats);  ///chats/${dmsId}
-      return chats;
+    const chats = {
+      title: data.title,
+      description: data.description,
+      img: data.img,
+      channelId: data.channelId,
+      userId: data.userId,
+    };
+    //const response = await axios.post(`/chats/1`, chats);  ///chats/${dmsId}
+    return chats;
   }
-)
+);

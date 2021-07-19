@@ -6,7 +6,6 @@ import {
   getOneChannelUsers,
   sendMessage,
   exitChannel,
-  sendMessageChannel,
 } from "../async/channel";
 
 const initialState = {
