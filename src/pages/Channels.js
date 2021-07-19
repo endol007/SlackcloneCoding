@@ -12,9 +12,13 @@ const Channels = (props) => {
   const dispatch = useDispatch();
   const { channel } = useParams();
   const [socket] = useSocket(channel);
-  // const { currentChannel } = useSelector((state) => state.channel);
+  // const { currentUser } = useSelector((state) => state.user);
+  // const { currentChannel, currentChannelUsers } = useSelector(
+  //   (state) => state.channel
+  // );
   const [chat, setChat] = useState();
-
+  const { sendMsg } = useSelector((state) => state.channel);
+  const placeholder = `# ${channel}에게 메시지 보내기`;
   const currentUser = {
     id: 1,
     nickname: "동우",
@@ -71,11 +75,12 @@ const Channels = (props) => {
     <React.Fragment>
       <ChatHeader current={currentChannel} currentUsers={currentChannelUsers}></ChatHeader>
       <ChannelsWrap width="100%" display="flex">
-        <ChatList chatData={currentChannel}></ChatList>
+        <ChatList chatData={sendMsg}></ChatList>
         <ChatBox
           onSubmitForm={onSubmitForm}
           chat={chat}
           onChangeChat={onChangeChat}
+          placeholder={placeholder}
         ></ChatBox>
       </ChannelsWrap>
     </React.Fragment>

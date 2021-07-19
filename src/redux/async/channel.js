@@ -46,7 +46,7 @@ export const sendMessage = createAsyncThunk(
   async (data, thunkAPI) => {
     const chatData = {
       userId: data.userId,
-      message: data.message,
+      chat: data.message,
     };
     console.log("chatData", chatData);
     // const response = await axios.post(`/channels/${data.channelId}`, chatData);

@@ -14,19 +14,17 @@ const Chats = (props) => {
   const [socket] = useSocket(chats);
   // const { currentUser } = useSelector((state) => state.user);
   // const { currentDM } = useSelector((state) => state.dm);
-  const currentUser = [{
+  const dm_list = useSelector((state) => state.dm.sendDM);
+  const placeholder = `#  에게 메시지 보내기`;
+  const currentUser = {
     id: 1,
     nickname: "동우",
-  }, {
-    id: 2,
-    nickname: "동환",
-  }];
+  };
   const currentDM = {
-    id: 1,
-    title: "일반",
+    id: 3,
+    title: "동환",
   };
   const [chat, setChat] = useState("");
-  const dm_list = useSelector((state) => state.dm.sendDM);
 
   useEffect(() => {
     dispatch(getAllDM());
@@ -40,7 +38,7 @@ const Chats = (props) => {
   }, [socket]);
 
   const onDM = (data) => {
-    console.log("message", data);
+    console.log("dm", data);
   };
 
   const onChangeChat = useCallback((e) => {
@@ -66,6 +64,7 @@ const Chats = (props) => {
           onSubmitForm={onSubmitForm}
           chat={chat}
           onChangeChat={onChangeChat}
+          placeholder={placeholder}
         ></ChatBox>
       </ChatsWrap>
     </React.Fragment>

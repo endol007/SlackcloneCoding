@@ -8,7 +8,7 @@ const ChatBox = (props) => {
           <InputText
             onChange={props.onChangeChat}
             value={props.chat}
-            placeholder="#일반에게 메세지보내기"
+            placeholder={props.placeholder}
           ></InputText>
           <IconBox>
             <IconBoxItem>

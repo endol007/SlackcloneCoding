@@ -3,9 +3,10 @@ import styled from "styled-components";
 import gravatar from "gravatar";
 import { useSelector } from "react-redux";
 
-const ChatList = (chatData) => {
-  const dm_list = useSelector((state) => state.dm.sendDM);
-  const userData = {
+const ChatList = ({ chatData }) => {
+  // const { currentUser } = useSelector((state) => state.user);
+  const currentUser = {
+    id: 1,
     email: "seanstainability@gmail.com",
     nickname: "sean",
   };
@@ -14,28 +15,27 @@ const ChatList = (chatData) => {
   return (
     <React.Fragment>
       <ChatListWrap>
-        {dm_list &&
-          dm_list?.map((p, idx) => {
-            return (
-              <ChatListBox>
-                <ChatListBoxInfo>
-                  <ChatListUserImageWrap>
-                    <UserImage
-                      src={gravatar.url(userData.email, {
-                        s: "40px",
-                        d: "retro",
-                      })}
-                      alt={userData.nickname}
-                    ></UserImage>
-                  </ChatListUserImageWrap>
-                  <ChatListUserInfo>
-                    <text>{p.userId}</text> <span>오후 3:16</span>
-                    <br />
-                    <div>{p.chat}</div>
-                  </ChatListUserInfo>
-                </ChatListBoxInfo>
-              </ChatListBox>
-            );
+        {chatData?.map((p, idx) => {
+          return (
+            <ChatListBox>
+              <ChatListBoxInfo>
+                <ChatListUserImageWrap>
+                  <UserImage
+                    src={gravatar.url(currentUser.email, {
+                      s: "40px",
+                      d: "retro",
+                    })}
+                    alt={currentUser.nickname}
+                  ></UserImage>
+                </ChatListUserImageWrap>
+                <ChatListUserInfo>
+                  <text>{p.userId}</text> <span>{chatData.createdAt}</span>
+                  <br />
+                  <div>{p.chat}</div>
+                </ChatListUserInfo>
+              </ChatListBoxInfo>
+            </ChatListBox>
+          );
         })}
       </ChatListWrap>
     </React.Fragment>
