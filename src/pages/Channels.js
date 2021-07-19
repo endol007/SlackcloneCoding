@@ -1,13 +1,8 @@
 import React, { useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import {
-  getChannels,
-  getOneChannel,
-  getOneChannelUsers,
-  sendMessage,
-} from "../redux/async/channel";
+import { useParams } from "react-router"
+import { getChannels, getOneChannel, sendMessageChannel } from "../redux/async/channel";
 import useSocket from "../useSocket";
 import ChatHeader from "../components/ChatHeader";
 import ChatList from "../components/ChatList";
@@ -21,6 +16,7 @@ const Channels = (props) => {
   // const { currentChannel, currentChannelUsers } = useSelector(
   //   (state) => state.channel
   // );
+  const [chat, setChat] = useState();
   const { sendMsg } = useSelector((state) => state.channel);
   const placeholder = `# ${channel}에게 메시지 보내기`;
   const currentUser = {
@@ -45,12 +41,9 @@ const Channels = (props) => {
       nickname: "동환",
     },
   ];
-  const [chat, setChat] = useState("");
-
   useEffect(() => {
     dispatch(getChannels());
     dispatch(getOneChannel({ channelId: channel }));
-    dispatch(getOneChannelUsers({ channelId: channel }));
   }, []);
 
   useEffect(() => {
@@ -67,24 +60,20 @@ const Channels = (props) => {
   const onChangeChat = useCallback((e) => {
     setChat(e.target.value);
   }, []);
-
-  const onSubmitForm = (e) => {
-    dispatch(
-      sendMessage({
-        channelId: channel,
-        userId: currentUser.id,
-        message: chat,
-      })
-    );
-    setChat("");
-  };
+  const ChannelMsgData = {
+    title: "",
+    description: chat,
+    img: "",
+    channelId: channel,
+    userId: "1",       //userId
+  }
+  const onSubmitForm = () => {
+    dispatch(sendMessageChannel(ChannelMsgData));
+  }
 
   return (
     <React.Fragment>
-      <ChatHeader
-        current={currentChannel}
-        currentUsers={currentChannelUsers}
-      ></ChatHeader>
+      <ChatHeader current={currentChannel} currentUsers={currentChannelUsers}></ChatHeader>
       <ChannelsWrap width="100%" display="flex">
         <ChatList chatData={sendMsg}></ChatList>
         <ChatBox

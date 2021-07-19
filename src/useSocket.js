@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 import { useCallback } from "react";
 
-const backUrl = "";
+const backUrl = "localhost:8005";
 
 const sockets = {};
 const useSocket = (channel) => {

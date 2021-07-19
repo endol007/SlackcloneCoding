@@ -16,7 +16,6 @@ const Header = (props) => {
   useEffect(() => {
     dispatch(getUser());
   }, []);
-
   const onClickProfile = useCallback(() => {
     setShowProfile((prev) => !prev);
   }, []);

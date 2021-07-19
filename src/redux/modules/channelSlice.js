@@ -6,10 +6,12 @@ import {
   getOneChannelUsers,
   sendMessage,
   exitChannel,
+  sendMessageChannel,
 } from "../async/channel";
 
 const initialState = {
   channelList: null,
+  sendMessageChannel: [],
   currentChannel: null,
   currentChannelUsers: null,
   sendMsg: [

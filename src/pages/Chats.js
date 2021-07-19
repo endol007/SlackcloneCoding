@@ -57,7 +57,7 @@ const Chats = (props) => {
 
   return (
     <React.Fragment>
-      <ChatHeader current={currentDM} currentUsers={[currentUser]}></ChatHeader>
+      <ChatHeader current={currentDM} currentUsers={currentUser}></ChatHeader>
       <ChatsWrap width="100%" display="flex">
         <ChatList chatData={dm_list}></ChatList>
         <ChatBox

@@ -10,12 +10,12 @@ import Chats from "./Chats";
 const Workspace = (props) => {
   return (
     <>
-      <Header />
+      <Header/>
       <WorkspaceWrapper>
         <ChannelsWrapper>
           <WorkspaceName>항해99</WorkspaceName>
           <MenuScroll>
-            <ChannelList />
+            <ChannelList/>
             <DMList />
           </MenuScroll>
           <div></div>
@@ -23,7 +23,7 @@ const Workspace = (props) => {
         <ChatsWrapper>
           <Switch>
             <Route path="/workspace/channel/:channel" component={Channels} />
-            <Route path="/workspace/chat/:chat" component={Chats} />
+            <Route path="/workspace/chat/:chats" component={Chats} />
           </Switch>
         </ChatsWrapper>
       </WorkspaceWrapper>

@@ -10,6 +10,7 @@ const ChatList = ({ chatData }) => {
     email: "seanstainability@gmail.com",
     nickname: "sean",
   };
+  
 
   return (
     <React.Fragment>
