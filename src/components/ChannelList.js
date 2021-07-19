@@ -16,16 +16,16 @@ const ChannelList = (props) => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [collapse, setCollapse] = useState(true);
   const { channelList } = useSelector((state) => state.channel);
-  // const channelData = [
-  //   {
-  //     id: 1,
-  //     title: "랜덤",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "일반",
-  //   },
-  // ];
+  const channelData = [
+    {
+      id: 1,
+      title: "랜덤",
+    },
+    {
+      id: 2,
+      title: "일반",
+    },
+  ];
 
   useEffect(() => {
     dispatch(getChannels());

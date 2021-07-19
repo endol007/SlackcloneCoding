@@ -33,7 +33,6 @@ const dmSlice = createSlice({
         state.currentDM = action.payload;
       })
       .addCase(sendDM.fulfilled, (state, action) => {
-          console.log(action.payload);
          state.sendDM.unshift(action.payload);
          
       })

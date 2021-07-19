@@ -6,11 +6,11 @@ import { useSelector } from "react-redux";
 
 const ChatHeader = ({ current }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
-  const { currentUser } = useSelector((state) => state.user);
-  //   const userData = {
-  //     email: "seanstainability@gmail.com",
-  //     nickname: "sean",
-  //   };
+  // const { currentUser } = useSelector((state) => state.user);
+  const currentUser = {
+      email: "seanstainability@gmail.com",
+      nickname: "sean",
+    };
 
   const openModal = () => {
     setModalOpen(true);
@@ -18,11 +18,11 @@ const ChatHeader = ({ current }) => {
   const closeModal = () => {
     setModalOpen(false);
   };
-
+  //{current.title}
   return (
     <React.Fragment>
       <ChatHeaderBox>
-        <ChatHeaderTextbox>#{current.title}</ChatHeaderTextbox>
+        <ChatHeaderTextbox>#asdsa</ChatHeaderTextbox> 
         <Wrap>
           <ModalBtn onClick={openModal}>
             <I

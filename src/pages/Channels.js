@@ -1,7 +1,8 @@
 import React, { useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
-import { useParams, useDispatch, useSelector } from "react-router";
-import { getChannels, getOneChannel } from "../redux/async/channel";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router"
+import { getChannels, getOneChannel, sendMessageChannel } from "../redux/async/channel";
 import useSocket from "../useSocket";
 import ChatHeader from "../components/ChatHeader";
 import ChatList from "../components/ChatList";
@@ -11,9 +12,31 @@ const Channels = (props) => {
   const dispatch = useDispatch();
   const { channel } = useParams();
   const [socket] = useSocket(channel);
-  const { currentChannel } = useSelector((state) => state.channel);
+  // const { currentChannel } = useSelector((state) => state.channel);
   const [chat, setChat] = useState();
 
+  const currentUser = {
+    id: 1,
+    nickname: "동우",
+  };
+  const currentChannel = {
+    id: 1,
+    title: "일반",
+  };
+  const currentChannelUsers = [
+    {
+      id: 1,
+      nickname: "동우",
+    },
+    {
+      id: 2,
+      nickname: "민영",
+    },
+    {
+      id: 3,
+      nickname: "동환",
+    },
+  ];
   useEffect(() => {
     dispatch(getChannels());
     dispatch(getOneChannel({ channelId: channel }));
@@ -33,10 +56,16 @@ const Channels = (props) => {
   const onChangeChat = useCallback((e) => {
     setChat(e.target.value);
   }, []);
-
-  const onSubmitForm = useCallback((e) => {
-    console.log(chat);
-  }, []);
+  const ChannelMsgData = {
+    title: "",
+    description: chat,
+    img: "",
+    channelId: channel,
+    userId: "1",       //userId
+  }
+  const onSubmitForm = () => {
+    dispatch(sendMessageChannel(ChannelMsgData));
+  }
 
   return (
     <React.Fragment>

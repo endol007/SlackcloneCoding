@@ -1,18 +1,21 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import gravatar from "gravatar";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../redux/modules/userSlice";
+import logout from "../redux/modules/userSlice";
+import { getUser } from "../redux/async/user";
 
 const Header = (props) => {
   const dispatch = useDispatch();
   const [showProfile, setShowProfile] = useState(false);
-  const { currentUser } = useSelector((state) => state.user);
-  // const userData = {
-  //   email: "seanstainability@gmail.com",
-  //   nickname: "sean",
-  // };
-
+  // const { currentUser } = useSelector((state) => state.user);
+  const currentUser = {
+    email: "seanstainability@gmail.com",
+    nickname: "sean",
+  };
+  useEffect(() => {
+    dispatch(getUser());
+  })
   const onClickProfile = useCallback(() => {
     setShowProfile((prev) => !prev);
   }, []);

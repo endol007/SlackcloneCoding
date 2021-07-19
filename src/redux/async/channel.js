@@ -40,3 +40,18 @@ export const exitChannel = createAsyncThunk(
     return response.data;
   }
 );
+
+export const sendMessageChannel = createAsyncThunk(
+  "channel/sendMessageChannel",
+  async (data, thunkAPI) => {
+      const chats = {
+        title: data.title,
+        description: data.description,
+        img: data.img,
+        channelId: data.channelId,
+        userId: data.userId, 
+      }
+      //const response = await axios.post(`/chats/1`, chats);  ///chats/${dmsId}
+      return chats;
+  }
+)

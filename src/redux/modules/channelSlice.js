@@ -4,10 +4,12 @@ import {
   getChannels,
   getOneChannel,
   exitChannel,
+  sendMessageChannel,
 } from "../async/channel";
 
 const initialState = {
   channelList: null,
+  sendMessageChannel: [],
   currentChannel: null,
   isLoading: false,
   isDone: false,
@@ -34,6 +36,9 @@ const channelSlice = createSlice({
       })
       .addCase(getOneChannel.fulfilled, (state, action) => {
         state.currentChannel = action.payload;
+      })
+      .addCase(sendMessageChannel.fulfilled, (state, action)=> {
+        state.sendMessage.push(action.payload);
       })
       .addCase(exitChannel.fulfilled, (state, action) => {
         state.currentChannel = null;

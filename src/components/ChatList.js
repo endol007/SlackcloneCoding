@@ -3,12 +3,13 @@ import styled from "styled-components";
 import gravatar from "gravatar";
 import { useSelector } from "react-redux";
 
-const ChatList = (props) => {
+const ChatList = (chatData) => {
   const dm_list = useSelector((state) => state.dm.sendDM);
   const userData = {
     email: "seanstainability@gmail.com",
     nickname: "sean",
   };
+  
 
   return (
     <React.Fragment>
@@ -28,14 +29,14 @@ const ChatList = (props) => {
                     ></UserImage>
                   </ChatListUserImageWrap>
                   <ChatListUserInfo>
-                    <text>{p.nickname}</text> <span>오후 3:16</span>
+                    <text>{p.userId}</text> <span>오후 3:16</span>
                     <br />
-                    <div>{p.message}</div>
+                    <div>{p.chat}</div>
                   </ChatListUserInfo>
                 </ChatListBoxInfo>
               </ChatListBox>
             );
-          })}
+        })}
       </ChatListWrap>
     </React.Fragment>
   );

@@ -1,30 +1,14 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { getOneDM, sendDM } from "../redux/async/dm";
-import socket from "socket.io-client/lib/socket";
 
-const ChatBox = (props) => {
-  const dispatch = useDispatch();
-  const [chat, setChat] = React.useState();
+const ChatBox = ({onSubmitForm, onChangeChat, chat}) => {
 
-  const editChat = (e) => {
-    setChat(e.target.value);
-  };
-  const chatInfo = {
-    chat: chat,
-    nickname: "dh",
-  };
-  const sendChatInfo = (e) => {
-    dispatch(sendDM(chatInfo));
-    setChat("");
-  };
   return (
     <React.Fragment>
       <ChatBoxWrap>
         <InputBox>
           <InputText
-            onChange={editChat}
+            onChange={onChangeChat}
             value={chat}
             placeholder="#일반에게 메세지보내기"
           ></InputText>
@@ -35,9 +19,7 @@ const ChatBox = (props) => {
             <IconBoxItem></IconBoxItem>
             <IconBoxItem>
               <SendButton
-                onClick={() => {
-                  sendChatInfo();
-                }}
+                onClick={onSubmitForm}
               >
                 <SendImage src="https://image.flaticon.com/icons/png/512/2391/2391067.png"></SendImage>
               </SendButton>
