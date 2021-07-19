@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import "./modal.css";
 import styled from "styled-components";
 import Input from "../elements/Input";
@@ -9,12 +9,26 @@ const CreateChannelModal = (props) => {
   const dispatch = useDispatch();
   const { open, close } = props;
 
-  const userList = [];
+  const userList = [
+    {
+      id: 2,
+      nickname: "민영",
+    },
+    {
+      id: 3,
+      nickname: "동환",
+    },
+  ];
+  const [certain, setCertain] = useState(false);
   const [channelTitle, setChannelTitle] = useState("");
   const [channelUsers, setChannelUsers] = useState(userList);
 
   const onChangeInput = useCallback((e) => {
-    console.log(e.target.value);
+    if (e.target.value === "certain") {
+      setCertain(true);
+    } else {
+      setCertain(false);
+    }
   }, []);
 
   const onChangeChannelTitle = useCallback((e) => {
@@ -25,12 +39,15 @@ const CreateChannelModal = (props) => {
     setChannelUsers(e.target.value);
   }, []);
 
-  const onSubmitCreateChannel = useCallback(() => {
+  const onSubmitCreateChannel = useCallback((e) => {
     console.log("채널 생성하기", channelTitle);
-    if (!channelTitle) {
-      return;
-    }
-    dispatch(createChannel({ title: channelTitle, userList: channelUsers }));
+    // if (!channelTitle) {
+    //   return;
+    // }
+    const query = 'input[name="member"]:checked';
+    const selectedEls = document.querySelectorAll(query);
+    let channelUsers = [];
+    // dispatch(createChannel({ title: channelTitle, userList: channelUsers }));
   }, []);
 
   return (
@@ -69,40 +86,48 @@ const CreateChannelModal = (props) => {
                 <label style={{ fontWeight: "bold" }}>사용자 추가</label>
                 <FieldSetWrapper>
                   <div>
-                    <span style={{ marginRight: "4px" }}>
+                    <label htmlFor="total">
                       <input
+                        id="total"
                         type="radio"
                         name="member"
                         value="total"
                         onChange={onChangeInput}
-                        checked
                       />
-                    </span>
-                    <span>
-                      <b>워크스페이스</b>의 모든 멤버 추가
-                    </span>
+                      &nbsp;<b>워크스페이스</b>의 모든 멤버 추가
+                    </label>
                   </div>
                   <div>
-                    <span style={{ marginRight: "4px" }}>
+                    <label htmlFor="certain">
                       <input
+                        id="certain"
                         type="radio"
                         name="member"
                         value="certain"
                         onChange={onChangeInput}
                       />
-                    </span>
-                    <span>특정 사용자 추가</span>
+                      &nbsp;특정 사용자 추가
+                    </label>
                   </div>
-                  <div style={{ marginLeft: "20px" }}>
-                    <div>
-                      <input type="checkbox" id="scales" name="member"></input>
-                      <label htmlFor="scales">동환</label>
+                  {certain && (
+                    <div style={{ marginLeft: "20px" }}>
+                      {userList.map((user) => {
+                        return (
+                          <div>
+                            <label htmlFor={user.id}>
+                              <input
+                                type="checkbox"
+                                id={user.id}
+                                name="member"
+                                value={user.id}
+                              ></input>
+                              {user.nickname}
+                            </label>
+                          </div>
+                        );
+                      })}
                     </div>
-                    <div>
-                      <input type="checkbox" id="scales" name="member"></input>
-                      <label htmlFor="scales">민영</label>
-                    </div>
-                  </div>
+                  )}
                 </FieldSetWrapper>
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>

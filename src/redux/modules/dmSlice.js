@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDmUsers, createDM, getOneDM } from "../async/channel";
+import { getDmUsers, createDM, getOneDM } from "../async/dm";
 
 const initialState = {
   dmList: null,

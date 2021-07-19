@@ -35,7 +35,7 @@ const channelSlice = createSlice({
       .addCase(getOneChannel.fulfilled, (state, action) => {
         state.currentChannel = action.payload;
       })
-      .addCase(getOneChannel.fulfilled, (state, action) => {
+      .addCase(exitChannel.fulfilled, (state, action) => {
         state.currentChannel = null;
       })
       .addMatcher(
