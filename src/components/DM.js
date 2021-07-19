@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 import DMList from "./DMList";
 
-const DM = ({ dm }) => {
+const DM = ({ dm, isOnline }) => {
   return (
     <NavLinkWrapper
       key={DMList.title}

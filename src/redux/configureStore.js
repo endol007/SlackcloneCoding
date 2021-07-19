@@ -5,11 +5,15 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import userSlice from "./modules/userSlice";
+import channelSlice from "./modules/channelSlice";
+import dmSlice from "./modules/dmSlice";
 
 export const history = createBrowserHistory();
 
 const reducer = combineReducers({
   user: userSlice.reducer,
+  channel: channelSlice.reducer,
+  dm: dmSlice.reducer,
   router: connectRouter(history),
 });
 
