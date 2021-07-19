@@ -12,7 +12,13 @@ const initialState = {
   channelList: null,
   currentChannel: null,
   currentChannelUsers: null,
-  sendMsg: [],
+  sendMsg: [
+    {
+      channelsId: 1,
+      chat: "채널 테스트",
+      createdAt: "오후 3:16",
+    },
+  ],
   isLoading: false,
   isDone: false,
   isError: false,
