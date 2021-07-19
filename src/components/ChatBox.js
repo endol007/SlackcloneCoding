@@ -1,8 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { getOneDM, sendDM } from "../redux/async/dm";
-import socket from "socket.io-client/lib/socket";
 
 const ChatBox = (props) => {
   return (

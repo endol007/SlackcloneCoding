@@ -29,13 +29,10 @@ const dmSlice = createSlice({
         state.currentDM = null;
       })
       .addCase(getAllDM.fulfilled, (state, action) => {
-          console.log()
         state.currentDM = action.payload;
       })
       .addCase(sendDM.fulfilled, (state, action) => {
-          console.log(action.payload);
-         state.sendDM.unshift(action.payload);
-         
+        state.sendDM.unshift(action.payload);
       })
       .addMatcher(
         (action) => {
