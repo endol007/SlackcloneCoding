@@ -1,52 +1,51 @@
 import React, { useState, useCallback, useEffect } from "react";
-
 import { ArrowDropDown, ArrowDropUp } from "@styled-icons/material-outlined";
 import { CollapseButton } from "./ChannelList";
-
 import DM from "./DM";
+import { useSelector, useDispatch } from "react-redux";
+import { getDmUsers } from "../redux/async/dm";
 
 const DMList = (props) => {
-  const dmData = [
-    {
-      id: 1,
-      user: {
-        id: 1,
-        nickname: "동우",
-      },
-      otherUser: {
-        id: 1,
-        nickname: "동우",
-      },
-    },
-    {
-      id: 2,
-      user: {
-        id: 1,
-        nickname: "동우",
-      },
-      otherUser: {
-        id: 2,
-        nickname: "민영",
-      },
-    },
-    {
-      id: 3,
-      user: {
-        id: 1,
-        nickname: "동우",
-      },
-      otherUser: {
-        id: 3,
-        nickname: "동환",
-      },
-    },
-  ];
-
-  const [onlineList, setOnlineList] = useState([]);
+  const dispatch = useDispatch();
   const [collapse, setCollapse] = useState(true);
-
+  const { dmList } = useSelector((state) => state.dm);
+  // const dmData = [
+  //   {
+  //     id: 1,
+  //     user: {
+  //       id: 1,
+  //       nickname: "동우",
+  //     },
+  //     otherUser: {
+  //       id: 1,
+  //       nickname: "동우",
+  //     },
+  //   },
+  //   {
+  //     id: 2,
+  //     user: {
+  //       id: 1,
+  //       nickname: "동우",
+  //     },
+  //     otherUser: {
+  //       id: 2,
+  //       nickname: "민영",
+  //     },
+  //   },
+  //   {
+  //     id: 3,
+  //     user: {
+  //       id: 1,
+  //       nickname: "동우",
+  //     },
+  //     otherUser: {
+  //       id: 3,
+  //       nickname: "동환",
+  //     },
+  //   },
+  // ];
   useEffect(() => {
-    setOnlineList([]);
+    dispatch(getDmUsers());
   }, []);
 
   const toggleCollapse = useCallback(() => {
@@ -66,9 +65,8 @@ const DMList = (props) => {
       </h2>
       <div>
         {collapse &&
-          dmData?.map((dm) => {
-            const isOnline = onlineList.includes(dm.id);
-            return <DM key={dm.id} dm={dm} isOnline={isOnline} />;
+          dmList?.map((dm) => {
+            return <DM key={dm.id} dm={dm} />;
           })}
       </div>
     </>

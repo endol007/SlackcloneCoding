@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import gravatar from "gravatar";
 
-const ChatList = (props) => {
+const ChatList = ({ chatData }) => {
   const userData = {
     email: "seanstainability@gmail.com",
     nickname: "sean",

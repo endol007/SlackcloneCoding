@@ -6,27 +6,37 @@ import Channel from "./Channel";
 import CreateChannelModal from "./CreateChannelModal";
 import useSocket from "../useSocket";
 import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { getChannels } from "../redux/async/channel";
 
 const ChannelList = (props) => {
-  const channelData = [
-    {
-      id: 1,
-      title: "랜덤",
-    },
-    {
-      id: 2,
-      title: "일반",
-    },
-  ];
+  const dispatch = useDispatch();
   const { channel } = useParams();
   const [socket] = useSocket(channel);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [collapse, setCollapse] = useState(true);
+  const { channelList } = useSelector((state) => state.channel);
+  // const channelData = [
+  //   {
+  //     id: 1,
+  //     title: "랜덤",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "일반",
+  //   },
+  // ];
 
   useEffect(() => {
-    socket?.on("message", onMessage);
+    dispatch(getChannels());
+  }, []);
+
+  useEffect(() => {
+    socket?.on("channel", onMessage);
+    console.log("socket on", socket?.hasListeners("channel"));
     return () => {
-      socket?.off("dm", onMessage);
+      socket?.off("channel", onMessage);
+      console.log("socket off", socket?.hasListeners("channel"));
     };
   }, [socket]);
 
@@ -62,7 +72,7 @@ const ChannelList = (props) => {
       ></CreateChannelModal>
       <div>
         {collapse &&
-          channelData?.map((channel) => {
+          channelList?.map((channel) => {
             return <Channel key={channel.id} channel={channel} />;
           })}
       </div>
