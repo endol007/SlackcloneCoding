@@ -1,21 +1,25 @@
 import React, { useState, useCallback } from "react";
-
 import styled from "styled-components";
 import gravatar from "gravatar";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/modules/userSlice";
 
 const Header = (props) => {
-  const userData = {
-    email: "seanstainability@gmail.com",
-    nickname: "sean",
-  };
-
+  const dispatch = useDispatch();
   const [showProfile, setShowProfile] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
+  // const userData = {
+  //   email: "seanstainability@gmail.com",
+  //   nickname: "sean",
+  // };
 
   const onClickProfile = useCallback(() => {
     setShowProfile((prev) => !prev);
   }, []);
 
-  const onLogOut = useCallback(() => {}, []);
+  const onLogOut = useCallback(() => {
+    dispatch(logout());
+  }, []);
 
   return (
     <>
@@ -23,22 +27,22 @@ const Header = (props) => {
         <RightMenu>
           <span onClick={onClickProfile}>
             <ProfileImg
-              src={gravatar.url(userData.email, { s: "28px", d: "retro" })}
-              alt={userData.nickname}
+              src={gravatar.url(currentUser.email, { s: "28px", d: "retro" })}
+              alt={currentUser.nickname}
             />
           </span>
           {showProfile && (
             <ProfileModal>
               <div>
                 <img
-                  src={gravatar.url(userData.email, {
+                  src={gravatar.url(currentUser.email, {
                     s: "28px",
                     d: "retro",
                   })}
-                  alt={userData.nickname}
+                  alt={currentUser.nickname}
                 />
                 <div>
-                  <span id="profile-name">{userData.nickname}</span>
+                  <span id="profile-name">{currentUser.nickname}</span>
                   <span id="profile-active">Active</span>
                 </div>
               </div>

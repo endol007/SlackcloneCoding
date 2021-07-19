@@ -4,37 +4,38 @@ import gravatar from "gravatar";
 import { useSelector } from "react-redux";
 
 const ChatList = (props) => {
-  const dm_list = useSelector(state => state.dm.sendDM);
+  const dm_list = useSelector((state) => state.dm.sendDM);
   const userData = {
     email: "seanstainability@gmail.com",
     nickname: "sean",
   };
 
-
   return (
     <React.Fragment>
       <ChatListWrap>
-      {dm_list && dm_list?.map((p, idx) => {
-        return (
-          <ChatListBox>
-            <ChatListBoxInfo>
-              <ChatListUserImageWrap>
-                <UserImage
-                  src={gravatar.url(userData.email, { s: "40px", d: "retro" })}
-                  alt={userData.nickname}
-                ></UserImage>
-              </ChatListUserImageWrap>
-              <ChatListUserInfo>
-                <text>{p.nickname}</text> <span>오후 3:16</span>
-                <br />
-                <div>
-                  {p.message}
-                </div>
-              </ChatListUserInfo>
-            </ChatListBoxInfo>
-          </ChatListBox>
-        )
-      })}
+        {dm_list &&
+          dm_list?.map((p, idx) => {
+            return (
+              <ChatListBox>
+                <ChatListBoxInfo>
+                  <ChatListUserImageWrap>
+                    <UserImage
+                      src={gravatar.url(userData.email, {
+                        s: "40px",
+                        d: "retro",
+                      })}
+                      alt={userData.nickname}
+                    ></UserImage>
+                  </ChatListUserImageWrap>
+                  <ChatListUserInfo>
+                    <text>{p.nickname}</text> <span>오후 3:16</span>
+                    <br />
+                    <div>{p.message}</div>
+                  </ChatListUserInfo>
+                </ChatListBoxInfo>
+              </ChatListBox>
+            );
+          })}
       </ChatListWrap>
     </React.Fragment>
   );

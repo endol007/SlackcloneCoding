@@ -1,8 +1,6 @@
 import React from "react";
-
 import styled from "styled-components";
 import Header from "../components/Header";
-
 import { Route, Switch } from "react-router-dom";
 import ChannelList from "../components/ChannelList";
 import DMList from "../components/DMList";
@@ -25,7 +23,7 @@ const Workspace = (props) => {
         <ChatsWrapper>
           <Switch>
             <Route path="/workspace/channel/:channel" component={Channels} />
-            <Route path="/workspace/chat/:id" component={Chats} />
+            <Route path="/workspace/chat/:chat" component={Chats} />
           </Switch>
         </ChatsWrapper>
       </WorkspaceWrapper>
