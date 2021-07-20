@@ -1,13 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-//채널 조회
+const headers = {
+  Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+};
+
 export const getChannels = createAsyncThunk(
   "channel/getChannels",
   async (data, thunkAPI) => {
-    const response = await axios.get("/channels");
-    console.log("response", response.data.result);
-    return response.data.result;
+    const response = await axios.get("/channels", { headers: headers });
+    console.log("response", response.data);
+    return response.data;
   }
 );
 
@@ -20,8 +23,10 @@ export const createChannel = createAsyncThunk(
       userList: data.userList,
       userId: data.userId,
     };
-    const response = await axios.post("/channels", createdData);
-    console.log("response", response.data.message);
+    const response = await axios.post("/channels", createdData, {
+      headers: headers,
+    });
+    console.log("response", response.data);
     return createdData;
   }
 );
@@ -30,38 +35,31 @@ export const createChannel = createAsyncThunk(
 export const getOneChannel = createAsyncThunk(
   "channel/getOneChannel",
   async (data, thunkAPI) => {
-    const response = await axios.get(`/channels/${data.channelId}`);
-    console.log("response", response.data.result);
-    return response.data.result;
+    const response = await axios.get(`/channels/${data.channelId}`, {
+      headers: headers,
+    });
+    console.log("response", response.data);
+    return response.data;
   }
 );
 
 export const getOneChannelUsers = createAsyncThunk(
   "channel/getOneChannelUsers",
   async (data, thunkAPI) => {
-    const response = await axios.get(`/channels/${data.channelId}/user`);
+    const response = await axios.get(`/channels/${data.channelId}/user`, {
+      headers: headers,
+    });
     console.log("response", response.data.result);
     return response.data.result;
-  }
-);
-
-export const sendMessage = createAsyncThunk(
-  "channel/sendMessage",
-  async (data, thunkAPI) => {
-    const chatData = {
-      userId: data.userId,
-      chat: data.message,
-    };
-    console.log("chatData", chatData);
-    // const response = await axios.post(`/channels/${data.channelId}`, chatData);
-    return chatData;
   }
 );
 
 export const exitChannel = createAsyncThunk(
   "channel/exitChannel",
   async (data, thunkAPI) => {
-    const response = await axios.delete(`/channels/${data.channelId}`);
+    const response = await axios.delete(`/channels/${data.channelId}`, {
+      headers: headers,
+    });
     console.log("response", response.data);
     return response.data;
   }
@@ -77,7 +75,7 @@ export const sendMessageChannel = createAsyncThunk(
       channelId: data.channelId,
       userId: data.userId,
     };
-    //const response = await axios.post(`/chats/1`, chats);  ///chats/${dmsId}
+    const response = await axios.post(`/comments`, chats, { headers: headers }); ///chats/${dmsId}
     return chats;
   }
 );
