@@ -9,34 +9,24 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getChannels } from "../redux/async/channel";
 
-const ChannelList = (props) => {
+const ChannelList = ({ currentUser }) => {
   const dispatch = useDispatch();
   const { channel } = useParams();
   const [socket] = useSocket(channel);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [collapse, setCollapse] = useState(true);
   const { channelList } = useSelector((state) => state.channel);
-  // const channelList = [
-  //   {
-  //     id: 1,
-  //     title: "랜덤",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "일반",
-  //   },
-  // ];
 
   useEffect(() => {
-    dispatch(getChannels());
-  }, []);
+    if (currentUser) {
+      dispatch(getChannels({ userId: currentUser.id }));
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     socket?.on("channel", onMessage);
-    console.log("socket on", socket?.hasListeners("channel"));
     return () => {
       socket?.off("channel", onMessage);
-      console.log("socket off", socket?.hasListeners("channel"));
     };
   }, [socket]);
 

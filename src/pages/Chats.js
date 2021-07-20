@@ -1,34 +1,29 @@
 import React, { useEffect, useCallback, useState } from "react";
-import styled from "styled-components";
-import { sendDM, getAllDM } from "../redux/async/dm";
-import ChatBox from "../components/ChatBox";
-import ChatList from "../components/ChatList";
-import ChatHeader from "../components/ChatHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
+import styled from "styled-components";
+import ChatHeader from "../components/ChatHeader";
+import ChatBox from "../components/ChatBox";
+import ChatList from "../components/ChatList";
 import useSocket from "../useSocket";
+import { getUser } from "../redux/async/user";
+import { sendDM, getAllDM } from "../redux/async/dm";
 
 const Chats = (props) => {
   const dispatch = useDispatch();
-  const { chats } = useParams();
-  const [socket] = useSocket(chats);
-  // const { currentUser } = useSelector((state) => state.user);
-  // const { currentDM } = useSelector((state) => state.dm);
-  const dm_list = useSelector((state) => state.dm.sendDM);
-  const placeholder = `#  에게 메시지 보내기`;
-  const currentUser = {
-    id: 1,
-    nickname: "동우",
-  };
-  const currentDM = {
-    id: 3,
-    title: "동환",
-  };
+  const { dmsId, otherUserId } = useParams();
+  const [socket] = useSocket(dmsId);
   const [chat, setChat] = useState("");
+  const { currentUser } = useSelector((state) => state.user);
+  const { currentDM: currentChat } = useSelector((state) => state.dm);
+  const dm_list = useSelector((state) => state.dm.sendDM);
+  const placeholder = `# 에게 메시지 보내기`;
+  alert(dmsId, otherUserId);
 
   useEffect(() => {
-    dispatch(getAllDM({ dmsId: chats, userId: currentDM.id }));
-  }, [chats]);
+    dispatch(getUser());
+    dispatch(getAllDM({ dmsId: dmsId, userId: otherUserId }));
+  }, [dmsId, otherUserId]);
 
   useEffect(() => {
     socket?.on("dm", onDM);
@@ -47,7 +42,7 @@ const Chats = (props) => {
 
   const onSubmitForm = () => {
     const dmData = {
-      dmsId: chats,
+      dmsId: dmsId,
       userId: currentUser.id,
       chat: chat,
     };
@@ -57,13 +52,13 @@ const Chats = (props) => {
 
   return (
     <React.Fragment>
-      <ChatHeader current={currentDM} currentUsers={currentUser}></ChatHeader>
+      <ChatHeader current={currentChat} currentUsers={currentUser}></ChatHeader>
       <ChatsWrap width="100%" display="flex">
         <ChatList chatData={dm_list}></ChatList>
         <ChatBox
-          onSubmitForm={onSubmitForm}
           chat={chat}
           onChangeChat={onChangeChat}
+          onSubmitForm={onSubmitForm}
           placeholder={placeholder}
         ></ChatBox>
       </ChatsWrap>
@@ -72,7 +67,7 @@ const Chats = (props) => {
 };
 const ChatsWrap = styled.div`
   width: 100%;
-  height: calc(100% -38px);
+  height: calc(100% - 38px);
   display: flex;
   flex-direction: column;
 `;

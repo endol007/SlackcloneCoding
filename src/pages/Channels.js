@@ -19,13 +19,11 @@ const Channels = (props) => {
   const { channelId } = useParams();
   const { channelList } = useSelector((state) => state.channel);
   const [socket] = useSocket(channelId);
-  const { currentUser } = useSelector((state) => state.user);
+  const currentUser = useSelector((state) => state.user.currentUser);
   const { currentChannel } = useSelector((state) => state.channel);
   const { sendMsg } = useSelector((state) => state.channel);
   const [chat, setChat] = useState();
-
   const placeholder = `# ${channelId}에게 메시지 보내기`;
-
   const currentChannelUsers = [
     {
       id: 1,
@@ -47,7 +45,7 @@ const Channels = (props) => {
   useEffect(() => {
     dispatch(getOneChannel(channelId));
     dispatch(getOneChannelUsers(channelId));
-    dispatch(getChannels(currentUser));
+    dispatch(getChannels());
   }, []);
 
 
@@ -69,14 +67,15 @@ const Channels = (props) => {
   const onChangeChat = useCallback((e) => {
     setChat(e.target.value);
   }, []);
-  const ChannelMsgData = {
-    postId: channelId,
-    title: "",
-    description: chat,
-    img: "",
-    userId: "2", //userId
-  };
+
   const onSubmitForm = () => {
+    const ChannelMsgData = {
+      channelId: channelId,
+      title: "",
+      description: chat,
+      img: "",
+      userId: currentUser.id, //userId
+    };
     dispatch(sendMessageChannel(ChannelMsgData));
   };
 
