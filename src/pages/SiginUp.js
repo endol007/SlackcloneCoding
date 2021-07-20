@@ -1,10 +1,44 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 import Grid from "../elements/Grid";
 import Input from "../elements/Input";
 import Button from "../elements/Button";
 import styled from "styled-components";
+import { history } from "../redux/configureStore";
+import { useDispatch } from "react-redux"
+import { dupCheckUser, signUp } from "../redux/async/user";
 
 const SignUp = (props) => {
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = React.useState();
+  const [nickname, setNickname] = React.useState();
+  const [password, setPassword] = React.useState();
+
+  const email_double_check = () => {
+    if (email === ""){
+      window.alert("아이디를 입력해주세요!");
+      return;
+    }
+    dispatch(dupCheckUser(email));
+  }
+
+  const signupdata = {
+    email: email,
+    nickname: nickname,
+    password: password,
+  }
+
+
+  const signup = () => {
+    if (email === "" || nickname === "" || password === "") {
+      window.alert("아이디, 패스워드, 닉네임을 모두 입력해주세요!");
+      return;
+    }
+    dispatch(signUp(signupdata));
+    history.push("/Workspace");
+  }
+  
+
   return (
     <Grid is_center>
       <Grid>
@@ -45,14 +79,23 @@ const SignUp = (props) => {
       </Grid>
       <Grid width="400px" display="inline-block">
         <Grid width="70%" margin="20px 0 0 0" display="inline-block">
-          <Input text="name@work-email.com" type="email"></Input>
+          <Input text="name@work-email.com"
+           _onChange={(e)=> {
+            setEmail(e.target.value);
+          }} type="email"></Input>
         </Grid>
         <Grid width="30%" margin="20px 0 0 0" display="inline-block">
-          <Button text="중복 확인"></Button>
+          <Button text="중복 확인" _onClick={email_double_check}></Button>
         </Grid>
-        <Input text="nickname" type="text" margin="20px 0 0 0"></Input>
-        <Input text="password" type="password" margin="20px 0 20px 0"></Input>
-        <Button text="이메일로 로그인" _onClick={() => {}}></Button>
+        <Input text="nickname" type="text" 
+          _onChange={(e)=> {
+            setNickname(e.target.value);
+          }} margin="20px 0 0 0"></Input>
+        <Input text="password" type="password" 
+        _onChange={(e)=> {
+            setPassword(e.target.value);
+          }} margin="20px 0 20px 0"></Input>
+        <Button text="이메일로 로그인" _onClick={signup}></Button>
       </Grid>
       <Grid margin="40px 0 0 0">
         <p>이미 slack을 사용하고 있나요?</p>

@@ -11,7 +11,8 @@ const Input = (props) => {
         font_size,
         text,
         type,
-        margin
+        margin,
+        _onChange
     } = props;
     const styles = {
         padding: padding,
@@ -26,7 +27,9 @@ const Input = (props) => {
             <LoginInput 
             placeholder={text}
             type={type}
-            {...styles}>{children}</LoginInput>
+            {...styles}
+            onChange={_onChange}
+            >{children}</LoginInput>
         </React.Fragment>
     )
 }
@@ -40,6 +43,7 @@ Input.defaultProps={
     font_size: false,
     border_radius: false,
     margin: false,
+    _onChange: ()=> {}
 }
 
 const LoginInput = styled.input`
