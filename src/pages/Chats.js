@@ -15,9 +15,22 @@ const Chats = (props) => {
   const [socket] = useSocket(dmsId);
   const [chat, setChat] = useState("");
   const { currentUser } = useSelector((state) => state.user);
-  const { currentDM } = useSelector((state) => state.dm);
+  // const { currentDM } = useSelector((state) => state.dm);
   const dm_list = useSelector((state) => state.dm.sendDM);
-  const placeholder = `# 에게 메시지 보내기`;
+  const currentDM = {
+    id: 1,
+    User: {
+      id: 4,
+      email: "sean@gamil.com",
+      nickname: "sean",
+    },
+    OtherUser: {
+      id: 2,
+      email: "sparta@gmail.com",
+      nickname: "sparta",
+    },
+  };
+  const placeholder = `# ${currentDM?.OtherUser?.nickname}에게 메시지 보내기`;
 
   useEffect(() => {
     dispatch(getUser());
@@ -26,6 +39,7 @@ const Chats = (props) => {
   useEffect(() => {
     if (currentUser) {
       dispatch(getAllDM({ dmsId: dmsId, userId: currentUser.id }));
+      console.log("currentDM", currentDM);
     }
   }, [currentUser]);
 

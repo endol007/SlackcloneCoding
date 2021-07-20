@@ -5,14 +5,14 @@ import { NavLink } from "react-router-dom";
 const DM = ({ dm, currentUser }) => {
   return (
     <NavLinkWrapper
-      key={dm.id}
+      key={dm?.id}
       activeClassName="active"
       activeStyle={{ fontWeight: "bold" }}
-      to={`/workspace/chat/${dm.id}`}
+      to={`/workspace/chat/${dm?.id}`}
     >
       <span>
-        # {dm.otherUserId}{" "}
-        {currentUser.id === dm.otherUserId && <span> (나)</span>}
+        # {dm?.OtherUser.nickname}{" "}
+        {currentUser?.id === dm?.OtherUser.id && <span> (나)</span>}
       </span>
     </NavLinkWrapper>
   );

@@ -10,23 +10,8 @@ const CreateChannelModal = (props) => {
   const { open, close } = props;
   const [certain, setCertain] = useState(false);
   const [channelTitle, setChannelTitle] = useState("");
-  const { dmList: userList } = useSelector((state) => state.dm);
-  // const { currentUser } = useSelector((state) => state.user);
-  const currentUser = {
-    id: 1,
-    email: "seanstainability@gmail.com",
-    nickname: "sean",
-  };
-  // const userList = [
-  //   {
-  //     id: 1,
-  //     nickname: "민영",
-  //   },
-  //   {
-  //     id: 2,
-  //     nickname: "동환",
-  //   },
-  // ];
+  const { dmList } = useSelector((state) => state.dm);
+  const { currentUser } = useSelector((state) => state.user);
 
   const onChangeInput = useCallback((e) => {
     if (e.target.value === "certain") {
@@ -45,7 +30,7 @@ const CreateChannelModal = (props) => {
     let member_length = document.getElementsByName("member").length;
     let membersChecked = [];
     if (document.getElementsByName("case")[0].value === "total") {
-      userList.forEach((user) => {
+      dmList.forEach((user) => {
         membersChecked.push(user.id);
       });
     } else {
@@ -59,19 +44,19 @@ const CreateChannelModal = (props) => {
     return membersChecked;
   };
 
-  const onSkip = () => {
-    if (channelTitle.trim() === "") {
-      alert("채널명은 필수 입력사항입니다.");
-      return;
-    }
-    dispatch(
-      createChannel({
-        title: channelTitle,
-        userList: [],
-        userId: currentUser.id,
-      })
-    );
-  };
+  // const onSkip = () => {
+  //   if (channelTitle.trim() === "") {
+  //     alert("채널명은 필수 입력사항입니다.");
+  //     return;
+  //   }
+  //   dispatch(
+  //     createChannel({
+  //       title: channelTitle,
+  //       userList: [],
+  //       userId: currentUser.id,
+  //     })
+  //   );
+  // };
 
   const onSubmitCreateChannel = (e) => {
     if (channelTitle.trim() === "") {
@@ -152,7 +137,7 @@ const CreateChannelModal = (props) => {
                   </div>
                   {certain && (
                     <div style={{ marginLeft: "20px" }}>
-                      {userList?.map((user) => {
+                      {dmList?.map((user) => {
                         return (
                           <div>
                             <label htmlFor={user.id}>
@@ -172,7 +157,7 @@ const CreateChannelModal = (props) => {
                 </FieldSetWrapper>
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <ButtonWrapper
+                {/* <ButtonWrapper
                   style={{
                     backgroundColor: "transparent",
                     border: "1px solid #000",
@@ -182,7 +167,7 @@ const CreateChannelModal = (props) => {
                   onClick={onSkip}
                 >
                   지금은 건너뛰기
-                </ButtonWrapper>
+                </ButtonWrapper> */}
                 <ButtonWrapper onClick={onSubmitCreateChannel}>
                   생성
                 </ButtonWrapper>

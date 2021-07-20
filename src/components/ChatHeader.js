@@ -4,6 +4,19 @@ import styled from "styled-components";
 import gravatar from "gravatar";
 
 const ChatHeader = ({ current, currentUsers }) => {
+  // const currentDM = { // current
+  //   id: 1,
+  //   User: {
+  //     id: 4,
+  //     email: "sean@gamil.com",
+  //     nickname: "sean",
+  //   },
+  //   OtherUser: {
+  //     id: 2,
+  //     email: "sparta@gmail.com",
+  //     nickname: "sparta",
+  //   },
+  // };
   const [modalOpen, setModalOpen] = React.useState(false);
   const openModal = () => {
     setModalOpen(true);
@@ -14,7 +27,7 @@ const ChatHeader = ({ current, currentUsers }) => {
   return (
     <React.Fragment>
       <ChatHeaderBox>
-        <ChatHeaderTextbox>{current?.otherUserId}</ChatHeaderTextbox>
+        <ChatHeaderTextbox>{current?.OtherUser.nickname}</ChatHeaderTextbox>
         <Wrap>
           <ModalBtn onClick={openModal}>
             <I
@@ -26,6 +39,8 @@ const ChatHeader = ({ current, currentUsers }) => {
           <ChannelInfoModal
             open={modalOpen}
             close={closeModal}
+            header={current?.OtherUser.nickname}
+            currentId={current?.id}
           ></ChannelInfoModal>
         </Wrap>
       </ChatHeaderBox>

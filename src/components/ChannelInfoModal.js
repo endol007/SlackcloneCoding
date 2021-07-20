@@ -1,119 +1,91 @@
-import React, {useState, useCallback} from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import "./modal.css";
+import gravatar from "gravatar";
+import { getOneChannelUsers } from "../redux/async/channel";
 
 const ChannelInfoModal = (props) => {
-    const {open, close, header} = props;
-    const [certain, setCertain] = useState(false);
+  const dispatch = useDispatch();
+  const { open, close, header, currentId } = props;
+  //   const { currentChannelUsers } = useSelector((state) => state.channel);
+  const currentChannelUsers = [
+    {
+      id: 4,
+      email: "sean@gamil.com",
+      nickname: "sean",
+    },
+    {
+      id: 2,
+      email: "sparta@gmail.com",
+      nickname: "sparta",
+    },
+    {
+      id: 3,
+      email: "kms@gmail.com",
+      nickname: "김첨지",
+    },
+  ];
 
-    const onChangeInput = useCallback((e) => {
-        if (e.target.value === "certain") {
-          setCertain(true);
-        } else {
-          setCertain(false);
-        }
-      }, []);
+  useEffect(() => {
+    dispatch(getOneChannelUsers({ channelId: currentId }));
+  }, []);
 
-    const userList = [
-        {
-          id: 1,
-          nickname: "민영",
-        },
-        {
-          id: 2,
-          nickname: "동환",
-        },
-      ];
-    return(
-        <React.Fragment>
-            <div className={open ? "openModal modal":"modal"}>
-            { open ? (
-                <section>
-                    <header>
-                        #일반
-                        <button className="close" onClick={close}> &times; </button>
-                    </header>
-                    <main>
-                        <UserListWrap>
-                            <UserList>
-                                <UserImg></UserImg>
-                                <UserNickname>사용자ID</UserNickname>
-                            </UserList>
-                        </UserListWrap>
-                        <FieldSetWrapper>
-                            <div>
-                                <label htmlFor="certain">
-                                <input
-                                    id="certain"
-                                    type="radio"
-                                    name="member"
-                                    value="certain"
-                                    onChange={onChangeInput}
-                                />
-                                &nbsp;특정 사용자 추가
-                                </label>
-                            </div>
-                            {certain && (
-                                <div style={{ marginLeft: "20px" }}>
-                                {userList.map((user) => {
-                                    return (
-                                    <div>
-                                        <label htmlFor={user.id}>
-                                        <input
-                                            type="checkbox"
-                                            id={user.id}
-                                            name="member"
-                                            value={user.id}
-                                        ></input>
-                                        {user.nickname}
-                                        </label>
-                                    </div>
-                                    );
-                                })}
-                                </div>
-                            )}
-                            </FieldSetWrapper>
-
-                        {props.children}
-                    </main>
-                </section>
-            ) : null
-
-            }
-            </div>
-        </React.Fragment>
-    )
-}
+  return (
+    <React.Fragment>
+      <div className={open ? "openModal modal" : "modal"}>
+        {open ? (
+          <section>
+            <header>
+              # {header}
+              <button className="close" onClick={close}>
+                {" "}
+                &times;{" "}
+              </button>
+            </header>
+            <main>
+              <UserListWrap>
+                {currentChannelUsers?.map((user) => {
+                  return (
+                    <UserList>
+                      <I
+                        src={gravatar.url(user?.email, {
+                          s: "28px",
+                          d: "retro",
+                        })}
+                        alt={user?.nickname}
+                      ></I>
+                      <UserNickname>{user?.nickname}</UserNickname>
+                    </UserList>
+                  );
+                })}
+              </UserListWrap>
+              {props.children}
+            </main>
+          </section>
+        ) : null}
+      </div>
+    </React.Fragment>
+  );
+};
 const UserListWrap = styled.div`
-    width: 100%;
-    height: 60px;
-    padding: 0 16px;
-    & > div {
-        margin: 10px 0px 10px 16px
-    }
+  width: 80%;
+  padding: 0 16px;
 `;
-const UserList = styled.div`
-    width: 100%;
-    height: 36px;
-    display: flex;
-`;
-const UserImg = styled.div`
-    background-image: url("https://image.flaticon.com/icons/png/512/456/456212.png");
-    background-size: cover;
-    width: 36px;
-    height: 36px;
-    display: inline-block;
-`;
-const UserNickname = styled.div`
-    margin-top: 10px;
-    margin-left: 10px;
 
+const UserList = styled.div`
+  display: flex;
+  align-items: center;
 `;
-const FieldSetWrapper = styled.fieldset`
-  margin-bottom: 12px;
-  border: none;
-  padding: 0;
-  margin: 0 0 20px;
+
+const UserNickname = styled.p`
+  margin-left: 20px;
+`;
+
+const I = styled.img`
+  width: 28px;
+  height: 28px;
+  display: inline-block;
 `;
 
 export default ChannelInfoModal;
