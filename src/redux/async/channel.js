@@ -5,12 +5,13 @@ const headers = {
   Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
 };
 
+//채널 조회
 export const getChannels = createAsyncThunk(
   "channel/getChannels",
   async (data, thunkAPI) => {
     const response = await axios.get("/channels", { headers: headers });
-    console.log("response", response.data);
-    return response.data;
+    console.log("response", response.data.result);
+    return response.data.result;
   }
 );
 
@@ -35,11 +36,12 @@ export const createChannel = createAsyncThunk(
 export const getOneChannel = createAsyncThunk(
   "channel/getOneChannel",
   async (data, thunkAPI) => {
+    console.log(data.channelId);
     const response = await axios.get(`/channels/${data.channelId}`, {
       headers: headers,
     });
-    console.log("response", response.data);
-    return response.data;
+    console.log("response", response.data.result);
+    return response.data.result;
   }
 );
 

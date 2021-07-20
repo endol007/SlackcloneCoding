@@ -1,8 +1,12 @@
 import React, { useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router"
-import { getChannels, getOneChannel, sendMessageChannel } from "../redux/async/channel";
+import { useParams } from "react-router";
+import {
+  getChannels,
+  getOneChannel,
+  sendMessageChannel,
+} from "../redux/async/channel";
 import useSocket from "../useSocket";
 import ChatHeader from "../components/ChatHeader";
 import ChatList from "../components/ChatList";
@@ -13,12 +17,16 @@ const Channels = (props) => {
   const { channel } = useParams();
   const [socket] = useSocket(channel);
   // const { currentUser } = useSelector((state) => state.user);
+  // console.log(currentUser);
   // const { currentChannel, currentChannelUsers } = useSelector(
   //   (state) => state.channel
   // );
-  const [chat, setChat] = useState();
+  const { channelList } = useSelector((state) => state.channel);
   const { sendMsg } = useSelector((state) => state.channel);
+  const [chat, setChat] = useState();
   const placeholder = `# ${channel}에게 메시지 보내기`;
+  const idx = channelList?.findIndex((c) => c.title === channel);
+
   const currentUser = {
     id: 1,
     nickname: "동우",
@@ -43,10 +51,13 @@ const Channels = (props) => {
   ];
   useEffect(() => {
     dispatch(getChannels());
-    dispatch(getOneChannel({ channelId: channel }));
+    // dispatch(getOneChannel({ channelId: channel }));
   }, []);
 
   useEffect(() => {
+    if (channelList && channelList[idx]) {
+      dispatch(getOneChannel({ channelId: channelList[idx] }));
+    }
     socket?.on("message", onMessage);
     return () => {
       socket?.off("message", onMessage);
@@ -65,15 +76,18 @@ const Channels = (props) => {
     description: chat,
     img: "",
     channelId: channel,
-    userId: "1",       //userId
-  }
+    userId: "1", //userId
+  };
   const onSubmitForm = () => {
     dispatch(sendMessageChannel(ChannelMsgData));
-  }
+  };
 
   return (
     <React.Fragment>
-      <ChatHeader current={currentChannel} currentUsers={currentChannelUsers}></ChatHeader>
+      <ChatHeader
+        current={currentChannel}
+        currentUsers={currentChannelUsers}
+      ></ChatHeader>
       <ChannelsWrap width="100%" display="flex">
         <ChatList chatData={sendMsg}></ChatList>
         <ChatBox

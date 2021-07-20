@@ -32,9 +32,11 @@ export const createDM = createAsyncThunk(
 export const getAllDM = createAsyncThunk(
   "channel/getAllDM",
   async (data, thunkAPI) => {
-    const response = await axios.get(`/chats/${data.dmId}`, {
+    const response = await axios.get(`/chats/${data.dmsId}`, {
       headers: headers,
+      userId: data.userId,
     });
+    console.log(response.data.result);
     return response.data.result;
   }
 );

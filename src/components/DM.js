@@ -5,6 +5,13 @@ import { NavLink } from "react-router-dom";
 import DMList from "./DMList";
 
 const DM = ({ dm }) => {
+  // const { currentUser } = useSelector((state) => state.user);
+  const currentUser = {
+    id: 3,
+    email: "dw1234",
+    nickname: "hanghae1234",
+  };
+
   return (
     <NavLinkWrapper
       key={DMList.title}
@@ -13,8 +20,7 @@ const DM = ({ dm }) => {
       to={`/workspace/chat/${dm.id}`}
     >
       <span>
-        # {dm.otherUser.nickname}{" "}
-        {dm.user.id === dm.otherUser.id && <span> (나)</span>}
+        # {dm.nickname} {currentUser.id === dm.id && <span> (나)</span>}
       </span>
     </NavLinkWrapper>
   );

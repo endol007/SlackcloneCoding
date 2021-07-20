@@ -16,6 +16,7 @@ const ChannelList = (props) => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [collapse, setCollapse] = useState(true);
   const { channelList } = useSelector((state) => state.channel);
+
   // const channelList = [
   //   {
   //     id: 1,

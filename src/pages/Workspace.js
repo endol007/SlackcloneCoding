@@ -10,12 +10,12 @@ import Chats from "./Chats";
 const Workspace = (props) => {
   return (
     <>
-      <Header/>
+      <Header />
       <WorkspaceWrapper>
         <ChannelsWrapper>
           <WorkspaceName>항해99</WorkspaceName>
           <MenuScroll>
-            <ChannelList/>
+            <ChannelList />
             <DMList />
           </MenuScroll>
           <div></div>

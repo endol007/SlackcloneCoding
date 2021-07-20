@@ -27,8 +27,8 @@ const Chats = (props) => {
   const [chat, setChat] = useState("");
 
   useEffect(() => {
-    dispatch(getAllDM());
-  }, []);
+    dispatch(getAllDM({ dmsId: chats, userId: currentDM.id }));
+  }, [chats]);
 
   useEffect(() => {
     socket?.on("dm", onDM);
