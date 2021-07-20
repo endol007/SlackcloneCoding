@@ -1,26 +1,19 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import gravatar from "gravatar";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logOut } from "../redux/modules/userSlice";
-import { history } from "../redux/configureStore";
-import { getUser } from "../redux/async/user";
 
-const Header = (props) => {
+const Header = ({ currentUser }) => {
   const dispatch = useDispatch();
   const [showProfile, setShowProfile] = useState(false);
-  // const { currentUser } = useSelector((state) => state.user);
-  const currentUser = {
-    email: "seanstainability@gmail.com",
-    nickname: "sean",
-  };
+
   const onClickProfile = useCallback(() => {
     setShowProfile((prev) => !prev);
   }, []);
 
   const onLogOut = useCallback(() => {
     dispatch(logOut());
-    history.push("/");
   }, []);
 
   return (
@@ -29,22 +22,22 @@ const Header = (props) => {
         <RightMenu>
           <span onClick={onClickProfile}>
             <ProfileImg
-              src={gravatar.url(currentUser.email, { s: "28px", d: "retro" })}
-              alt={currentUser.nickname}
+              src={gravatar.url(currentUser?.email, { s: "28px", d: "retro" })}
+              alt={currentUser?.nickname}
             />
           </span>
           {showProfile && (
             <ProfileModal>
               <div>
                 <img
-                  src={gravatar.url(currentUser.email, {
+                  src={gravatar.url(currentUser?.email, {
                     s: "28px",
                     d: "retro",
                   })}
-                  alt={currentUser.nickname}
+                  alt={currentUser?.nickname}
                 />
                 <div>
-                  <span id="profile-name">{currentUser.nickname}</span>
+                  <span id="profile-name">{currentUser?.nickname}</span>
                   <span id="profile-active">Active</span>
                 </div>
               </div>

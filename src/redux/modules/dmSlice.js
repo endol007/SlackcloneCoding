@@ -3,13 +3,7 @@ import { getDmUsers, createDM, getAllDM, sendDM } from "../async/dm";
 
 const initialState = {
   dmList: null,
-  sendDM: [
-    {
-      dmsId: 1,
-      chat: "디엠 테스트",
-      createdAt: "오전 12:16",
-    },
-  ],
+  sendDM: null,
   currentDM: null,
   isLoading: false,
   isDone: false,

@@ -23,20 +23,20 @@ const Channels = (props) => {
   const { currentChannel } = useSelector((state) => state.channel);
   const [chat, setChat] = useState();
   const placeholder = `# ${channel}에게 메시지 보내기`;
-  const currentChannelUsers = [
-    {
-      id: 1,
-      nickname: "동우",
-    },
-    {
-      id: 2,
-      nickname: "민영",
-    },
-    {
-      id: 3,
-      nickname: "동환",
-    },
-  ];
+  // const currentChannelUsers = [
+  //   {
+  //     id: 1,
+  //     nickname: "동우",
+  //   },
+  //   {
+  //     id: 2,
+  //     nickname: "민영",
+  //   },
+  //   {
+  //     id: 3,
+  //     nickname: "동환",
+  //   },
+  // ];
   useEffect(() => {
     dispatch(getUser())
   }, []);
@@ -54,9 +54,9 @@ const Channels = (props) => {
     //   dispatch(getOneChannelUsers({ channelId: channelList[idx] }));
     // }
     socket?.on("message", onMessage);
-    return () => {
-      socket?.off("message", onMessage);
-    };
+    // return () => {
+    //   socket?.off("message", onMessage);
+    // };
   }, [socket]);
 
   const onMessage = (data) => {
@@ -84,7 +84,7 @@ const Channels = (props) => {
     <React.Fragment>
       <ChatHeader
         current={currentChannel}
-        currentUsers={currentChannelUsers}
+        currentUsers={currentUser}
       ></ChatHeader>
       <ChannelsWrap width="100%" display="flex">
         <ChatList chatData={currentChannel}></ChatList>

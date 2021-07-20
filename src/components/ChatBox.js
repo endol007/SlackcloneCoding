@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-const ChatBox = (props) => {
+const ChatBox = ({ chat, onChangeChat, placeholder, onSubmitForm }) => {
   return (
     <React.Fragment>
       <ChatBoxWrap>
         <InputBox>
           <InputText
-            onChange={props.onChangeChat}
-            value={props.chat}
-            placeholder={props.placeholder}
+            onChange={onChangeChat}
+            value={chat}
+            placeholder={placeholder}
           ></InputText>
           <IconBox>
             <IconBoxItem>
@@ -16,7 +16,7 @@ const ChatBox = (props) => {
             </IconBoxItem>
             <IconBoxItem></IconBoxItem>
             <IconBoxItem>
-              <SendButton onClick={props.onSubmitForm}>
+              <SendButton onClick={onSubmitForm}>
                 <SendImage src="https://image.flaticon.com/icons/png/512/2391/2391067.png"></SendImage>
               </SendButton>
             </IconBoxItem>
