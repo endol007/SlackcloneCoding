@@ -5,7 +5,7 @@ export const signUp = createAsyncThunk(
   "user/signUp",
   async (data, thunkAPI) => {
     const newUser = {
-      id: data.email,
+      email: data.email,
       password: data.password,
       nickname: data.nickname,
     };
@@ -17,7 +17,7 @@ export const signUp = createAsyncThunk(
 
 export const logIn = createAsyncThunk("user/logIn", async (data, thunkAPI) => {
   const response = await axios.post("/users/login", {
-    id: data.email,
+    email: data.email,
     password: data.password,
   });
   console.log("response", response.data);
