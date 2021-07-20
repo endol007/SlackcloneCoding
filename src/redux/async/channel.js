@@ -9,8 +9,20 @@ const headers = {
 export const getChannels = createAsyncThunk(
   "channel/getChannels",
   async (data, thunkAPI) => {
-    const response = await axios.get("/channels", { headers: headers });
-    console.log("response", response.data.result);
+    // const response = axios({
+    //   url: "/channels",
+    //   method: "post",
+    //   data: {
+    //     userId: data.userId,
+    //   },
+    //   headers: headers,
+    // })
+    const response = await axios.post(
+      "/channels",
+      { userId: data.userId },
+      { headers }
+    );
+    console.log("getChannels", response.data.result);
     return response.data.result;
   }
 );

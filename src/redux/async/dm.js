@@ -8,8 +8,12 @@ const headers = {
 export const getDmUsers = createAsyncThunk(
   "channel/getDmUsers",
   async (data, thunkAPI) => {
-    const response = await axios.get("/channels/users", { headers: headers });
-    console.log("response", response.data.result);
+    const response = await axios.post(
+      "/channels/users",
+      { userId: data.userId },
+      { headers }
+    );
+    console.log("getDmUsers", response.data.result);
     return response.data.result;
   }
 );

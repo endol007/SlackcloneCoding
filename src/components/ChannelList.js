@@ -9,7 +9,7 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getChannels } from "../redux/async/channel";
 
-const ChannelList = (props) => {
+const ChannelList = ({ currentUser }) => {
   const dispatch = useDispatch();
   const { channel } = useParams();
   const [socket] = useSocket(channel);
@@ -17,20 +17,12 @@ const ChannelList = (props) => {
   const [collapse, setCollapse] = useState(true);
   const { channelList } = useSelector((state) => state.channel);
 
-  // const channelList = [
-  //   {
-  //     id: 1,
-  //     title: "랜덤",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "일반",
-  //   },
-  // ];
-
   useEffect(() => {
-    dispatch(getChannels());
-  }, []);
+    if (currentUser) {
+      console.log("getChannels", currentUser.id);
+      dispatch(getChannels({ userId: currentUser.id }));
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     socket?.on("channel", onMessage);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import { Route, Switch } from "react-router-dom";
@@ -6,24 +6,36 @@ import ChannelList from "../components/ChannelList";
 import DMList from "../components/DMList";
 import Channels from "./Channels";
 import Chats from "./Chats";
+import { getUser } from "../redux/async/user";
+import { useDispatch, useSelector } from "react-redux";
 
 const Workspace = (props) => {
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
   return (
     <>
-      <Header />
+      <Header currentUser={currentUser} />
       <WorkspaceWrapper>
         <ChannelsWrapper>
           <WorkspaceName>항해99</WorkspaceName>
           <MenuScroll>
-            <ChannelList />
-            <DMList />
+            <ChannelList currentUser={currentUser} />
+            <DMList currentUser={currentUser} />
           </MenuScroll>
           <div></div>
         </ChannelsWrapper>
         <ChatsWrapper>
           <Switch>
             <Route path="/workspace/channel/:channel" component={Channels} />
-            <Route path="/workspace/chat/:chats" component={Chats} />
+            <Route
+              path="/workspace/chat/:dmsId/:otherUserId"
+              component={Chats}
+            />
           </Switch>
         </ChatsWrapper>
       </WorkspaceWrapper>
