@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import { Route, Switch } from "react-router-dom";
@@ -6,19 +6,25 @@ import ChannelList from "../components/ChannelList";
 import DMList from "../components/DMList";
 import Channels from "./Channels";
 import Chats from "./Chats";
+import {history} from "../redux/configureStore";
 import { getUser } from "../redux/async/user";
 import { useDispatch, useSelector } from "react-redux";
 
 const Workspace = (props) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+  
+ 
 
   useEffect(() => {
     dispatch(getUser());
   }, []);
+  
 
   return (
     <>
+    {sessionStorage.getItem("access_token") ? 
+    (<React.Fragment>
       <Header currentUser={currentUser} />
       <WorkspaceWrapper>
         <ChannelsWrapper>
@@ -119,12 +125,8 @@ const WorkspaceName = styled.button`
 `;
 
 const MenuScroll = styled.div`
-<<<<<<< HEAD
-  height: 90vh;
-=======
   height: calc(100vh - 38px);
   // overflow-y: auto;
->>>>>>> 638446fece34b1f89880212590cd3f07e5118180
 `;
 
 const ChatsWrapper = styled.div`

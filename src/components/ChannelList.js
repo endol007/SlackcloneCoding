@@ -26,10 +26,8 @@ const ChannelList = ({ currentUser }) => {
 
   useEffect(() => {
     socket?.on("channel", onMessage);
-    console.log("socket on", socket?.hasListeners("channel"));
     return () => {
       socket?.off("channel", onMessage);
-      console.log("socket off", socket?.hasListeners("channel"));
     };
   }, [socket]);
 

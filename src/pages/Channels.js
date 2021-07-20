@@ -6,7 +6,9 @@ import {
   getChannels,
   getOneChannel,
   sendMessageChannel,
+  getOneChannelUsers
 } from "../redux/async/channel";
+import {getUser} from "../redux/async/user";
 import useSocket from "../useSocket";
 import ChatHeader from "../components/ChatHeader";
 import ChatList from "../components/ChatList";
@@ -14,27 +16,14 @@ import ChatBox from "../components/ChatBox";
 
 const Channels = (props) => {
   const dispatch = useDispatch();
-  const { channel } = useParams();
-  const [socket] = useSocket(channel);
-  // const { currentUser } = useSelector((state) => state.user);
-  // console.log(currentUser);
-  // const { currentChannel, currentChannelUsers } = useSelector(
-  //   (state) => state.channel
-  // );
+  const { channelId } = useParams();
   const { channelList } = useSelector((state) => state.channel);
+  const [socket] = useSocket(channelId);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const { currentChannel } = useSelector((state) => state.channel);
   const { sendMsg } = useSelector((state) => state.channel);
   const [chat, setChat] = useState();
-  const placeholder = `# ${channel}에게 메시지 보내기`;
-  const idx = channelList?.findIndex((c) => c.title === channel);
-
-  const currentUser = {
-    id: 1,
-    nickname: "동우",
-  };
-  const currentChannel = {
-    id: 1,
-    title: "일반",
-  };
+  const placeholder = `# ${channelId}에게 메시지 보내기`;
   const currentChannelUsers = [
     {
       id: 1,
@@ -50,14 +39,21 @@ const Channels = (props) => {
     },
   ];
   useEffect(() => {
-    dispatch(getChannels());
-    // dispatch(getOneChannel({ channelId: channel }));
+    dispatch(getUser())
   }, []);
 
   useEffect(() => {
-    if (channelList && channelList[idx]) {
-      dispatch(getOneChannel({ channelId: channelList[idx] }));
-    }
+    dispatch(getOneChannel(channelId));
+    dispatch(getOneChannelUsers(channelId));
+    dispatch(getChannels());
+  }, []);
+
+
+  useEffect(() => {
+    // if (channelList && channelList[idx]) {
+    //   dispatch(getOneChannel({ channelId: channelList[idx] }));
+    //   dispatch(getOneChannelUsers({ channelId: channelList[idx] }));
+    // }
     socket?.on("message", onMessage);
     return () => {
       socket?.off("message", onMessage);
@@ -71,14 +67,15 @@ const Channels = (props) => {
   const onChangeChat = useCallback((e) => {
     setChat(e.target.value);
   }, []);
-  const ChannelMsgData = {
-    title: "",
-    description: chat,
-    img: "",
-    channelId: channel,
-    userId: "1", //userId
-  };
+
   const onSubmitForm = () => {
+    const ChannelMsgData = {
+      channelId: channelId,
+      title: "",
+      description: chat,
+      img: "",
+      userId: currentUser.id, //userId
+    };
     dispatch(sendMessageChannel(ChannelMsgData));
   };
 

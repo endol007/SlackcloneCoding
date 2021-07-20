@@ -9,14 +9,6 @@ const headers = {
 export const getChannels = createAsyncThunk(
   "channel/getChannels",
   async (data, thunkAPI) => {
-    // const response = axios({
-    //   url: "/channels",
-    //   method: "post",
-    //   data: {
-    //     userId: data.userId,
-    //   },
-    //   headers: headers,
-    // })
     const response = await axios.post(
       "/channels",
       { userId: data.userId },
@@ -48,7 +40,6 @@ export const createChannel = createAsyncThunk(
 export const getOneChannel = createAsyncThunk(
   "channel/getOneChannel",
   async (data, thunkAPI) => {
-    console.log(data.channelId);
     const response = await axios.get(`/channels/${data.channelId}`, {
       headers: headers,
     });
@@ -89,7 +80,7 @@ export const sendMessageChannel = createAsyncThunk(
       channelId: data.channelId,
       userId: data.userId,
     };
-    const response = await axios.post(`/comments`, chats, { headers: headers }); ///chats/${dmsId}
+    const response = await axios.post(`/comments/11`, chats, { headers: headers }); ///chats/${dmsId}
     return chats;
   }
 );

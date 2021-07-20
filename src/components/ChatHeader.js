@@ -5,7 +5,6 @@ import gravatar from "gravatar";
 
 const ChatHeader = ({ current, currentUsers }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
-
   const openModal = () => {
     setModalOpen(true);
   };

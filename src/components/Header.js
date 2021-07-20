@@ -5,17 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../redux/modules/userSlice";
 import { getUser } from "../redux/async/user";
 
-const Header = (props) => {
+const Header = ({ currentUser }) => {
   const dispatch = useDispatch();
   const [showProfile, setShowProfile] = useState(false);
   // const { currentUser } = useSelector((state) => state.user);
-  const currentUser = {
-    email: "seanstainability@gmail.com",
-    nickname: "sean",
-  };
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
+
   const onClickProfile = useCallback(() => {
     setShowProfile((prev) => !prev);
   }, []);

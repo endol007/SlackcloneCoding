@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Grid from "../elements/Grid";
 import Input from "../elements/Input";
 import Button from "../elements/Button";
@@ -25,6 +25,11 @@ const Login = (props) => {
     dispatch(logIn(loginInput));
     history.push("/Workspace");
   }
+  useEffect(()=> {
+    if(sessionStorage.getItem("access_token")){
+      history.push("/Workspace");
+    }
+  })
 
   return (
     <Grid is_center>
