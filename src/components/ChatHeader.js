@@ -2,14 +2,9 @@ import React from "react";
 import ChannelInfoModal from "./ChannelInfoModal";
 import styled from "styled-components";
 import gravatar from "gravatar";
-import { useSelector } from "react-redux";
 
 const ChatHeader = ({ current, currentUsers }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
-  const currentUser = [{
-    email: "seanstainability@gmail.com",
-    nickname: "sean",
-  }];
 
   const openModal = () => {
     setModalOpen(true);
@@ -17,18 +12,17 @@ const ChatHeader = ({ current, currentUsers }) => {
   const closeModal = () => {
     setModalOpen(false);
   };
-  //{current.title}
   return (
     <React.Fragment>
       <ChatHeaderBox>
-        <ChatHeaderTextbox>#asdsa</ChatHeaderTextbox> 
+        <ChatHeaderTextbox>{current?.otherUserId}</ChatHeaderTextbox>
         <Wrap>
           <ModalBtn onClick={openModal}>
             <I
-              src={gravatar.url(currentUser.email, { s: "28px", d: "retro" })}
-              alt={currentUser.nickname}
+              src={gravatar.url(currentUsers?.email, { s: "28px", d: "retro" })}
+              alt={currentUsers?.nickname}
             ></I>
-            <T>{currentUsers.length}</T>
+            <T>{currentUsers?.length || 1}</T>
           </ModalBtn>
           <ChannelInfoModal
             open={modalOpen}

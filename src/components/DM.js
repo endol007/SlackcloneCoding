@@ -3,13 +3,12 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const DM = ({ dm, currentUser }) => {
-  console.log(dm);
   return (
     <NavLinkWrapper
       key={dm.id}
       activeClassName="active"
       activeStyle={{ fontWeight: "bold" }}
-      to={`/workspace/chat/${dm.id}/${dm.otherUserId}`}
+      to={`/workspace/chat/${dm.id}`}
     >
       <span>
         # {dm.otherUserId}{" "}

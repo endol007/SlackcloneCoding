@@ -25,9 +25,7 @@ export const createDM = createAsyncThunk(
       userId: data.userId,
       otherUserId: data.otherUserId,
     };
-    const response = await axios.post("/chats", createdData, {
-      headers: headers,
-    });
+    const response = await axios.post("/chats", createdData, { headers });
     console.log("response", response.data.result);
     return response.data.result;
   }
@@ -36,11 +34,12 @@ export const createDM = createAsyncThunk(
 export const getAllDM = createAsyncThunk(
   "channel/getAllDM",
   async (data, thunkAPI) => {
-    const response = await axios.get(`/chats/${data.dmsId}`, {
-      headers: headers,
-      userId: data.userId,
-    });
-    console.log(response.data.result);
+    const response = await axios.post(
+      `/chats/${data.dmsId}`,
+      { userId: data.userId },
+      { headers }
+    );
+    // console.log(response.data.result);
     return response.data.result;
   }
 );
@@ -54,7 +53,7 @@ export const sendDM = createAsyncThunk(
     };
     console.log("chatData", chatData);
     const response = await axios.post(`/chats/${data.dmsId}`, chatData, {
-      headers: headers,
+      headers,
     });
     return response.data;
   }

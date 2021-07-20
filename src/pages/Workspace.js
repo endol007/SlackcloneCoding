@@ -32,10 +32,7 @@ const Workspace = (props) => {
         <ChatsWrapper>
           <Switch>
             <Route path="/workspace/channel/:channel" component={Channels} />
-            <Route
-              path="/workspace/chat/:dmsId/:otherUserId"
-              component={Chats}
-            />
+            <Route path="/workspace/chat/:dmsId" component={Chats} />
           </Switch>
         </ChatsWrapper>
       </WorkspaceWrapper>
