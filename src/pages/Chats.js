@@ -48,7 +48,7 @@ const Chats = (props) => {
   const onSubmitForm = () => {
     const dmData = {
       dmsId: chats,
-      userId: "1",
+      userId: currentUser.id,
       chat: chat,
     };
     dispatch(sendDM(dmData));

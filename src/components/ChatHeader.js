@@ -10,7 +10,6 @@ const ChatHeader = ({ current, currentUsers }) => {
     email: "seanstainability@gmail.com",
     nickname: "sean",
   }];
-
   const openModal = () => {
     setModalOpen(true);
   };
@@ -28,7 +27,7 @@ const ChatHeader = ({ current, currentUsers }) => {
               src={gravatar.url(currentUser.email, { s: "28px", d: "retro" })}
               alt={currentUser.nickname}
             ></I>
-            <T>{currentUsers.length}</T>
+            <T>{currentUser.length}</T>
           </ModalBtn>
           <ChannelInfoModal
             open={modalOpen}

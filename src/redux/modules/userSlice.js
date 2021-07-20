@@ -37,9 +37,10 @@ const userSlice = createSlice({
         state.userList= [];
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        state.userList.find(
-          (user) => user.id === parseInt(action.payload.userId)
-        );
+        // state.userList.find(
+        //   (user) => user.id === parseInt(action.payload.userId)
+        // );
+        state.userList.push(action.payload);
       })
       .addCase(dupCheckUser.pending, (state, action) => {
         state.dupCheck = false;
