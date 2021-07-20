@@ -1,10 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const headers = { Authorization: `Bearer ${sessionStorage.getItem("access_token")}`};
+
 export const getDmUsers = createAsyncThunk(
   "channel/getDmUsers",
   async (data, thunkAPI) => {
-    const response = await axios.get("/channels/users");
+    const response = await axios.get("/channels/users", {headers: headers});
     console.log("response", response.data.result);
     return response.data.result;
   }
@@ -17,7 +19,7 @@ export const createDM = createAsyncThunk(
       userId: data.userId,
       otherUserId: data.otherUserId,
     };
-    const response = await axios.post("/chats", createdData);
+    const response = await axios.post("/chats", createdData, {headers: headers});
     console.log("response", response.data.result);
     return response.data.result;
   }
@@ -26,9 +28,9 @@ export const createDM = createAsyncThunk(
 export const getAllDM = createAsyncThunk(
   "channel/getAllDM",
   async (data, thunkAPI) => {
-    const response = await axios.get(`/chats/${data.dmId}`);
+    const response = await axios.get(`/chats/${data.dmId}`, {headers: headers});
     return response.data.result;
-  }
+    }
 );
 
 export const sendDM = createAsyncThunk(
@@ -39,7 +41,7 @@ export const sendDM = createAsyncThunk(
       chat: data.chat,
     };
     console.log("chatData", chatData);
-    // const response = await axios.post(`/chats/${data.dmsId}`, chatData);
-    return chatData;
+    const response = await axios.post(`/chats/${data.dmsId}`, chatData, {headers: headers});
+    return response.data;
   }
 );

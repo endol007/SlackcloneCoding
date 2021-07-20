@@ -34,7 +34,7 @@ const userSlice = createSlice({
         sessionStorage.setItem("access_token", action.payload.result);
       })
       .addCase(getUser.pending, (state, action) => {
-        state.userList= null;
+        state.userList= [];
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.userList.find(

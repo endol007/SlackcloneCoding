@@ -4,9 +4,8 @@ import {
   getChannels,
   getOneChannel,
   getOneChannelUsers,
-  sendMessage,
-  exitChannel,
   sendMessageChannel,
+  exitChannel,
 } from "../async/channel";
 
 const initialState = {
@@ -53,7 +52,7 @@ const channelSlice = createSlice({
       .addCase(getOneChannelUsers.fulfilled, (state, action) => {
         state.currentChannelUsers = action.payload;
       })
-      .addCase(sendMessage.fulfilled, (state, action) => {
+      .addCase(sendMessageChannel.fulfilled, (state, action) => {
         console.log(action.payload);
         state.sendMsg.unshift(action.payload);
       })
