@@ -33,14 +33,11 @@ const userSlice = createSlice({
       .addCase(logIn.fulfilled, (state, action) => {
         sessionStorage.setItem("access_token", action.payload.result);
       })
-      .addCase(getUser.pending, (state, action) => {
-        state.userList= [];
-      })
       .addCase(getUser.fulfilled, (state, action) => {
         // state.userList.find(
         //   (user) => user.id === parseInt(action.payload.userId)
         // );
-        state.userList.push(action.payload);
+        state.currentUser = action.payload;
       })
       .addCase(dupCheckUser.pending, (state, action) => {
         state.dupCheck = false;

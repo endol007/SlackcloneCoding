@@ -8,7 +8,7 @@ const Channel = ({ channel }) => {
       key={channel.title}
       activeClassName="active"
       activeStyle={{ fontWeight: "bold" }}
-      to={`/workspace/channel/${channel.title}`}
+      to={`/workspace/channel/${channel.id}`}
     >
       <span># {channel.title}</span>
     </NavLinkWrapper>

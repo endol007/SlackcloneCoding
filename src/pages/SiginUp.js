@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { history } from "../redux/configureStore";
 import { useDispatch } from "react-redux"
 import { dupCheckUser, signUp } from "../redux/async/user";
+import {emailCheck, pwdReg} from "../checkReg";
 
 const SignUp = (props) => {
   const dispatch = useDispatch();
@@ -19,6 +20,11 @@ const SignUp = (props) => {
       window.alert("아이디를 입력해주세요!");
       return;
     }
+    if(!emailCheck(email)){
+      window.alert("이메일 형식으로 입력해주세요");
+      return;
+    }
+
     dispatch(dupCheckUser(email));
   }
 
@@ -34,6 +40,10 @@ const SignUp = (props) => {
       window.alert("아이디, 패스워드, 닉네임을 모두 입력해주세요!");
       return;
     }
+    if (!pwdReg(password)){
+      window.alert("패스워드를 8자 이상 입력해주세요");
+    }
+
     dispatch(signUp(signupdata));
     history.push("/Workspace");
   }
@@ -95,7 +105,7 @@ const SignUp = (props) => {
         _onChange={(e)=> {
             setPassword(e.target.value);
           }} margin="20px 0 20px 0"></Input>
-        <Button text="이메일로 로그인" _onClick={signup}></Button>
+        <Button text="이메일로 회원가입" _onClick={signup}></Button>
       </Grid>
       <Grid margin="40px 0 0 0">
         <p>이미 slack을 사용하고 있나요?</p>

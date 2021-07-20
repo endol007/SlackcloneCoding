@@ -3,6 +3,7 @@ import styled from "styled-components";
 import gravatar from "gravatar";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../redux/modules/userSlice";
+import { history } from "../redux/configureStore";
 import { getUser } from "../redux/async/user";
 
 const Header = (props) => {
@@ -13,15 +14,13 @@ const Header = (props) => {
     email: "seanstainability@gmail.com",
     nickname: "sean",
   };
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
   const onClickProfile = useCallback(() => {
     setShowProfile((prev) => !prev);
   }, []);
 
   const onLogOut = useCallback(() => {
     dispatch(logOut());
+    history.push("/");
   }, []);
 
   return (

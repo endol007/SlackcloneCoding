@@ -30,7 +30,6 @@ export const getUser = createAsyncThunk(
   "user/getUser",
   async (data, thunkAPI) => {
     const response = await axios.get("/users/me", {headers: headers});
-    console.log("response", response.data);
     return response.data;
   }
 );
@@ -38,7 +37,7 @@ export const getUser = createAsyncThunk(
 export const dupCheckUser = createAsyncThunk(
   "user/dupCheckUser",
   async (data, thunkAPI) => {
-    const response = await axios.post("/users/dupCheck", { id: data.email });
+    const response = await axios.post("/users/dupCheck", { email: data });
     console.log("response", response.data);
     return response.data;
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import { Route, Switch } from "react-router-dom";
@@ -6,16 +6,17 @@ import ChannelList from "../components/ChannelList";
 import DMList from "../components/DMList";
 import Channels from "./Channels";
 import Chats from "./Chats";
+import {useDispatch} from "react-redux";
 
 const Workspace = (props) => {
   return (
     <>
-      <Header/>
+      <Header />
       <WorkspaceWrapper>
         <ChannelsWrapper>
           <WorkspaceName>항해99</WorkspaceName>
           <MenuScroll>
-            <ChannelList/>
+            <ChannelList />
             <DMList />
           </MenuScroll>
           <div></div>
