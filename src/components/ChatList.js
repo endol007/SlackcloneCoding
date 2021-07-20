@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import gravatar from "gravatar";
-import { useSelector } from "react-redux";
+import {getUser} from "../redux/async/user";
+import { useSelector, useDispatch } from "react-redux";
 
 const ChatList = ({ chatData }) => {
   // const { currentUser } = useSelector((state) => state.user);
+
   const currentUser = {
     id: 1,
     email: "seanstainability@gmail.com",
@@ -31,7 +33,7 @@ const ChatList = ({ chatData }) => {
                 <ChatListUserInfo>
                   <text>{p.userId}</text> <span>{chatData.createdAt}</span>
                   <br />
-                  <div>{p.chat}</div>
+                  <div>{p.chat || p.description}</div>
                 </ChatListUserInfo>
               </ChatListBoxInfo>
             </ChatListBox>

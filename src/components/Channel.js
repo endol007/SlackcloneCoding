@@ -5,12 +5,12 @@ import { NavLink } from "react-router-dom";
 const Channel = ({ channel }) => {
   return (
     <NavLinkWrapper
-      key={channel.title}
+      key={channel.id}
       activeClassName="active"
       activeStyle={{ fontWeight: "bold" }}
-      to={`/workspace/channel/${channel.id}`}
+      to={`/workspace/channel/${channel.nickname}`}
     >
-      <span># {channel.title}</span>
+      <span># {channel.nickname}</span>
     </NavLinkWrapper>
   );
 };

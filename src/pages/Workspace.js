@@ -14,7 +14,6 @@ const Workspace = (props) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   
- 
 
   useEffect(() => {
     dispatch(getUser());
@@ -37,7 +36,7 @@ const Workspace = (props) => {
           </ChannelsWrapper>
           <ChatsWrapper>
             <Switch>
-              <Route path="/workspace/channel/:channelId" component={Channels} />
+              <Route path="/workspace/channel/:channel" component={Channels} />
               <Route
                 path="/workspace/chat/:dmsId/:otherUserId"
                 component={Chats}

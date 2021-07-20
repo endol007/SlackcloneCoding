@@ -38,6 +38,7 @@ const userSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.currentUser = action.payload;
+        // state.userList.push(action.payload);
       })
       .addCase(dupCheckUser.pending, (state, action) => {
         state.dupCheck = false;

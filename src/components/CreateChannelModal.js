@@ -11,23 +11,7 @@ const CreateChannelModal = (props) => {
   const [certain, setCertain] = useState(false);
   const [channelTitle, setChannelTitle] = useState("");
   const { dmList: userList } = useSelector((state) => state.dm);
-  // const { currentUser } = useSelector((state) => state.user);
-  const currentUser = {
-    id: 1,
-    email: "seanstainability@gmail.com",
-    nickname: "sean",
-  };
-  // const userList = [
-  //   {
-  //     id: 1,
-  //     nickname: "민영",
-  //   },
-  //   {
-  //     id: 2,
-  //     nickname: "동환",
-  //   },
-  // ];
-
+  const { currentUser } = useSelector((state) => state.user);
   const onChangeInput = useCallback((e) => {
     if (e.target.value === "certain") {
       setCertain(true);
@@ -64,13 +48,13 @@ const CreateChannelModal = (props) => {
       alert("채널명은 필수 입력사항입니다.");
       return;
     }
-    dispatch(
-      createChannel({
-        title: channelTitle,
-        userList: [],
-        userId: currentUser.id,
-      })
-    );
+    // dispatch(
+    //   createChannel({
+    //     title: channelTitle,
+    //     userList: [],
+    //     userId: currentUser.id,
+    //   })
+    // );
   };
 
   const onSubmitCreateChannel = (e) => {
@@ -158,7 +142,7 @@ const CreateChannelModal = (props) => {
                             <label htmlFor={user.id}>
                               <input
                                 type="checkbox"
-                                id={user.id}
+                                id={user.email}
                                 name="member"
                                 value={user.id}
                               ></input>

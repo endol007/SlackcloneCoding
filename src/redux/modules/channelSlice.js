@@ -53,8 +53,7 @@ const channelSlice = createSlice({
         state.currentChannelUsers = action.payload;
       })
       .addCase(sendMessageChannel.fulfilled, (state, action) => {
-        console.log(action.payload);
-        state.sendMsg.unshift(action.payload);
+        state.sendMsg.push(action.payload);
       })
       .addCase(exitChannel.fulfilled, (state, action) => {
         state.currentChannel = null;

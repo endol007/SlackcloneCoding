@@ -16,14 +16,13 @@ import ChatBox from "../components/ChatBox";
 
 const Channels = (props) => {
   const dispatch = useDispatch();
-  const { channelId } = useParams();
+  const { channel } = useParams();
   const { channelList } = useSelector((state) => state.channel);
-  const [socket] = useSocket(channelId);
+  const [socket] = useSocket(channel);
   const currentUser = useSelector((state) => state.user.currentUser);
   const { currentChannel } = useSelector((state) => state.channel);
-  const { sendMsg } = useSelector((state) => state.channel);
   const [chat, setChat] = useState();
-  const placeholder = `# ${channelId}에게 메시지 보내기`;
+  const placeholder = `# ${channel}에게 메시지 보내기`;
   const currentChannelUsers = [
     {
       id: 1,
@@ -43,8 +42,8 @@ const Channels = (props) => {
   }, []);
 
   useEffect(() => {
-    dispatch(getOneChannel(channelId));
-    dispatch(getOneChannelUsers(channelId));
+    dispatch(getOneChannel());
+    dispatch(getOneChannelUsers());
     dispatch(getChannels());
   }, []);
 
@@ -67,11 +66,13 @@ const Channels = (props) => {
   const onChangeChat = useCallback((e) => {
     setChat(e.target.value);
   }, []);
-
   const onSubmitForm = () => {
+    const index = channelList?.findIndex((p) => p.nickname === channel);
+    const channel_id = channelList[index].channelId;
+    const title = channelList[index].nickname;
     const ChannelMsgData = {
-      channelId: channelId,
-      title: "",
+      channelId: channel_id,
+      title: title,
       description: chat,
       img: "",
       userId: currentUser.id, //userId
@@ -86,7 +87,7 @@ const Channels = (props) => {
         currentUsers={currentChannelUsers}
       ></ChatHeader>
       <ChannelsWrap width="100%" display="flex">
-        <ChatList chatData={sendMsg}></ChatList>
+        <ChatList chatData={currentChannel}></ChatList>
         <ChatBox
           onSubmitForm={onSubmitForm}
           chat={chat}
