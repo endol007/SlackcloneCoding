@@ -26,7 +26,7 @@ const dmSlice = createSlice({
       .addCase(createDM.fulfilled, (state, action) => {
         // DM 목록 생성
         state.currentDM = action.payload;
-        window.location.reload();
+        // window.location.reload();
       })
       .addCase(getDMChat.pending, (state, action) => {
         // 채팅 기록

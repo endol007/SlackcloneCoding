@@ -8,7 +8,7 @@ import Workspace from "./pages/Workspace";
 import Login from "./pages/Login";
 import SignUp from "./pages/SiginUp";
 
-axios.defaults.baseURL = "http://3.36.114.73/";
+axios.defaults.baseURL = "http://3.36.114.73";
 axios.defaults.withCredentials = true;
 
 function App(props) {

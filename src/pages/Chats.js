@@ -9,7 +9,7 @@ import useSocket from "../useSocket";
 import { sendDM, getDMChat } from "../redux/async/dm";
 import { createDM } from "../redux/async/dm";
 
-const Chats = () => {
+const Chats = (props) => {
   const dispatch = useDispatch();
   const { dmId } = useParams();
   const [currentDM, setCurrentDM] = useState(null);
@@ -17,14 +17,6 @@ const Chats = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { dmChat } = useSelector((state) => state.dm);
   const [socket, disconnect] = useSocket(dmId);
-
-  // useEffect(() => {
-  //   // dispatch(getDMList({ userId: currentUser.id }));
-  //   if (currentUser) {
-  //     dispatch(createDM({ userId: currentUser.id, otherUserId: dmId }));
-  //   }
-  //   // dispatch(getDMChat({ dmsId: dmId, userId: currentUser.id }));
-  // }, []);
 
   // useEffect(() => {
   //   if (dmList) {

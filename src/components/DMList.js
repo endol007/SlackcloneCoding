@@ -5,6 +5,7 @@ import DM from "./DM";
 import { useSelector } from "react-redux";
 
 const DMList = ({ currentUser }) => {
+  const dispatch = useDispatch();
   const [collapse, setCollapse] = useState(true);
   const { getchannelsUsers } = useSelector((state) => state.channel);
 

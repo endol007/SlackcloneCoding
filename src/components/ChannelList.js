@@ -19,7 +19,6 @@ const ChannelList = ({ currentUser }) => {
 
   useEffect(() => {
     if (currentUser) {
-      // console.log("getChannels", currentUser.id);
       dispatch(getChannels({ userId: currentUser.id }));
     }
   }, [currentUser]);

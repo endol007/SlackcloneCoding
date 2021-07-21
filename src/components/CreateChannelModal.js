@@ -3,16 +3,19 @@ import "./modal.css";
 import styled from "styled-components";
 import Input from "../elements/Input";
 import { useDispatch, useSelector } from "react-redux";
-import { createChannel } from "../redux/async/channel";
+import { createChannel} from "../redux/async/channel";
+import {history} from "../redux/configureStore";
 import { createDM } from "../redux/async/dm";
 
 const CreateChannelModal = (props) => {
   const dispatch = useDispatch();
   const { open, close } = props;
+  
   const [certain, setCertain] = useState(false);
   const [channelTitle, setChannelTitle] = useState("");
   const { getchannelsUsers } = useSelector((state) => state.channel);
   const { currentUser } = useSelector((state) => state.user);
+  
   const onChangeInput = useCallback((e) => {
     if (e.target.value === "certain") {
       setCertain(true);
@@ -142,7 +145,9 @@ const CreateChannelModal = (props) => {
                 </FieldSetWrapper>
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <ButtonWrapper type="button" onClick={onSubmitCreateChannel}>
+                <ButtonWrapper 
+                  type="button"
+                  onClick={onSubmitCreateChannel}>
                   생성
                 </ButtonWrapper>
               </div>

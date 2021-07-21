@@ -53,8 +53,8 @@ export const getOneChannelUsers = createAsyncThunk(
   async (data, thunkAPI) => {
     const channel = thunkAPI.getState().channel.channelList;
     const index = channel.findIndex((p) => p.id == data)
-    const channelID = channel[index].channelId
-    const response = await axios.get(`/channels/${channelID}/users`, {
+    const channelId = channel[index].channelId
+    const response = await axios.get(`/channels/${channelId}/users`, {
       headers,
     });
     return response.data.result;

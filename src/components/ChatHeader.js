@@ -2,8 +2,12 @@ import React from "react";
 import ChannelInfoModal from "./ChannelInfoModal";
 import styled from "styled-components";
 import gravatar from "gravatar";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router";
 
-const ChatHeader = ({ current, currentUsers }) => {
+const ChatHeader = ({ current, currentUsers, _title }) => {
+  const {getOneChannelUsers} = useSelector((state) => state.channel);
+  const {channel} = useParams();
   // const currentDM = { // current
   //   id: 1,
   //   User: {
@@ -28,14 +32,14 @@ const ChatHeader = ({ current, currentUsers }) => {
   return (
     <React.Fragment>
       <ChatHeaderBox>
-        <ChatHeaderTextbox></ChatHeaderTextbox>
+        <ChatHeaderTextbox>{_title}</ChatHeaderTextbox>
         <Wrap>
           <ModalBtn onClick={openModal}>
             <I
               src={gravatar.url(currentUsers?.email, { s: "28px", d: "retro" })}
               alt={currentUsers?.nickname}
             ></I>
-            <T>{currentUsers?.length || 1}</T>
+            <T>{getOneChannelUsers?.length || 1}</T>
           </ModalBtn>
           <ChannelInfoModal
             open={modalOpen}
