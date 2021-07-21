@@ -20,20 +20,15 @@ const CreateChannelModal = (props) => {
     }
   }, []);
 
-  // const onChangeChannelTitle = useCallback((e) => {
-  //   console.log(e.target.value);
-  //   setChannelTitle(e.target.value);
-  // }, []);
-
   const checkedMember = () => {
     let member_length = document.getElementsByName("member").length;
     let membersChecked = [];
-    if (document.getElementsByName("case")[0].value === "total") {
+    if (document.getElementsByName("case")[0].checked === true) {
       getchannelsUsers.forEach((user) => {
         membersChecked.push(user.id);
       });
     } else {
-      for (var i = 0; i < member_length; i++) {
+    for (var i = 0; i < member_length; i++) {
         if (document.getElementsByName("member")[i].checked === true) {
           let target = document.getElementsByName("member")[i].value;
           membersChecked.push(target);
@@ -64,6 +59,7 @@ const CreateChannelModal = (props) => {
       return;
     }
     let channelUsers = checkedMember();
+    window.alert(channelUsers)
     const createData = {
       title: channelTitle,
       userList: channelUsers,
@@ -168,6 +164,7 @@ const CreateChannelModal = (props) => {
                   지금은 건너뛰기
                 </ButtonWrapper> */}
                 <ButtonWrapper 
+                  tpye="button"
                   onClick={onSubmitCreateChannel}>
                   생성
                 </ButtonWrapper>

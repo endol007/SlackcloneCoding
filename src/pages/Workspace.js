@@ -9,6 +9,7 @@ import Chats from "./Chats";
 import { getUser } from "../redux/async/user";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configureStore";
+import {getchannelsUsers} from "../redux/async/channel";
 
 const Workspace = (props) => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Workspace = (props) => {
 
   useEffect(() => {
     dispatch(getUser());
+    dispatch(getchannelsUsers());
   }, []);
 
   return (

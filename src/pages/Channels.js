@@ -31,7 +31,6 @@ const Channels = (props) => {
 
   useEffect(() => {
     dispatch(getOneChannel(channel));
-    dispatch(getchannelsUsers());
     dispatch(getChannels());
   }, []);
   

@@ -57,7 +57,6 @@ export const getOneChannelUsers = createAsyncThunk(
     const response = await axios.get(`/channels/${channelID}/users`, {
       headers,
     });
-    console.log("response", response.data.result);
     return response.data.result;
   }
 );
