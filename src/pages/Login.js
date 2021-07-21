@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "../elements/Grid";
 import Input from "../elements/Input";
 import Button from "../elements/Button";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { logIn } from "../redux/async/user";
+import { history } from "../redux/configureStore";
 
 const Login = (props) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
+  const session = sessionStorage.getItem("access_token");
   const loginInput = {
     email: email,
     password: password,
@@ -23,6 +24,12 @@ const Login = (props) => {
     }
     dispatch(logIn(loginInput));
   };
+
+  useEffect(() => {
+    if (session) {
+      history.push("/workspace");
+    }
+  }, [session]);
 
   return (
     <Grid is_center>
