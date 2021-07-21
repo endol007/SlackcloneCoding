@@ -8,7 +8,6 @@ import ChatList from "../components/ChatList";
 import useSocket from "../useSocket";
 import { getUser } from "../redux/async/user";
 import { sendDM, getAllDM } from "../redux/async/dm";
-import { PlugDisconnected } from "styled-icons/fluentui-system-filled";
 
 const Chats = (props) => {
   const dispatch = useDispatch();

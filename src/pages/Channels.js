@@ -6,9 +6,9 @@ import {
   getChannels,
   getOneChannel,
   sendMessageChannel,
-  getOneChannelUsers
+  getOneChannelUsers,
 } from "../redux/async/channel";
-import {getUser} from "../redux/async/user";
+import { getUser } from "../redux/async/user";
 import useSocket from "../useSocket";
 import ChatHeader from "../components/ChatHeader";
 import ChatList from "../components/ChatList";
@@ -37,8 +37,9 @@ const Channels = (props) => {
   //     nickname: "동환",
   //   },
   // ];
+
   useEffect(() => {
-    dispatch(getUser())
+    dispatch(getUser());
   }, []);
 
   useEffect(() => {
@@ -46,7 +47,6 @@ const Channels = (props) => {
     dispatch(getOneChannelUsers());
     dispatch(getChannels());
   }, []);
-
 
   useEffect(() => {
     // if (channelList && channelList[idx]) {
