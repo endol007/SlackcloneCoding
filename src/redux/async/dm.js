@@ -6,13 +6,17 @@ const headers = {
 };
 
 export const getDmUsers = createAsyncThunk(
+  // 채널 정보
   "channel/getDmUsers",
   async (data, thunkAPI) => {
-    const response = await axios.post(
-      "/channels/users",
-      { userId: data.userId },
-      { headers }
-    );
+    // const response = await axios.post(
+    //   "/channels/users",
+    //   { userId: data.userId },
+    //   { headers }
+    // );
+    const response = await axios.get(`/channels/users`, {
+      headers: headers,
+    });
     console.log("getDmUsers", response.data.result);
     return response.data.result;
   }
@@ -26,12 +30,13 @@ export const createDM = createAsyncThunk(
       otherUserId: data.otherUserId,
     };
     const response = await axios.post("/chats", createdData, { headers });
-    console.log("response", response.data.result);
+    console.log("createDM", response.data.result);
     return response.data.result;
   }
 );
 
 export const getAllDM = createAsyncThunk(
+  // 채팅 내용
   "channel/getAllDM",
   async (data, thunkAPI) => {
     const response = await axios.post(
@@ -39,7 +44,7 @@ export const getAllDM = createAsyncThunk(
       { userId: data.userId },
       { headers }
     );
-    // console.log(response.data.result);
+    console.log("getAllDM", response.data.result);
     return response.data.result;
   }
 );
@@ -52,7 +57,7 @@ export const sendDM = createAsyncThunk(
       chat: data.chat,
     };
     console.log("chatData", chatData);
-    const response = await axios.post(`/chats/${data.dmsId}`, chatData, {
+    const response = await axios.post(`/chats/${data.dmsId}/chat`, chatData, {
       headers,
     });
     return response.data;

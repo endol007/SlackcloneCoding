@@ -3,47 +3,46 @@ import { ArrowDropDown, ArrowDropUp } from "@styled-icons/material-outlined";
 import { CollapseButton } from "./ChannelList";
 import DM from "./DM";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "../redux/async/user";
 import { getDmUsers } from "../redux/async/dm";
 import { useParams } from "react-router-dom";
 import useSocket from "../useSocket";
+import { createDM } from "../redux/async/dm";
 
 const DMList = ({ currentUser }) => {
   const { dmsId } = useParams();
   const dispatch = useDispatch();
   const [collapse, setCollapse] = useState(true);
-  // const { currentUser } = useSelector((state) => state.user);
-  // const { dmList } = useSelector((state) => state.dm);
+  const { dmList } = useSelector((state) => state.dm);
   const [socket] = useSocket(dmsId);
 
-  const dmList = [
-    {
-      id: 1,
-      User: {
-        id: 4,
-        email: "sean@gamil.com",
-        nickname: "sean",
-      },
-      OtherUser: {
-        id: 4,
-        email: "sean@gmail.com",
-        nickname: "sean",
-      },
-    },
-    {
-      id: 2,
-      User: {
-        id: 4,
-        email: "sean@gamil.com",
-        nickname: "sean",
-      },
-      OtherUser: {
-        id: 2,
-        email: "sparta@gmail.com",
-        nickname: "sparta",
-      },
-    },
-  ];
+  // const dmList = [
+  //   {
+  //     id: 1,
+  //     User: {
+  //       id: 4,
+  //       email: "sean@gamil.com",
+  //       nickname: "sean",
+  //     },
+  //     OtherUser: {
+  //       id: 4,
+  //       email: "sean@gmail.com",
+  //       nickname: "sean",
+  //     },
+  //   },
+  //   {
+  //     id: 2,
+  //     User: {
+  //       id: 4,
+  //       email: "sean@gamil.com",
+  //       nickname: "sean",
+  //     },
+  //     OtherUser: {
+  //       id: 2,
+  //       email: "sparta@gmail.com",
+  //       nickname: "sparta",
+  //     },
+  //   },
+  // ];
 
   useEffect(() => {
     if (currentUser) {

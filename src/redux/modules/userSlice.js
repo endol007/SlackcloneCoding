@@ -21,12 +21,12 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      .addCase(signUp.pending, (state, action) => {
-        state.currentUser = null;
-      })
-      .addCase(signUp.fulfilled, (state, action) => {
-        state.currentUser = action.payload;
-      })
+      // .addCase(signUp.pending, (state, action) => {
+      //   state.currentUser = null;
+      // })
+      // .addCase(signUp.fulfilled, (state, action) => {
+      //   state.currentUser = action.payload;
+      // })
       .addCase(logIn.pending, (state, action) => {
         state.userList = null;
       })

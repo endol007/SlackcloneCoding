@@ -3,31 +3,31 @@ import styled from "styled-components";
 import gravatar from "gravatar";
 
 const ChatList = ({ chatData }) => {
-  const dummyChatData = [
-    {
-      User: {
-        id: 4,
-        nickname: "sean",
-        email: "sean@gmail.com",
-      },
-      chat: "안녕",
-      createdAt: "오후 3시 15분",
-    },
-    {
-      User: {
-        id: 2,
-        nickname: "sparta",
-        email: "sparta@gmail.com",
-      },
-      chat: "오랜만이야",
-      createdAt: "오후 3시 16분",
-    },
-  ];
+  // const dummyChatData = [
+  //   {
+  //     User: {
+  //       id: 4,
+  //       nickname: "sean",
+  //       email: "sean@gmail.com",
+  //     },
+  //     chat: "안녕",
+  //     createdAt: "오후 3시 15분",
+  //   },
+  //   {
+  //     User: {
+  //       id: 2,
+  //       nickname: "sparta",
+  //       email: "sparta@gmail.com",
+  //     },
+  //     chat: "오랜만이야",
+  //     createdAt: "오후 3시 16분",
+  //   },
+  // ];
 
   return (
     <React.Fragment>
       <ChatListWrap>
-        {dummyChatData?.map((p, idx) => {
+        {chatData?.map((p, idx) => {
           return (
             <ChatListBox>
               <ChatListBoxInfo>

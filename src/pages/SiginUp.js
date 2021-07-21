@@ -44,7 +44,7 @@ const SignUp = (props) => {
     }
 
     dispatch(signUp(signupdata));
-    history.push("/Workspace");
+    history.push("/");
   };
 
   return (

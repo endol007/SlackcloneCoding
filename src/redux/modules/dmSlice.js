@@ -3,8 +3,8 @@ import { getDmUsers, createDM, getAllDM, sendDM } from "../async/dm";
 
 const initialState = {
   dmList: null,
-  sendDM: null,
-  currentDM: null,
+  // sendDM: null,
+  chatData: null,
   isLoading: false,
   isDone: false,
   isError: false,
@@ -26,13 +26,13 @@ const dmSlice = createSlice({
         state.dmList.push(action.payload);
       })
       .addCase(getAllDM.pending, (state, action) => {
-        state.currentDM = null;
+        state.chatData = null;
       })
       .addCase(getAllDM.fulfilled, (state, action) => {
-        state.currentDM = action.payload;
+        state.chatData = action.payload;
       })
       .addCase(sendDM.fulfilled, (state, action) => {
-        state.sendDM.unshift(action.payload);
+        state.chatData.unshift(action.payload);
       })
       .addMatcher(
         (action) => {
