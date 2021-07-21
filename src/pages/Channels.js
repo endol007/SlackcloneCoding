@@ -7,7 +7,7 @@ import {
   getOneChannel,
   sendMessageChannel,
   getOneChannelUsers,
-  getchannelsUsers
+  getchannelsUsers,
 } from "../redux/async/channel";
 import { getUser } from "../redux/async/user";
 import useSocket from "../useSocket";
@@ -26,15 +26,7 @@ const Channels = (props) => {
   const placeholder = `# ${channel}에게 메시지 보내기`;
 
   useEffect(() => {
-    dispatch(getUser());
-  }, []);
-
-  useEffect(() => {
     dispatch(getOneChannel(channel));
-    dispatch(getChannels());
-  }, []);
-  
-  useEffect(() => {
     dispatch(getOneChannelUsers(channel));
   }, [channel]);
 

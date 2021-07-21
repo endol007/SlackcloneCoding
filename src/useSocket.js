@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 import { useCallback } from "react";
 
-const backUrl = "http://3.36.92.153/";
+const backUrl = "http://3.36.114.73/";
 
 const sockets = {};
 const useSocket = (channel) => {

@@ -40,24 +40,24 @@ const CreateChannelModal = (props) => {
   };
 
   const onSubmitCreateChannel = (e) => {
+    // e.preventDefault();
     if (channelTitle.trim() === "") {
       alert("채널명은 필수 입력사항입니다.");
       return;
     }
     let channelUsers = checkedMember();
-    window.alert(channelUsers);
     const createData = {
       title: channelTitle,
       userList: channelUsers,
       userId: currentUser.id,
     };
-    dispatch(createChannel(createData));
     dispatch(
       createDM({
         userId: currentUser.id,
         otherUserId: channelUsers,
       })
     );
+    dispatch(createChannel(createData));
   };
 
   return (
@@ -142,7 +142,7 @@ const CreateChannelModal = (props) => {
                 </FieldSetWrapper>
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <ButtonWrapper tpye="button" onClick={onSubmitCreateChannel}>
+                <ButtonWrapper type="button" onClick={onSubmitCreateChannel}>
                   생성
                 </ButtonWrapper>
               </div>

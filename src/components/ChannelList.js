@@ -16,6 +16,7 @@ const ChannelList = ({ currentUser }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [collapse, setCollapse] = useState(true);
   const { channelList } = useSelector((state) => state.channel);
+
   useEffect(() => {
     if (currentUser) {
       // console.log("getChannels", currentUser.id);

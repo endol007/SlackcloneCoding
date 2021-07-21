@@ -19,7 +19,7 @@ const Chats = (props) => {
   const [socket, disconnect] = useSocket(dmsId);
 
   useEffect(() => {
-    dispatch(getUser());
+    // dispatch(getUser());
     if (currentUser) {
       dispatch(getDMList({ userId: currentUser.id }));
       dispatch(getDMChat({ dmsId: dmsId, userId: currentUser.id }));
@@ -77,7 +77,7 @@ const Chats = (props) => {
           chat={chat}
           onChangeChat={onChangeChat}
           onSubmitForm={onSubmitChat}
-          placeholder={`# ${currentDM?.OtherUser?.nickname}에게 메시지 보내기`}
+          placeholder={`# ${currentDM?.Dm.OtherUser?.nickname}에게 메시지 보내기`}
         ></ChatBox>
       </ChatsWrap>
     </React.Fragment>
