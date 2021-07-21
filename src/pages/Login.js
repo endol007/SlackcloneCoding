@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Grid from "../elements/Grid";
 import Input from "../elements/Input";
 import Button from "../elements/Button";
 import styled from "styled-components";
-import { history } from "../redux/configureStore"
 import { useDispatch } from "react-redux";
-import {logIn} from "../redux/async/user";
+import { logIn } from "../redux/async/user";
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -15,21 +14,15 @@ const Login = (props) => {
   const loginInput = {
     email: email,
     password: password,
-  }
+  };
 
   const login = () => {
-    if(email === "" || password === ""){
+    if (email === "" || password === "") {
       window.alert("아이디 혹은 패스워드를 입력하세요");
       return;
     }
     dispatch(logIn(loginInput));
-    history.push("/Workspace");
-  }
-  useEffect(()=> {
-    if(sessionStorage.getItem("access_token")){
-      history.push("/Workspace");
-    }
-  })
+  };
 
   return (
     <Grid is_center>
@@ -78,17 +71,17 @@ const Login = (props) => {
           text="name@work-email.com"
           type="email"
           margin="20px 0 0 0"
-          _onChange={(e)=> {
-            setEmail(e.target.value)
+          _onChange={(e) => {
+            setEmail(e.target.value);
           }}
         ></Input>
-        <Input 
-        text="password" 
-        type="password" 
-        margin="20px 0 20px 0"
-        _onChange={(e)=> {
-          setPassword(e.target.value)
-        }}
+        <Input
+          text="password"
+          type="password"
+          margin="20px 0 20px 0"
+          _onChange={(e) => {
+            setPassword(e.target.value);
+          }}
         ></Input>
         <Button text="이메일로 로그인" _onClick={login}></Button>
       </Grid>

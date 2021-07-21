@@ -20,7 +20,7 @@ const Workspace = (props) => {
 
   return (
     <>
-      {sessionStorage.getItem("access_token") ? (
+      {sessionStorage.getItem("access_token") && currentUser ? (
         <React.Fragment>
           <Header currentUser={currentUser} />
           <WorkspaceWrapper>
@@ -38,7 +38,7 @@ const Workspace = (props) => {
                   path="/workspace/channel/:channel"
                   component={Channels}
                 />
-                <Route path="/workspace/chat/:dmsId" component={Chats} />
+                <Route path="/workspace/chat/:dmId" component={Chats} />
               </Switch>
             </ChatsWrapper>
           </WorkspaceWrapper>

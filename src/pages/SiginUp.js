@@ -1,20 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Grid from "../elements/Grid";
 import Input from "../elements/Input";
 import Button from "../elements/Button";
 import styled from "styled-components";
-import { history } from "../redux/configureStore";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { dupCheckUser, signUp } from "../redux/async/user";
 import { emailCheck, pwdReg } from "../checkReg";
 
 const SignUp = (props) => {
   const dispatch = useDispatch();
-
   const [email, setEmail] = React.useState();
   const [nickname, setNickname] = React.useState();
   const [password, setPassword] = React.useState();
-  const { dupCheck } = useSelector((state) => state.user);
 
   const email_double_check = () => {
     if (email === "") {
@@ -42,9 +39,7 @@ const SignUp = (props) => {
     if (!pwdReg(password)) {
       window.alert("패스워드를 8자 이상 입력해주세요");
     }
-
     dispatch(signUp(signupdata));
-    history.push("/");
   };
 
   return (

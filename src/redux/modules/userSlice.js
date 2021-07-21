@@ -7,7 +7,6 @@ const initialState = {
   isLoading: false,
   isDone: false,
   isError: false,
-  dupCheck: false,
 };
 
 const userSlice = createSlice({
@@ -21,38 +20,36 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      // .addCase(signUp.pending, (state, action) => {
-      //   state.currentUser = null;
-      // })
-      // .addCase(signUp.fulfilled, (state, action) => {
-      //   state.currentUser = action.payload;
-      // })
-      .addCase(logIn.pending, (state, action) => {
-        state.userList = null;
-      })
-      .addCase(logIn.fulfilled, (state, action) => {
-        sessionStorage.setItem("access_token", action.payload.result);
-        window.location.href = "/workspace";
-      })
       .addCase(getUser.pending, (state, action) => {
+        // 유저 정보
         state.currentUser = null;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.currentUser = action.payload;
-        // state.userList.push(action.payload);
-      })
-      .addCase(dupCheckUser.pending, (state, action) => {
-        state.dupCheck = false;
       })
       .addCase(dupCheckUser.fulfilled, (state, action) => {
+        // 이메일 중복 체크
         if (action.payload) {
-          state.dupCheck = true;
           alert("사용 가능한 이메일입니다.");
-        } else {
-          state.dupCheck = false;
-          alert("사용할 수 없는 이메일입니다.");
         }
       })
+      .addCase(dupCheckUser.rejected, (state, action) => {
+        alert(action.error.message);
+      })
+      .addCase(signUp.fulfilled, (state, action) => {
+        // 회원 가입
+        window.location.href = "/";
+      })
+      .addCase(logIn.pending, (state, action) => {
+        // 로그인
+        state.userList = null;
+        state.currentUser = null;
+      })
+      .addCase(logIn.fulfilled, (state, action) => {
+        sessionStorage.setItem("access_token", action.payload);
+        window.location.href = "/workspace";
+      })
+      // 공통
       .addMatcher(
         (action) => {
           return action.type.includes("/pending");

@@ -5,23 +5,21 @@ const headers = {
   Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
 };
 
-export const getDmUsers = createAsyncThunk(
-  // 채널 정보
-  "channel/getDmUsers",
+// DM 목록
+export const getDMList = createAsyncThunk(
+  "channel/getDMList",
   async (data, thunkAPI) => {
-    // const response = await axios.post(
-    //   "/channels/users",
-    //   { userId: data.userId },
-    //   { headers }
-    // );
-    const response = await axios.get(`/channels/users`, {
-      headers: headers,
-    });
-    console.log("getDmUsers", response.data.result);
+    const response = await axios.post(
+      "/channels/users",
+      { userId: data.userId },
+      { headers }
+    );
+    console.log("DM 목록", response.data.result);
     return response.data.result;
   }
 );
 
+// DM 목록 생성
 export const createDM = createAsyncThunk(
   "channel/createDM",
   async (data, thunkAPI) => {
@@ -30,25 +28,29 @@ export const createDM = createAsyncThunk(
       otherUserId: data.otherUserId,
     };
     const response = await axios.post("/chats", createdData, { headers });
-    console.log("createDM", response.data.result);
+    console.log("DM 목록 생성", response.data.result);
     return response.data.result;
   }
 );
 
-export const getAllDM = createAsyncThunk(
-  // 채팅 내용
-  "channel/getAllDM",
+// 채팅 기록
+export const getDMChat = createAsyncThunk(
+  "channel/getDMChat",
   async (data, thunkAPI) => {
+    // const response = await axios.get(`/chats/${data.dmsId}`, {
+    //   headers: headers,
+    // });
     const response = await axios.post(
       `/chats/${data.dmsId}`,
       { userId: data.userId },
       { headers }
     );
-    console.log("getAllDM", response.data.result);
+    console.log("채팅 기록", response.data.result);
     return response.data.result;
   }
 );
 
+// 채팅 전송
 export const sendDM = createAsyncThunk(
   "channel/sendDM",
   async (data, thunkAPI) => {
@@ -56,7 +58,7 @@ export const sendDM = createAsyncThunk(
       userId: data.userId,
       chat: data.chat,
     };
-    console.log("chatData", chatData);
+    console.log("채팅 전송", chatData);
     const response = await axios.post(`/chats/${data.dmsId}/chat`, chatData, {
       headers,
     });

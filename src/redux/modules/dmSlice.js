@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDmUsers, createDM, getAllDM, sendDM } from "../async/dm";
+import { getDMList, createDM, getDMChat, sendDM } from "../async/dm";
 
 const initialState = {
   dmList: null,
-  // sendDM: null,
-  chatData: null,
+  dmChat: null,
   isLoading: false,
   isDone: false,
   isError: false,
@@ -16,24 +15,29 @@ const dmSlice = createSlice({
   reducers: {},
   extraReducers: (builder) =>
     builder
-      .addCase(getDmUsers.pending, (state, action) => {
+      .addCase(getDMList.pending, (state, action) => {
+        // DM 목록
         state.dmList = null;
       })
-      .addCase(getDmUsers.fulfilled, (state, action) => {
+      .addCase(getDMList.fulfilled, (state, action) => {
         state.dmList = action.payload;
       })
       .addCase(createDM.fulfilled, (state, action) => {
+        // DM 목록 생성
         state.dmList.push(action.payload);
       })
-      .addCase(getAllDM.pending, (state, action) => {
-        state.chatData = null;
+      .addCase(getDMChat.pending, (state, action) => {
+        // 채팅 기록
+        state.dmChat = null;
       })
-      .addCase(getAllDM.fulfilled, (state, action) => {
-        state.chatData = action.payload;
+      .addCase(getDMChat.fulfilled, (state, action) => {
+        state.dmChat = action.payload;
       })
       .addCase(sendDM.fulfilled, (state, action) => {
-        state.chatData.unshift(action.payload);
+        // 채팅 전송
+        state.dmChat.unshift(action.payload);
       })
+      // 공통
       .addMatcher(
         (action) => {
           return action.type.includes("/pending");
