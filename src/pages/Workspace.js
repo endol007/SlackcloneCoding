@@ -20,7 +20,7 @@ const Workspace = (props) => {
 
   return (
     <>
-      {sessionStorage.getItem("access_token") && currentUser ? (
+      {sessionStorage.getItem("access_token") ? (
         <React.Fragment>
           <Header currentUser={currentUser} />
           <WorkspaceWrapper>

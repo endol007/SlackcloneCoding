@@ -47,7 +47,6 @@ const userSlice = createSlice({
       })
       .addCase(logIn.fulfilled, (state, action) => {
         sessionStorage.setItem("access_token", action.payload);
-        window.location.href = "/workspace";
       })
       // 공통
       .addMatcher(
