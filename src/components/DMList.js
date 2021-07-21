@@ -4,7 +4,7 @@ import { CollapseButton } from "./ChannelList";
 import DM from "./DM";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../redux/async/user";
-import { getDmUsers } from "../redux/async/dm";
+// import { getDmUsers } from "../redux/async/dm";
 
 const DMList = (props) => {
   const dispatch = useDispatch();
@@ -12,13 +12,6 @@ const DMList = (props) => {
   const { currentUser } = useSelector((state) => state.user);
   // const { dmList } = useSelector((state) => state.dm);
   const { getOneChannelUsers } = useSelector((state) => state.channel);
-
-  useEffect(() => {
-    if (currentUser) {
-      // console.log("getDmUsers", currentUser.id);
-      dispatch(getDmUsers({ userId: currentUser.id }));
-    }
-  }, [currentUser]);
 
   const toggleCollapse = useCallback(() => {
     setCollapse((prev) => !prev);

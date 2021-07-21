@@ -16,35 +16,34 @@ const Workspace = (props) => {
 
   useEffect(() => {
     dispatch(getUser());
-    console.log("currentUser", currentUser);
   }, []);
 
   return (
     <>
-    {sessionStorage.getItem("access_token") ? 
-    (<React.Fragment>
-      <Header currentUser={currentUser} />
-        <WorkspaceWrapper>
-          <ChannelsWrapper>
-            <WorkspaceName>항해99</WorkspaceName>
-            <MenuScroll>
-              <ChannelList currentUser={currentUser} />
-              <DMList currentUser={currentUser} />
-            </MenuScroll>
-            <div></div>
-          </ChannelsWrapper>
-          <ChatsWrapper>
-            <Switch>
-              <Route path="/workspace/channel/:channel" component={Channels} />
-              <Route
-                path="/workspace/chat/:dmsId"
-                component={Chats}
-              />
-            </Switch>
-          </ChatsWrapper>
-        </WorkspaceWrapper>
-      </React.Fragment>)
-      : (
+      {sessionStorage.getItem("access_token") ? (
+        <React.Fragment>
+          <Header currentUser={currentUser} />
+          <WorkspaceWrapper>
+            <ChannelsWrapper>
+              <WorkspaceName>항해99</WorkspaceName>
+              <MenuScroll>
+                <ChannelList currentUser={currentUser} />
+                <DMList currentUser={currentUser} />
+              </MenuScroll>
+              <div></div>
+            </ChannelsWrapper>
+            <ChatsWrapper>
+              <Switch>
+                <Route
+                  path="/workspace/channel/:channel"
+                  component={Channels}
+                />
+                <Route path="/workspace/chat/:dmId" component={Chats} />
+              </Switch>
+            </ChatsWrapper>
+          </WorkspaceWrapper>
+        </React.Fragment>
+      ) : (
         history.push("/")
       )}
     </>

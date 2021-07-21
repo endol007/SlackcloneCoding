@@ -1,13 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { signUp, logIn, getUser, dupCheckUser } from "../async/user";
-import {history} from "../configureStore";
+
 const initialState = {
   userList: null,
   currentUser: null,
   isLoading: false,
   isDone: false,
   isError: false,
-  dupCheck: false,
 };
 
 const userSlice = createSlice({
@@ -21,35 +20,36 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      .addCase(signUp.pending, (state, action) => {
-        state.currentUser = null;
-      })
-      .addCase(signUp.fulfilled, (state, action) => {
-        // state.currentUser = action.payload;
-      })
-      .addCase(logIn.pending, (state, action) => {
-        state.userList = null;
-      })
-      .addCase(logIn.fulfilled, (state, action) => {
-        sessionStorage.setItem("access_token", action.payload.result);
-      })
       .addCase(getUser.pending, (state, action) => {
+        // 유저 정보
         state.currentUser = null;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.currentUser = action.payload;
-        // state.userList.push(action.payload);
-      })
-      .addCase(dupCheckUser.pending, (state, action) => {
-        state.dupCheck = false;
       })
       .addCase(dupCheckUser.fulfilled, (state, action) => {
-        if (action.payload === "ok") {
-          state.dupCheck = true;
-        } else {
-          state.dupCheck = false;
+        // 이메일 중복 체크
+        if (action.payload) {
+          alert("사용 가능한 이메일입니다.");
         }
       })
+      .addCase(dupCheckUser.rejected, (state, action) => {
+        alert(action.error.message);
+      })
+      .addCase(signUp.fulfilled, (state, action) => {
+        // 회원 가입
+        window.location.href = "/";
+      })
+      .addCase(logIn.pending, (state, action) => {
+        // 로그인
+        state.userList = null;
+        state.currentUser = null;
+      })
+      .addCase(logIn.fulfilled, (state, action) => {
+        sessionStorage.setItem("access_token", action.payload);
+        window.location.reload();
+      })
+      // 공통
       .addMatcher(
         (action) => {
           return action.type.includes("/pending");

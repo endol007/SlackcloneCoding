@@ -1,32 +1,33 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "../elements/Grid";
 import Input from "../elements/Input";
 import Button from "../elements/Button";
 import styled from "styled-components";
-import { history } from "../redux/configureStore"
 import { useDispatch } from "react-redux";
-import {logIn} from "../redux/async/user";
+import { logIn } from "../redux/async/user";
+import { history } from "../redux/configureStore";
 
 const Login = (props) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const session = sessionStorage.getItem("access_token")
+  const session = sessionStorage.getItem("access_token");
   const loginInput = {
     email: email,
     password: password,
-  }
+  };
 
   const login = () => {
-    if(email === "" || password === ""){
+    if (email === "" || password === "") {
       window.alert("아이디 혹은 패스워드를 입력하세요");
       return;
     }
     dispatch(logIn(loginInput));
-  }
-  useEffect(()=> {
-    if(session){
-      history.push("/Workspace");
+  };
+
+  useEffect(() => {
+    if (session) {
+      history.push("/workspace");
     }
   }, [session]);
 
@@ -77,17 +78,17 @@ const Login = (props) => {
           text="name@work-email.com"
           type="email"
           margin="20px 0 0 0"
-          _onChange={(e)=> {
-            setEmail(e.target.value)
+          _onChange={(e) => {
+            setEmail(e.target.value);
           }}
         ></Input>
-        <Input 
-        text="password" 
-        type="password" 
-        margin="20px 0 20px 0"
-        _onChange={(e)=> {
-          setPassword(e.target.value)
-        }}
+        <Input
+          text="password"
+          type="password"
+          margin="20px 0 20px 0"
+          _onChange={(e) => {
+            setPassword(e.target.value);
+          }}
         ></Input>
         <Button text="이메일로 로그인" _onClick={login}></Button>
       </Grid>

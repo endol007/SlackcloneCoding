@@ -5,12 +5,6 @@ import { useSelector } from "react-redux";
 
 const ChatList = ({ chatData }) => {
   const { currentUser } = useSelector((state) => state.user);
-  // const currentUser = {
-  //   id: 1,
-  //   email: "seanstainability@gmail.com",
-  //   nickname: "sean",
-  // };
-  
 
   return (
     <React.Fragment>

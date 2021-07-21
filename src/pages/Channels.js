@@ -9,7 +9,7 @@ import {
   getOneChannelUsers,
   getchannelsUsers
 } from "../redux/async/channel";
-import {getUser} from "../redux/async/user";
+import { getUser } from "../redux/async/user";
 import useSocket from "../useSocket";
 import ChatHeader from "../components/ChatHeader";
 import ChatList from "../components/ChatList";
@@ -24,34 +24,9 @@ const Channels = (props) => {
   const { currentChannel } = useSelector((state) => state.channel);
   const [chat, setChat] = useState();
   const placeholder = `# ${channel}에게 메시지 보내기`;
-  // const channelList = [{
-  //   id: 3,
-  //   userId: 1,
-  //   nickname: "endols",
-  //   channelId: 11,
-  //   channel: {
-  //     id: 11,
-  //     title: "12번째 채널",
-  //     userId: 1,
-  //   }
-  // }]
 
-  // const currentChannelUsers = [
-  //   {
-  //     id: 1,
-  //     nickname: "동우",
-  //   },
-  //   {
-  //     id: 2,
-  //     nickname: "민영",
-  //   },
-  //   {
-  //     id: 3,
-  //     nickname: "동환",
-  //   },
-  // ];
   useEffect(() => {
-    dispatch(getUser())
+    dispatch(getUser());
   }, []);
 
   useEffect(() => {
@@ -63,7 +38,6 @@ const Channels = (props) => {
   useEffect(() => {
     dispatch(getOneChannelUsers(channel));
   }, [channel]);
-
 
   useEffect(() => {
     socket?.on("message", onMessage);
