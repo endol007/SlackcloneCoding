@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 const ChatBox = ({ chat, onChangeChat, placeholder, onSubmitForm }) => {
+  // const { dmChat } = useSelector((state) => state.dm);
+
   return (
     <React.Fragment>
       <ChatBoxWrap>
@@ -8,7 +10,7 @@ const ChatBox = ({ chat, onChangeChat, placeholder, onSubmitForm }) => {
           <InputText
             onChange={onChangeChat}
             value={chat}
-            placeholder={placeholder}
+            placeholder={placeholder || `# 에게 메시지 보내기`}
           ></InputText>
           <IconBox>
             <IconBoxItem>

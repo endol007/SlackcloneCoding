@@ -1,28 +1,20 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { useParams } from "react-router";
+// import { useParams } from "react-router";
 import ChatHeader from "../components/ChatHeader";
 import ChatBox from "../components/ChatBox";
 import ChatList from "../components/ChatList";
 import useSocket from "../useSocket";
-import { sendDM, getDMChat } from "../redux/async/dm";
-import { createDM } from "../redux/async/dm";
+import { sendDM } from "../redux/async/dm";
 
 const Chats = (props) => {
   const dispatch = useDispatch();
-  const { dmId } = useParams();
-  const [currentDM, setCurrentDM] = useState(null);
+  // const { dmId } = useParams();
   const [chat, setChat] = useState("");
   const { currentUser } = useSelector((state) => state.user);
-  const { dmChat } = useSelector((state) => state.dm);
-  const [socket, disconnect] = useSocket(dmId);
-
-  // useEffect(() => {
-  //   if (dmList) {
-  //     setCurrentDM(dmList.find((dm) => dm.dmId === dmId));
-  //   }
-  // }, [dmList]);
+  const { currentDM } = useSelector((state) => state.dm);
+  const [socket, disconnect] = useSocket(currentDM?.dmsId);
 
   useEffect(() => {
     socket?.on("dm", onMessage);
@@ -35,10 +27,10 @@ const Chats = (props) => {
     return () => {
       disconnect();
     };
-  }, [dmId, disconnect]);
+  }, [currentDM?.dmsId, disconnect]);
 
   const onMessage = (data) => {
-    if (data.SenderId === Number(dmId)) {
+    if (data.SenderId === Number(currentDM?.dmsId)) {
       console.log("전달 받은 데이터", data);
     }
   };
@@ -49,7 +41,7 @@ const Chats = (props) => {
 
   const onSubmitChat = useCallback((e) => {
     const dmChatData = {
-      dmsId: dmId,
+      dmsId: currentDM?.dmsId,
       userId: currentUser.id,
       chat: chat,
     };
@@ -62,14 +54,17 @@ const Chats = (props) => {
 
   return (
     <React.Fragment>
-      <ChatHeader current={currentDM} currentUsers={currentUser}></ChatHeader>
+      <ChatHeader
+        current={currentDM}
+        currentUsers={currentUser}
+        _title={currentDM?.otherUser?.nickname}
+      ></ChatHeader>
       <ChatsWrap width="100%" display="flex">
-        <ChatList chatData={dmChat}></ChatList>
+        <ChatList></ChatList>
         <ChatBox
           chat={chat}
           onChangeChat={onChangeChat}
           onSubmitForm={onSubmitChat}
-          placeholder={`# ${currentDM?.Dm.OtherUser?.nickname}에게 메시지 보내기`}
         ></ChatBox>
       </ChatsWrap>
     </React.Fragment>
