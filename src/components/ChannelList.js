@@ -18,7 +18,6 @@ const ChannelList = ({ currentUser }) => {
   const { channelList } = useSelector((state) => state.channel);
   useEffect(() => {
     if (currentUser) {
-      // console.log("getChannels", currentUser.id);
       dispatch(getChannels({ userId: currentUser.id }));
     }
   }, [currentUser]);
@@ -30,9 +29,6 @@ const ChannelList = ({ currentUser }) => {
     };
   }, [socket]);
 
-  useEffect(() => {
-    dispatch(getOneChannelUsers(channel));
-  }, [channel]);
 
   const onMessage = (data) => {
     console.log("message", data);

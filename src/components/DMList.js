@@ -11,7 +11,7 @@ const DMList = (props) => {
   const [collapse, setCollapse] = useState(true);
   const { currentUser } = useSelector((state) => state.user);
   // const { dmList } = useSelector((state) => state.dm);
-  const { getOneChannelUsers } = useSelector((state) => state.channel);
+  const { getchannelsUsers } = useSelector((state) => state.channel);
 
   const toggleCollapse = useCallback(() => {
     setCollapse((prev) => !prev);
@@ -27,7 +27,7 @@ const DMList = (props) => {
       </h2>
       <div>
         {collapse &&
-          getOneChannelUsers?.map((dm) => {
+          getchannelsUsers?.map((dm) => {
             return <DM key={dm.id} dm={dm} currentUser={currentUser} />;
           })}
       </div>

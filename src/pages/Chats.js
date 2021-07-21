@@ -17,9 +17,8 @@ const Chats = (props) => {
   const { currentUser } = useSelector((state) => state.user);
   const { dmList, dmChat } = useSelector((state) => state.dm);
   const [socket, disconnect] = useSocket(dmsId);
-
   useEffect(() => {
-    dispatch(getUser());
+    // dispatch(getUser());
     if (currentUser) {
       dispatch(getDMList({ userId: currentUser.id }));
       dispatch(getDMChat({ dmsId: dmsId, userId: currentUser.id }));

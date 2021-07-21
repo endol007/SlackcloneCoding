@@ -6,30 +6,9 @@ import gravatar from "gravatar";
 import { getOneChannelUsers } from "../redux/async/channel";
 
 const ChannelInfoModal = (props) => {
-  const dispatch = useDispatch();
-  const { open, close, header, currentId } = props;
-  //   const { currentChannelUsers } = useSelector((state) => state.channel);
-  const currentChannelUsers = [
-    {
-      id: 4,
-      email: "sean@gamil.com",
-      nickname: "sean",
-    },
-    {
-      id: 2,
-      email: "sparta@gmail.com",
-      nickname: "sparta",
-    },
-    {
-      id: 3,
-      email: "kms@gmail.com",
-      nickname: "김첨지",
-    },
-  ];
-
-  useEffect(() => {
-    dispatch(getOneChannelUsers({ channelId: currentId }));
-  }, []);
+  
+  const { open, close, header } = props;
+    const { getOneChannelUsers } = useSelector((state) => state.channel);
 
   return (
     <React.Fragment>
@@ -45,17 +24,17 @@ const ChannelInfoModal = (props) => {
             </header>
             <main>
               <UserListWrap>
-                {currentChannelUsers?.map((user) => {
+                {getOneChannelUsers?.map((user) => {
                   return (
                     <UserList>
                       <I
-                        src={gravatar.url(user?.email, {
+                        src={gravatar.url(user?.User.email, {
                           s: "28px",
                           d: "retro",
                         })}
-                        alt={user?.nickname}
+                        alt={user?.User.nickname}
                       ></I>
-                      <UserNickname>{user?.nickname}</UserNickname>
+                      <UserNickname>{user?.User.nickname}</UserNickname>
                     </UserList>
                   );
                 })}

@@ -34,6 +34,7 @@ const channelSlice = createSlice({
       })
       .addCase(createChannel.fulfilled, (state, action) => {
         // state.channelList.push(action.payload);
+        window.location.reload();
       })
       .addCase(getOneChannel.pending, (state, action) => {
         state.currentChannel = null;

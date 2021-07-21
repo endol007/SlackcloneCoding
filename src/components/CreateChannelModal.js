@@ -4,14 +4,17 @@ import styled from "styled-components";
 import Input from "../elements/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { createChannel} from "../redux/async/channel";
+import {history} from "../redux/configureStore";
 
 const CreateChannelModal = (props) => {
   const dispatch = useDispatch();
   const { open, close } = props;
+  
   const [certain, setCertain] = useState(false);
   const [channelTitle, setChannelTitle] = useState("");
   const { getchannelsUsers } = useSelector((state) => state.channel);
   const { currentUser } = useSelector((state) => state.user);
+  
   const onChangeInput = useCallback((e) => {
     if (e.target.value === "certain") {
       setCertain(true);
@@ -38,28 +41,12 @@ const CreateChannelModal = (props) => {
     return membersChecked;
   };
 
-  // const onSkip = () => {
-  //   if (channelTitle.trim() === "") {
-  //     alert("채널명은 필수 입력사항입니다.");
-  //     return;
-  //   }
-  //   const createData = {
-  //     title: channelTitle,
-  //     userList: [currentUser.id],
-  //     userId: currentUser.id
-  //   }
-  //   console.log(createData);
-  //   dispatch(createChannel(createData));
-  //   window.alert("성공")
-  // };
-
   const onSubmitCreateChannel = (e) => {
     if (channelTitle.trim() === "") {
       alert("채널명은 필수 입력사항입니다.");
       return;
     }
     let channelUsers = checkedMember();
-    window.alert(channelUsers)
     const createData = {
       title: channelTitle,
       userList: channelUsers,
@@ -97,7 +84,6 @@ const CreateChannelModal = (props) => {
                   padding="4px 46px 4px 16px"
                   font_size="18px !important"
                   _onChange={(e) => {
-                    // console.log(e.target.value);
                     setChannelTitle(e.target.value);
                   }}
                 ></Input>
@@ -151,20 +137,8 @@ const CreateChannelModal = (props) => {
                 </FieldSetWrapper>
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                {/* <ButtonWrapper
-                  type="button"
-                  style={{
-                    backgroundColor: "transparent",
-                    border: "1px solid #000",
-                    color: "#000",
-                    marginRight: "6px",
-                  }}
-                  onClick={onSkip}
-                >
-                  지금은 건너뛰기
-                </ButtonWrapper> */}
                 <ButtonWrapper 
-                  tpye="button"
+                  type="button"
                   onClick={onSubmitCreateChannel}>
                   생성
                 </ButtonWrapper>

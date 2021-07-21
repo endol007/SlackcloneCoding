@@ -26,16 +26,7 @@ const Channels = (props) => {
   const placeholder = `# ${channel}에게 메시지 보내기`;
 
   useEffect(() => {
-    dispatch(getUser());
-  }, []);
-
-  useEffect(() => {
     dispatch(getOneChannel(channel));
-    dispatch(getChannels());
-  }, []);
-  
-  useEffect(() => {
-    dispatch(getOneChannelUsers(channel));
   }, [channel]);
 
   useEffect(() => {
@@ -63,12 +54,15 @@ const Channels = (props) => {
     };
     dispatch(sendMessageChannel(ChannelMsgData));
   };
+  const index = channelList?.findIndex((p) => p.id == channel);
+  const channel_title = channelList[index].Channel.title;
 
   return (
     <React.Fragment>
       <ChatHeader
         current={currentChannel}
         currentUsers={currentUser}
+        _title={channel_title}
       ></ChatHeader>
       <ChannelsWrap width="100%" display="flex">
         <ChatList chatData={currentChannel}></ChatList>
