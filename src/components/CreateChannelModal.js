@@ -3,7 +3,8 @@ import "./modal.css";
 import styled from "styled-components";
 import Input from "../elements/Input";
 import { useDispatch, useSelector } from "react-redux";
-import { createChannel} from "../redux/async/channel";
+import { createChannel } from "../redux/async/channel";
+import { createDM } from "../redux/async/dm";
 
 const CreateChannelModal = (props) => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const CreateChannelModal = (props) => {
         membersChecked.push(user.id);
       });
     } else {
-    for (var i = 0; i < member_length; i++) {
+      for (var i = 0; i < member_length; i++) {
         if (document.getElementsByName("member")[i].checked === true) {
           let target = document.getElementsByName("member")[i].value;
           membersChecked.push(target);
@@ -38,34 +39,25 @@ const CreateChannelModal = (props) => {
     return membersChecked;
   };
 
-  // const onSkip = () => {
-  //   if (channelTitle.trim() === "") {
-  //     alert("채널명은 필수 입력사항입니다.");
-  //     return;
-  //   }
-  //   const createData = {
-  //     title: channelTitle,
-  //     userList: [currentUser.id],
-  //     userId: currentUser.id
-  //   }
-  //   console.log(createData);
-  //   dispatch(createChannel(createData));
-  //   window.alert("성공")
-  // };
-
   const onSubmitCreateChannel = (e) => {
     if (channelTitle.trim() === "") {
       alert("채널명은 필수 입력사항입니다.");
       return;
     }
     let channelUsers = checkedMember();
-    window.alert(channelUsers)
+    window.alert(channelUsers);
     const createData = {
       title: channelTitle,
       userList: channelUsers,
-      userId: currentUser.id
-    }
+      userId: currentUser.id,
+    };
     dispatch(createChannel(createData));
+    dispatch(
+      createDM({
+        userId: currentUser.id,
+        otherUserId: channelUsers,
+      })
+    );
   };
 
   return (
@@ -97,7 +89,6 @@ const CreateChannelModal = (props) => {
                   padding="4px 46px 4px 16px"
                   font_size="18px !important"
                   _onChange={(e) => {
-                    // console.log(e.target.value);
                     setChannelTitle(e.target.value);
                   }}
                 ></Input>
@@ -151,21 +142,7 @@ const CreateChannelModal = (props) => {
                 </FieldSetWrapper>
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                {/* <ButtonWrapper
-                  type="button"
-                  style={{
-                    backgroundColor: "transparent",
-                    border: "1px solid #000",
-                    color: "#000",
-                    marginRight: "6px",
-                  }}
-                  onClick={onSkip}
-                >
-                  지금은 건너뛰기
-                </ButtonWrapper> */}
-                <ButtonWrapper 
-                  tpye="button"
-                  onClick={onSubmitCreateChannel}>
+                <ButtonWrapper tpye="button" onClick={onSubmitCreateChannel}>
                   생성
                 </ButtonWrapper>
               </div>

@@ -7,7 +7,7 @@ import CreateChannelModal from "./CreateChannelModal";
 import useSocket from "../useSocket";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getChannels, getOneChannelUsers } from "../redux/async/channel";
+import { getChannels } from "../redux/async/channel";
 
 const ChannelList = ({ currentUser }) => {
   const dispatch = useDispatch();
@@ -29,10 +29,6 @@ const ChannelList = ({ currentUser }) => {
       socket?.off("channel", onMessage);
     };
   }, [socket]);
-
-  useEffect(() => {
-    dispatch(getOneChannelUsers(channel));
-  }, [channel]);
 
   const onMessage = (data) => {
     console.log("message", data);
