@@ -13,18 +13,18 @@ const Chats = () => {
   const dispatch = useDispatch();
   const { dmId } = useParams();
   const [currentDM, setCurrentDM] = useState(null);
-
   const [chat, setChat] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const { dmChat } = useSelector((state) => state.dm);
   const [socket, disconnect] = useSocket(dmId);
 
-  useEffect(() => {
-    // dispatch(getDMList({ userId: currentUser.id }));
-    dispatch(createDM({ userId: currentUser.id, otherUserId: dmId }));
-
-    // dispatch(getDMChat({ dmsId: dmId, userId: currentUser.id }));
-  }, []);
+  // useEffect(() => {
+  //   // dispatch(getDMList({ userId: currentUser.id }));
+  //   if (currentUser) {
+  //     dispatch(createDM({ userId: currentUser.id, otherUserId: dmId }));
+  //   }
+  //   // dispatch(getDMChat({ dmsId: dmId, userId: currentUser.id }));
+  // }, []);
 
   // useEffect(() => {
   //   if (dmList) {
