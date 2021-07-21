@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { signUp, logIn, getUser, dupCheckUser } from "../async/user";
-import { history } from "../configureStore";
+
 const initialState = {
   userList: null,
   currentUser: null,
@@ -47,6 +47,7 @@ const userSlice = createSlice({
       })
       .addCase(logIn.fulfilled, (state, action) => {
         sessionStorage.setItem("access_token", action.payload);
+        window.location.reload();
       })
       // 공통
       .addMatcher(
