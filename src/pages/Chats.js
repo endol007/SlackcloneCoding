@@ -13,7 +13,7 @@ const Chats = (props) => {
   // const { dmId } = useParams();
   const [chat, setChat] = useState("");
   const { currentUser } = useSelector((state) => state.user);
-  const { dmChat, currentDM } = useSelector((state) => state.dm);
+  const { currentDM } = useSelector((state) => state.dm);
   const [socket, disconnect] = useSocket(currentDM?.dmsId);
 
   useEffect(() => {
@@ -60,12 +60,11 @@ const Chats = (props) => {
         _title={currentDM?.otherUser?.nickname}
       ></ChatHeader>
       <ChatsWrap width="100%" display="flex">
-        <ChatList chatData={dmChat}></ChatList>
+        <ChatList></ChatList>
         <ChatBox
           chat={chat}
           onChangeChat={onChangeChat}
           onSubmitForm={onSubmitChat}
-          placeholder={`# ${currentDM?.otherUser?.nickname}에게 메시지 보내기`}
         ></ChatBox>
       </ChatsWrap>
     </React.Fragment>
