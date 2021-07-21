@@ -1,25 +1,19 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import styled from "styled-components";
-import { useParams } from "react-router";
 import { NavLink } from "react-router-dom";
-import {createDM} from "../redux/async/dm";
-import { useDispatch } from "react-redux"; 
+import { createDM, getDMChat } from "../redux/async/dm";
+import { useDispatch, useSelector } from "react-redux";
 
 const DM = ({ dm, currentUser }) => {
   const dispatch = useDispatch();
+  const { currentDM } = useSelector((state) => state.dm);
   const createDirectMessage = () => {
-    if(currentUser){
+    if (currentUser) {
       dispatch(createDM({ userId: currentUser.id, otherUserId: dm.id }));
-      }
-  }
-  // useEffect(() => {
-  //   if(currentUser){
-  //   // dispatch(getDMList({ userId: currentUser.id }));
-  //   dispatch(createDM({ userId: currentUser.id, otherUserId: dmId }));
-  //   }
-  //   // dispatch(getDMChat({ dmsId: dmId, userId: currentUser.id }));
-  // }, []);
-  
+      dispatch(getDMChat({ dmsId: currentDM?.dmsId, userId: currentUser.id }));
+    }
+  };
+
   return (
     <NavLinkWrapper
       onClick={() => {
