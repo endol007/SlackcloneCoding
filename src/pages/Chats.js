@@ -11,24 +11,24 @@ import { sendDM, getDMChat, getDMList } from "../redux/async/dm";
 
 const Chats = (props) => {
   const dispatch = useDispatch();
-  const { dmId } = useParams();
+  const { dmsId } = useParams();
   const [currentDM, setCurrentDM] = useState(null);
   const [chat, setChat] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const { dmList, dmChat } = useSelector((state) => state.dm);
-  const [socket, disconnect] = useSocket(dmId);
+  const [socket, disconnect] = useSocket(dmsId);
 
   useEffect(() => {
     dispatch(getUser());
     if (currentUser) {
       dispatch(getDMList({ userId: currentUser.id }));
-      dispatch(getDMChat({ dmsId: dmId, userId: currentUser.id }));
+      dispatch(getDMChat({ dmsId: dmsId, userId: currentUser.id }));
     }
   }, [currentUser]);
 
   useEffect(() => {
     if (dmList) {
-      setCurrentDM(dmList.find((dm) => dm.id === dmId));
+      setCurrentDM(dmList.find((dm) => dm.dmsId === dmsId));
     }
   }, [dmList]);
 
@@ -43,10 +43,10 @@ const Chats = (props) => {
     return () => {
       disconnect();
     };
-  }, [dmId, disconnect]);
+  }, [dmsId, disconnect]);
 
   const onMessage = (data) => {
-    if (data.SenderId === Number(dmId)) {
+    if (data.SenderId === Number(dmsId)) {
       console.log("전달 받은 데이터", data);
     }
   };
@@ -57,7 +57,7 @@ const Chats = (props) => {
 
   const onSubmitChat = useCallback((e) => {
     const dmChatData = {
-      dmsId: dmId,
+      dmsId: dmsId,
       userId: currentUser.id,
       chat: chat,
     };

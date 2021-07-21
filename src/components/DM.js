@@ -8,7 +8,7 @@ const DM = ({ dm, currentUser }) => {
       key={dm?.id}
       activeClassName="active"
       activeStyle={{ fontWeight: "bold" }}
-      to={`/workspace/chat/${dm?.id}`}
+      to={`/workspace/chat/${dm?.dmsId}`}
     >
       <span>
         # {dm?.OtherUser.nickname}{" "}
