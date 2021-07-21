@@ -7,7 +7,7 @@ import {
   getOneChannel,
   sendMessageChannel,
   getOneChannelUsers,
-  getchannelsUsers
+  getchannelsUsers,
 } from "../redux/async/channel";
 import { getUser } from "../redux/async/user";
 import useSocket from "../useSocket";

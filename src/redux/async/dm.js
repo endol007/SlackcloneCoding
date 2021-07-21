@@ -23,12 +23,13 @@ export const getDMList = createAsyncThunk(
 export const createDM = createAsyncThunk(
   "channel/createDM",
   async (data, thunkAPI) => {
+    console.log(data);
     const createdData = {
       userId: data.userId,
       otherUserId: data.otherUserId,
     };
     const response = await axios.post("/chats", createdData, { headers });
-    console.log("DM 목록 생성", response.data.result);
+    console.log("DM 목록 생성", response.data);
     return response.data.result;
   }
 );

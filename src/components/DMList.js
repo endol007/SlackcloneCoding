@@ -3,19 +3,23 @@ import { ArrowDropDown, ArrowDropUp } from "@styled-icons/material-outlined";
 import { CollapseButton } from "./ChannelList";
 import DM from "./DM";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "../redux/async/user";
-// import { getDmUsers } from "../redux/async/dm";
 
-const DMList = (props) => {
+const DMList = ({currentUser}) => {
   const dispatch = useDispatch();
   const [collapse, setCollapse] = useState(true);
-  const { currentUser } = useSelector((state) => state.user);
   // const { dmList } = useSelector((state) => state.dm);
   const { getchannelsUsers } = useSelector((state) => state.channel);
 
   const toggleCollapse = useCallback(() => {
     setCollapse((prev) => !prev);
   }, []);
+
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     dispatch(getDMList());
+  //     // dispatch(getDMList({ userId: currentUser.id }));
+  //   }
+  // }, [currentUser]);
 
   return (
     <>

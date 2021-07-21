@@ -6,30 +6,23 @@ import ChatHeader from "../components/ChatHeader";
 import ChatBox from "../components/ChatBox";
 import ChatList from "../components/ChatList";
 import useSocket from "../useSocket";
-import { getUser } from "../redux/async/user";
-import { sendDM, getDMChat, getDMList } from "../redux/async/dm";
+import { sendDM, getDMChat } from "../redux/async/dm";
+import { createDM } from "../redux/async/dm";
 
 const Chats = (props) => {
   const dispatch = useDispatch();
-  const { dmsId } = useParams();
+  const { dmId } = useParams();
   const [currentDM, setCurrentDM] = useState(null);
   const [chat, setChat] = useState("");
   const { currentUser } = useSelector((state) => state.user);
-  const { dmList, dmChat } = useSelector((state) => state.dm);
-  const [socket, disconnect] = useSocket(dmsId);
-  useEffect(() => {
-    // dispatch(getUser());
-    if (currentUser) {
-      dispatch(getDMList({ userId: currentUser.id }));
-      dispatch(getDMChat({ dmsId: dmsId, userId: currentUser.id }));
-    }
-  }, [currentUser]);
+  const { dmChat } = useSelector((state) => state.dm);
+  const [socket, disconnect] = useSocket(dmId);
 
-  useEffect(() => {
-    if (dmList) {
-      setCurrentDM(dmList.find((dm) => dm.dmsId === dmsId));
-    }
-  }, [dmList]);
+  // useEffect(() => {
+  //   if (dmList) {
+  //     setCurrentDM(dmList.find((dm) => dm.dmId === dmId));
+  //   }
+  // }, [dmList]);
 
   useEffect(() => {
     socket?.on("dm", onMessage);
@@ -42,10 +35,10 @@ const Chats = (props) => {
     return () => {
       disconnect();
     };
-  }, [dmsId, disconnect]);
+  }, [dmId, disconnect]);
 
   const onMessage = (data) => {
-    if (data.SenderId === Number(dmsId)) {
+    if (data.SenderId === Number(dmId)) {
       console.log("전달 받은 데이터", data);
     }
   };
@@ -56,7 +49,7 @@ const Chats = (props) => {
 
   const onSubmitChat = useCallback((e) => {
     const dmChatData = {
-      dmsId: dmsId,
+      dmsId: dmId,
       userId: currentUser.id,
       chat: chat,
     };
@@ -76,7 +69,7 @@ const Chats = (props) => {
           chat={chat}
           onChangeChat={onChangeChat}
           onSubmitForm={onSubmitChat}
-          placeholder={`# ${currentDM?.OtherUser?.nickname}에게 메시지 보내기`}
+          placeholder={`# ${currentDM?.Dm.OtherUser?.nickname}에게 메시지 보내기`}
         ></ChatBox>
       </ChatsWrap>
     </React.Fragment>

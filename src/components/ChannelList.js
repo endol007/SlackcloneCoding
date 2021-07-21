@@ -7,7 +7,7 @@ import CreateChannelModal from "./CreateChannelModal";
 import useSocket from "../useSocket";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getChannels, getOneChannelUsers } from "../redux/async/channel";
+import { getChannels } from "../redux/async/channel";
 
 const ChannelList = ({ currentUser }) => {
   const dispatch = useDispatch();
@@ -16,6 +16,7 @@ const ChannelList = ({ currentUser }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [collapse, setCollapse] = useState(true);
   const { channelList } = useSelector((state) => state.channel);
+
   useEffect(() => {
     if (currentUser) {
       dispatch(getChannels({ userId: currentUser.id }));
@@ -28,7 +29,6 @@ const ChannelList = ({ currentUser }) => {
       socket?.off("channel", onMessage);
     };
   }, [socket]);
-
 
   const onMessage = (data) => {
     console.log("message", data);

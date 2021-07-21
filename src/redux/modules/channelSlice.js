@@ -14,6 +14,7 @@ const initialState = {
   currentChannel: null,
   currentChannelUsers: null,
   getOneChannelUsers: null,
+  getchannelsUsers: null,
   sendMsg: [],
   isLoading: false,
   isDone: false,
