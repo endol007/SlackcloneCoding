@@ -1,49 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import gravatar from "gravatar";
+import { useSelector } from "react-redux";
 
 const ChatList = ({ chatData }) => {
-  const dummyChatData = [
-    {
-      User: {
-        id: 4,
-        nickname: "sean",
-        email: "sean@gmail.com",
-      },
-      chat: "안녕",
-      createdAt: "오후 3시 15분",
-    },
-    {
-      User: {
-        id: 2,
-        nickname: "sparta",
-        email: "sparta@gmail.com",
-      },
-      chat: "오랜만이야",
-      createdAt: "오후 3시 16분",
-    },
-  ];
+  const { currentUser } = useSelector((state) => state.user);
+  // const currentUser = {
+  //   id: 1,
+  //   email: "seanstainability@gmail.com",
+  //   nickname: "sean",
+  // };
+  
 
   return (
     <React.Fragment>
       <ChatListWrap>
-        {dummyChatData?.map((p, idx) => {
+        {chatData?.map((p, idx) => {
           return (
             <ChatListBox>
               <ChatListBoxInfo>
                 <ChatListUserImageWrap>
                   <UserImage
-                    src={gravatar.url(p.User.email, {
+                    src={gravatar.url(currentUser.email, {
                       s: "40px",
                       d: "retro",
                     })}
-                    alt={p.User.email}
+                    alt={currentUser.nickname}
                   ></UserImage>
                 </ChatListUserImageWrap>
                 <ChatListUserInfo>
-                  <text>{p.User.nickname}</text> <span>{p.createdAt}</span>
+                  <text>{p.userId}</text> <span>{chatData.createdAt}</span>
                   <br />
-                  <div>{p.chat || p.description}</div>
+                  <div>{p.chat}</div>
                 </ChatListUserInfo>
               </ChatListBoxInfo>
             </ChatListBox>

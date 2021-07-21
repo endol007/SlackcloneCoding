@@ -3,16 +3,15 @@ import "./modal.css";
 import styled from "styled-components";
 import Input from "../elements/Input";
 import { useDispatch, useSelector } from "react-redux";
-import { createChannel } from "../redux/async/channel";
+import { createChannel} from "../redux/async/channel";
 
 const CreateChannelModal = (props) => {
   const dispatch = useDispatch();
   const { open, close } = props;
   const [certain, setCertain] = useState(false);
   const [channelTitle, setChannelTitle] = useState("");
-  const { dmList } = useSelector((state) => state.dm);
+  const { getchannelsUsers } = useSelector((state) => state.channel);
   const { currentUser } = useSelector((state) => state.user);
-
   const onChangeInput = useCallback((e) => {
     if (e.target.value === "certain") {
       setCertain(true);
@@ -30,7 +29,7 @@ const CreateChannelModal = (props) => {
     let member_length = document.getElementsByName("member").length;
     let membersChecked = [];
     if (document.getElementsByName("case")[0].value === "total") {
-      dmList.forEach((user) => {
+      getchannelsUsers.forEach((user) => {
         membersChecked.push(user.id);
       });
     } else {
@@ -44,19 +43,20 @@ const CreateChannelModal = (props) => {
     return membersChecked;
   };
 
-  // const onSkip = () => {
-  //   if (channelTitle.trim() === "") {
-  //     alert("채널명은 필수 입력사항입니다.");
-  //     return;
-  //   }
-  //   dispatch(
-  //     createChannel({
-  //       title: channelTitle,
-  //       userList: [],
-  //       userId: currentUser.id,
-  //     })
-  //   );
-  // };
+  const onSkip = () => {
+    if (channelTitle.trim() === "") {
+      alert("채널명은 필수 입력사항입니다.");
+      return;
+    }
+    const createData = {
+      title: channelTitle,
+      userList: [currentUser.id],
+      userId: currentUser.id
+    }
+    console.log(createData);
+    dispatch(createChannel(createData));
+    window.alert("성공")
+  };
 
   const onSubmitCreateChannel = (e) => {
     if (channelTitle.trim() === "") {
@@ -69,7 +69,6 @@ const CreateChannelModal = (props) => {
       createChannel({
         title: channelTitle,
         userList: channelUsers,
-        userId: currentUser.id,
       })
     );
   };
@@ -137,7 +136,7 @@ const CreateChannelModal = (props) => {
                   </div>
                   {certain && (
                     <div style={{ marginLeft: "20px" }}>
-                      {dmList?.map((user) => {
+                      {getchannelsUsers?.map((user) => {
                         return (
                           <div>
                             <label htmlFor={user.id}>
@@ -157,7 +156,8 @@ const CreateChannelModal = (props) => {
                 </FieldSetWrapper>
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                {/* <ButtonWrapper
+                <ButtonWrapper
+                  type="button"
                   style={{
                     backgroundColor: "transparent",
                     border: "1px solid #000",
@@ -167,8 +167,10 @@ const CreateChannelModal = (props) => {
                   onClick={onSkip}
                 >
                   지금은 건너뛰기
-                </ButtonWrapper> */}
-                <ButtonWrapper onClick={onSubmitCreateChannel}>
+                </ButtonWrapper>
+                <ButtonWrapper 
+                  type="button"
+                onClick={onSubmitCreateChannel}>
                   생성
                 </ButtonWrapper>
               </div>

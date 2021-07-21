@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { signUp, logIn, getUser, dupCheckUser } from "../async/user";
-
+import {history} from "../configureStore";
 const initialState = {
   userList: null,
   currentUser: null,
@@ -25,7 +25,7 @@ const userSlice = createSlice({
         state.currentUser = null;
       })
       .addCase(signUp.fulfilled, (state, action) => {
-        state.currentUser = action.payload;
+        // state.currentUser = action.payload;
       })
       .addCase(logIn.pending, (state, action) => {
         state.userList = null;

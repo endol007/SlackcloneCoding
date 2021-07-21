@@ -42,6 +42,13 @@ export const dupCheckUser = createAsyncThunk(
   async (data, thunkAPI) => {
     const response = await axios.post("/users/dupCheck", { email: data });
     console.log("response", response.data);
-    return response.data;
+      if(response.data.ok === true){
+        window.alert("사용가능한 아이디입니다.")
+      return response.data;
+      }else{
+        window.alert("이미 가입된 아이디입니다")
+        return response.data;
+      }
+    
   }
 );

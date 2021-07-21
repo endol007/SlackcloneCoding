@@ -6,7 +6,8 @@ import {
   getChannels,
   getOneChannel,
   sendMessageChannel,
-  getOneChannelUsers
+  getOneChannelUsers,
+  getchannelsUsers
 } from "../redux/async/channel";
 import {getUser} from "../redux/async/user";
 import useSocket from "../useSocket";
@@ -18,11 +19,24 @@ const Channels = (props) => {
   const dispatch = useDispatch();
   const { channel } = useParams();
   const { channelList } = useSelector((state) => state.channel);
+
   const [socket] = useSocket(channel);
   const currentUser = useSelector((state) => state.user.currentUser);
   const { currentChannel } = useSelector((state) => state.channel);
   const [chat, setChat] = useState();
   const placeholder = `# ${channel}에게 메시지 보내기`;
+  // const channelList = [{
+  //   id: 3,
+  //   userId: 1,
+  //   nickname: "endols",
+  //   channelId: 11,
+  //   channel: {
+  //     id: 11,
+  //     title: "12번째 채널",
+  //     userId: 1,
+  //   }
+  // }]
+
   // const currentChannelUsers = [
   //   {
   //     id: 1,
@@ -42,8 +56,9 @@ const Channels = (props) => {
   }, []);
 
   useEffect(() => {
-    dispatch(getOneChannel());
-    dispatch(getOneChannelUsers());
+    dispatch(getOneChannel(channel));
+    dispatch(getOneChannelUsers(channel));
+    dispatch(getchannelsUsers());
     dispatch(getChannels());
   }, []);
 
@@ -54,9 +69,9 @@ const Channels = (props) => {
     //   dispatch(getOneChannelUsers({ channelId: channelList[idx] }));
     // }
     socket?.on("message", onMessage);
-    // return () => {
-    //   socket?.off("message", onMessage);
-    // };
+    return () => {
+      socket?.off("message", onMessage);
+    };
   }, [socket]);
 
   const onMessage = (data) => {
@@ -67,13 +82,11 @@ const Channels = (props) => {
     setChat(e.target.value);
   }, []);
   const onSubmitForm = () => {
-    const index = channelList?.findIndex((p) => p.nickname === channel);
-    const channel_id = channelList[index].channelId;
-    const title = channelList[index].nickname;
+    const index = channelList?.findIndex((p) => p.id == channel);
+    const channel_id = channelList[index].id;
     const ChannelMsgData = {
       channelId: channel_id,
-      title: title,
-      description: chat,
+      chat: chat,
       img: "",
       userId: currentUser.id, //userId
     };

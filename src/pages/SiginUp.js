@@ -42,10 +42,10 @@ const SignUp = (props) => {
     }
     if (!pwdReg(password)){
       window.alert("패스워드를 8자 이상 입력해주세요");
+      return;
     }
-
     dispatch(signUp(signupdata));
-    history.push("/Workspace");
+    history.push("/")
   }
   
 

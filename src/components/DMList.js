@@ -6,39 +6,39 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../redux/async/user";
 import { getDmUsers } from "../redux/async/dm";
 
-const DMList = ({ currentUser }) => {
+const DMList = (props) => {
   const dispatch = useDispatch();
   const [collapse, setCollapse] = useState(true);
-  // const { currentUser } = useSelector((state) => state.user);
-  // const { dmList } = useSelector((state) => state.dm);
-  const dmList = [
-    {
-      id: 1,
-      User: {
-        id: 4,
-        email: "sean@gamil.com",
-        nickname: "sean",
-      },
-      OtherUser: {
-        id: 4,
-        email: "sean@gmail.com",
-        nickname: "sean",
-      },
-    },
-    {
-      id: 2,
-      User: {
-        id: 4,
-        email: "sean@gamil.com",
-        nickname: "sean",
-      },
-      OtherUser: {
-        id: 2,
-        email: "sparta@gmail.com",
-        nickname: "sparta",
-      },
-    },
-  ];
+  const { currentUser } = useSelector((state) => state.user);
+  const { dmList } = useSelector((state) => state.dm);
+  // const dmList = [
+  //   {
+  //     id: 1,
+  //     User: {
+  //       id: 4,
+  //       email: "sean@gamil.com",
+  //       nickname: "sean",
+  //     },
+  //     OtherUser: {
+  //       id: 4,
+  //       email: "sean@gmail.com",
+  //       nickname: "sean",
+  //     },
+  //   },
+  //   {
+  //     id: 2,
+  //     User: {
+  //       id: 4,
+  //       email: "sean@gamil.com",
+  //       nickname: "sean",
+  //     },
+  //     OtherUser: {
+  //       id: 2,
+  //       email: "sparta@gmail.com",
+  //       nickname: "sparta",
+  //     },
+  //   },
+  // ];
 
   useEffect(() => {
     if (currentUser) {
