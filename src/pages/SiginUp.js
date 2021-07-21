@@ -1,12 +1,12 @@
-import React, {useRef, useState} from "react";
+import React, { useEffect } from "react";
 import Grid from "../elements/Grid";
 import Input from "../elements/Input";
 import Button from "../elements/Button";
 import styled from "styled-components";
 import { history } from "../redux/configureStore";
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 import { dupCheckUser, signUp } from "../redux/async/user";
-import {emailCheck, pwdReg} from "../checkReg";
+import { emailCheck, pwdReg } from "../checkReg";
 
 const SignUp = (props) => {
   const dispatch = useDispatch();
@@ -14,40 +14,38 @@ const SignUp = (props) => {
   const [email, setEmail] = React.useState();
   const [nickname, setNickname] = React.useState();
   const [password, setPassword] = React.useState();
+  const { dupCheck } = useSelector((state) => state.user);
 
   const email_double_check = () => {
-    if (email === ""){
-      window.alert("아이디를 입력해주세요!");
+    if (email === "") {
+      window.alert("이메일을 입력해주세요!!");
       return;
     }
-    if(!emailCheck(email)){
-      window.alert("이메일 형식으로 입력해주세요");
+    if (!emailCheck(email)) {
+      window.alert("이메일 형식으로 입력해주세요!!");
       return;
     }
-
     dispatch(dupCheckUser(email));
-  }
+  };
 
   const signupdata = {
     email: email,
     nickname: nickname,
     password: password,
-  }
-
+  };
 
   const signup = () => {
     if (email === "" || nickname === "" || password === "") {
       window.alert("아이디, 패스워드, 닉네임을 모두 입력해주세요!");
       return;
     }
-    if (!pwdReg(password)){
+    if (!pwdReg(password)) {
       window.alert("패스워드를 8자 이상 입력해주세요");
     }
 
     dispatch(signUp(signupdata));
     history.push("/Workspace");
-  }
-  
+  };
 
   return (
     <Grid is_center>
@@ -64,7 +62,7 @@ const SignUp = (props) => {
           text="Slack"
           display="inline-block"
         >
-          <a href="http://localhost:3000/login">
+          <a href="/">
             <img
               alt="Slack"
               src="https://a.slack-edge.com/bv1-9/slack_logo-ebd02d1.svg"
@@ -89,22 +87,33 @@ const SignUp = (props) => {
       </Grid>
       <Grid width="400px" display="inline-block">
         <Grid width="70%" margin="20px 0 0 0" display="inline-block">
-          <Input text="name@work-email.com"
-           _onChange={(e)=> {
-            setEmail(e.target.value);
-          }} type="email"></Input>
+          <Input
+            text="name@work-email.com"
+            _onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            type="email"
+          ></Input>
         </Grid>
         <Grid width="30%" margin="20px 0 0 0" display="inline-block">
           <Button text="중복 확인" _onClick={email_double_check}></Button>
         </Grid>
-        <Input text="nickname" type="text" 
-          _onChange={(e)=> {
+        <Input
+          text="nickname"
+          type="text"
+          _onChange={(e) => {
             setNickname(e.target.value);
-          }} margin="20px 0 0 0"></Input>
-        <Input text="password" type="password" 
-        _onChange={(e)=> {
+          }}
+          margin="20px 0 0 0"
+        ></Input>
+        <Input
+          text="password"
+          type="password"
+          _onChange={(e) => {
             setPassword(e.target.value);
-          }} margin="20px 0 20px 0"></Input>
+          }}
+          margin="20px 0 20px 0"
+        ></Input>
         <Button text="이메일로 회원가입" _onClick={signup}></Button>
       </Grid>
       <Grid margin="40px 0 0 0">

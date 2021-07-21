@@ -41,7 +41,7 @@ export const dupCheckUser = createAsyncThunk(
   "user/dupCheckUser",
   async (data, thunkAPI) => {
     const response = await axios.post("/users/dupCheck", { email: data });
-    console.log("response", response.data);
-    return response.data;
+    console.log("response", response.data.ok);
+    return response.data.ok;
   }
 );
