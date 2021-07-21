@@ -16,8 +16,8 @@ const DMList = ({currentUser}) => {
 
   // useEffect(() => {
   //   if (currentUser) {
-  //     dispatch(getDMList());
-  //     // dispatch(getDMList({ userId: currentUser.id }));
+  //     // dispatch(getDMList());
+  //     dispatch(getDMList({ userId: currentUser.id }));
   //   }
   // }, [currentUser]);
 

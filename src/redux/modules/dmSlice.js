@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createDM, getDMChat, sendDM } from "../async/dm";
+import { createDM, getDMChat, sendDM} from "../async/dm";
 
 const initialState = {
   // dmList: null,
@@ -24,9 +24,7 @@ const dmSlice = createSlice({
       //   state.dmList = action.payload;
       // })
       .addCase(createDM.fulfilled, (state, action) => {
-        // DM 목록 생성
-        state.currentDM = action.payload;
-        // window.location.reload();
+        state.currentDM = action.payload[0];
       })
       .addCase(getDMChat.pending, (state, action) => {
         // 채팅 기록

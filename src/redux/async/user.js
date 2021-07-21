@@ -10,7 +10,7 @@ export const getUser = createAsyncThunk(
   "user/getUser",
   async (data, thunkAPI) => {
     const response = await axios.get("/users/me", { headers });
-    console.log("유저 정보", response.data);
+    // console.log("유저 정보", response.data);
     return response.data;
   }
 );

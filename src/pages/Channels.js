@@ -45,7 +45,7 @@ const Channels = (props) => {
   }, []);
   const onSubmitForm = () => {
     const index = channelList?.findIndex((p) => p.id == channel);
-    const channel_id = channelList[index].id;
+    const channel_id = channelList[index].Channel.id;
     const ChannelMsgData = {
       channelId: channel_id,
       chat: chat,

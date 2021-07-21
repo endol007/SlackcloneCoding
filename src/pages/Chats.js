@@ -7,12 +7,11 @@ import ChatBox from "../components/ChatBox";
 import ChatList from "../components/ChatList";
 import useSocket from "../useSocket";
 import { sendDM, getDMChat } from "../redux/async/dm";
-import { createDM } from "../redux/async/dm";
 
 const Chats = (props) => {
   const dispatch = useDispatch();
   const { dmId } = useParams();
-  const [currentDM, setCurrentDM] = useState(null);
+  const { currentDM } = useSelector((state) => state.dm)
   const [chat, setChat] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const { dmChat } = useSelector((state) => state.dm);
@@ -23,7 +22,6 @@ const Chats = (props) => {
   //     setCurrentDM(dmList.find((dm) => dm.dmId === dmId));
   //   }
   // }, [dmList]);
-
   useEffect(() => {
     socket?.on("dm", onMessage);
     return () => {
@@ -69,7 +67,7 @@ const Chats = (props) => {
           chat={chat}
           onChangeChat={onChangeChat}
           onSubmitForm={onSubmitChat}
-          placeholder={`# ${currentDM?.Dm.OtherUser?.nickname}에게 메시지 보내기`}
+          placeholder={`# ${currentDM?.otherUserId}에게 메시지 보내기`}
         ></ChatBox>
       </ChatsWrap>
     </React.Fragment>

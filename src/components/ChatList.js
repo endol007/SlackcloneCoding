@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 
 const ChatList = ({ chatData }) => {
   const { currentUser } = useSelector((state) => state.user);
-
+  const {getchannelsUsers} = useSelector((state) => state.user);
+  
   return (
     <React.Fragment>
       <ChatListWrap>

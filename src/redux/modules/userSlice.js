@@ -22,7 +22,7 @@ const userSlice = createSlice({
     builder
       .addCase(getUser.pending, (state, action) => {
         // 유저 정보
-        state.currentUser = null;
+        // state.currentUser = null;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.currentUser = action.payload;
