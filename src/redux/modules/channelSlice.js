@@ -6,14 +6,15 @@ import {
   getOneChannelUsers,
   sendMessageChannel,
   exitChannel,
+  getchannelsUsers,
 } from "../async/channel";
 
 const initialState = {
-  channelList: null,
-  sendMessageChannel: [],
+  channelList: [],
   currentChannel: null,
   currentChannelUsers: null,
-  sendMsg: null,
+  getOneChannelUsers: [],
+  sendMsg: [],
   isLoading: false,
   isDone: false,
   isError: false,
@@ -32,7 +33,7 @@ const channelSlice = createSlice({
         state.channelList = action.payload;
       })
       .addCase(createChannel.fulfilled, (state, action) => {
-        state.channelList.push(action.payload);
+        // state.channelList.push(action.payload);
       })
       .addCase(getOneChannel.pending, (state, action) => {
         state.currentChannel = null;
@@ -41,13 +42,16 @@ const channelSlice = createSlice({
         state.currentChannel = action.payload;
       })
       .addCase(getOneChannelUsers.pending, (state, action) => {
-        state.currentChannelUsers = null;
+        state.getOneChannelUsers = null;
       })
       .addCase(getOneChannelUsers.fulfilled, (state, action) => {
-        state.currentChannelUsers = action.payload;
+        state.getOneChannelUsers = action.payload;
+      })
+      .addCase(getchannelsUsers.fulfilled, (state, action) => {
+        state.getchannelsUsers = action.payload;
       })
       .addCase(sendMessageChannel.fulfilled, (state, action) => {
-        state.sendMsg.push(action.payload);
+        state.currentChannel.push(action.payload);
       })
       .addCase(exitChannel.fulfilled, (state, action) => {
         state.currentChannel = null;

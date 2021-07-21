@@ -40,11 +40,7 @@ export const getDMChat = createAsyncThunk(
     // const response = await axios.get(`/chats/${data.dmsId}`, {
     //   headers: headers,
     // });
-    const response = await axios.post(
-      `/chats/${data.dmsId}`,
-      { userId: data.userId },
-      { headers }
-    );
+    const response = await axios.post(`/chats/${data.dmsId}`, { headers });
     console.log("채팅 기록", response.data.result);
     return response.data.result;
   }

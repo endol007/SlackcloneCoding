@@ -11,7 +11,7 @@ const Login = (props) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
+  const session = sessionStorage.getItem("access_token");
   const loginInput = {
     email: email,
     password: password,
@@ -26,10 +26,10 @@ const Login = (props) => {
   };
 
   useEffect(() => {
-    if (sessionStorage.getItem("access_token")) {
+    if (session) {
       history.push("/workspace");
     }
-  }, []);
+  }, [session]);
 
   return (
     <Grid is_center>
