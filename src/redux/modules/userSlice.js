@@ -32,6 +32,7 @@ const userSlice = createSlice({
       })
       .addCase(logIn.fulfilled, (state, action) => {
         sessionStorage.setItem("access_token", action.payload.result);
+        window.location.href = "/workspace";
       })
       .addCase(getUser.pending, (state, action) => {
         state.currentUser = null;
@@ -44,10 +45,12 @@ const userSlice = createSlice({
         state.dupCheck = false;
       })
       .addCase(dupCheckUser.fulfilled, (state, action) => {
-        if (action.payload === "ok") {
+        if (action.payload) {
           state.dupCheck = true;
+          alert("사용 가능한 이메일입니다.");
         } else {
           state.dupCheck = false;
+          alert("사용할 수 없는 이메일입니다.");
         }
       })
       .addMatcher(

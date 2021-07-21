@@ -12,7 +12,7 @@ import { sendDM, getAllDM } from "../redux/async/dm";
 const Chats = (props) => {
   const dispatch = useDispatch();
   const { dmsId } = useParams();
-  const [socket] = useSocket(dmsId);
+  const [socket, disconnect] = useSocket(dmsId);
   const [chat, setChat] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   // const { currentDM } = useSelector((state) => state.dm);
@@ -44,15 +44,21 @@ const Chats = (props) => {
   }, [currentUser]);
 
   useEffect(() => {
-    socket?.on("dm", onDM);
-    return () => {
-      socket?.off("dm", onDM);
-    };
-  }, [socket]);
+    if (currentDM && currentUser && socket) {
+      const dmData = {
+        dmsId: dmsId,
+        userId: currentUser.id,
+        chat: chat,
+      };
+      socket.emit("dm", dmData);
+    }
+  }, [socket, currentUser, currentDM]);
 
-  const onDM = (data) => {
-    console.log("dm", data);
-  };
+  useEffect(() => {
+    return () => {
+      disconnect();
+    };
+  }, [dmsId, disconnect]);
 
   const onChangeChat = useCallback((e) => {
     setChat(e.target.value);

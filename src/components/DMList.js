@@ -5,40 +5,45 @@ import DM from "./DM";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../redux/async/user";
 import { getDmUsers } from "../redux/async/dm";
+import { useParams } from "react-router-dom";
+import useSocket from "../useSocket";
 
-const DMList = (props) => {
+const DMList = ({ currentUser }) => {
+  const { dmsId } = useParams();
   const dispatch = useDispatch();
   const [collapse, setCollapse] = useState(true);
-  const { currentUser } = useSelector((state) => state.user);
-  const { dmList } = useSelector((state) => state.dm);
-  // const dmList = [
-  //   {
-  //     id: 1,
-  //     User: {
-  //       id: 4,
-  //       email: "sean@gamil.com",
-  //       nickname: "sean",
-  //     },
-  //     OtherUser: {
-  //       id: 4,
-  //       email: "sean@gmail.com",
-  //       nickname: "sean",
-  //     },
-  //   },
-  //   {
-  //     id: 2,
-  //     User: {
-  //       id: 4,
-  //       email: "sean@gamil.com",
-  //       nickname: "sean",
-  //     },
-  //     OtherUser: {
-  //       id: 2,
-  //       email: "sparta@gmail.com",
-  //       nickname: "sparta",
-  //     },
-  //   },
-  // ];
+  // const { currentUser } = useSelector((state) => state.user);
+  // const { dmList } = useSelector((state) => state.dm);
+  const [socket] = useSocket(dmsId);
+
+  const dmList = [
+    {
+      id: 1,
+      User: {
+        id: 4,
+        email: "sean@gamil.com",
+        nickname: "sean",
+      },
+      OtherUser: {
+        id: 4,
+        email: "sean@gmail.com",
+        nickname: "sean",
+      },
+    },
+    {
+      id: 2,
+      User: {
+        id: 4,
+        email: "sean@gamil.com",
+        nickname: "sean",
+      },
+      OtherUser: {
+        id: 2,
+        email: "sparta@gmail.com",
+        nickname: "sparta",
+      },
+    },
+  ];
 
   useEffect(() => {
     if (currentUser) {
@@ -46,6 +51,17 @@ const DMList = (props) => {
       dispatch(getDmUsers({ userId: currentUser.id }));
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    socket?.on("dm", (data) => {
+      console.log("dm", data);
+    });
+    console.log("socket on dm", socket?.hasListeners("dm"), socket);
+    return () => {
+      console.log("socket off dm", socket?.hasListeners("dm"));
+      socket?.off("dm");
+    };
+  }, [socket]);
 
   const toggleCollapse = useCallback(() => {
     setCollapse((prev) => !prev);
