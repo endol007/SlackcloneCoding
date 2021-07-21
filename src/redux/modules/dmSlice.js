@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDMList, createDM, getDMChat, sendDM } from "../async/dm";
+import { createDM, getDMChat, sendDM } from "../async/dm";
 
 const initialState = {
-  dmList: null,
+  // dmList: null,
+  currentDM: null,
   dmChat: null,
   isLoading: false,
   isDone: false,
@@ -19,12 +20,12 @@ const dmSlice = createSlice({
       //   // DM 목록
       //   state.dmList = null;
       // })
-      .addCase(getDMList.fulfilled, (state, action) => {
-        state.dmList = action.payload;
-      })
+      // .addCase(getDMList.fulfilled, (state, action) => {
+      //   state.dmList = action.payload;
+      // })
       .addCase(createDM.fulfilled, (state, action) => {
         // DM 목록 생성
-        state.dmList.push(action.payload);
+        state.currentDM = action.payload;
         window.location.reload();
       })
       .addCase(getDMChat.pending, (state, action) => {

@@ -51,12 +51,12 @@ const CreateChannelModal = (props) => {
       userList: channelUsers,
       userId: currentUser.id,
     };
-    dispatch(
-      createDM({
-        userId: currentUser.id,
-        otherUserId: channelUsers,
-      })
-    );
+    // dispatch(
+    //   createDM({
+    //     userId: currentUser.id,
+    //     otherUserId: channelUsers,
+    //   })
+    // );
     dispatch(createChannel(createData));
   };
 
