@@ -43,20 +43,20 @@ const CreateChannelModal = (props) => {
     return membersChecked;
   };
 
-  const onSkip = () => {
-    if (channelTitle.trim() === "") {
-      alert("채널명은 필수 입력사항입니다.");
-      return;
-    }
-    const createData = {
-      title: channelTitle,
-      userList: [currentUser.id],
-      userId: currentUser.id
-    }
-    console.log(createData);
-    dispatch(createChannel(createData));
-    window.alert("성공")
-  };
+  // const onSkip = () => {
+  //   if (channelTitle.trim() === "") {
+  //     alert("채널명은 필수 입력사항입니다.");
+  //     return;
+  //   }
+  //   const createData = {
+  //     title: channelTitle,
+  //     userList: [currentUser.id],
+  //     userId: currentUser.id
+  //   }
+  //   console.log(createData);
+  //   dispatch(createChannel(createData));
+  //   window.alert("성공")
+  // };
 
   const onSubmitCreateChannel = (e) => {
     if (channelTitle.trim() === "") {
@@ -64,13 +64,12 @@ const CreateChannelModal = (props) => {
       return;
     }
     let channelUsers = checkedMember();
-    alert(channelUsers);
-    dispatch(
-      createChannel({
-        title: channelTitle,
-        userList: channelUsers,
-      })
-    );
+    const createData = {
+      title: channelTitle,
+      userList: channelUsers,
+      userId: currentUser.id
+    }
+    dispatch(createChannel(createData));
   };
 
   return (
@@ -156,7 +155,7 @@ const CreateChannelModal = (props) => {
                 </FieldSetWrapper>
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <ButtonWrapper
+                {/* <ButtonWrapper
                   type="button"
                   style={{
                     backgroundColor: "transparent",
@@ -167,10 +166,9 @@ const CreateChannelModal = (props) => {
                   onClick={onSkip}
                 >
                   지금은 건너뛰기
-                </ButtonWrapper>
+                </ButtonWrapper> */}
                 <ButtonWrapper 
-                  type="button"
-                onClick={onSubmitCreateChannel}>
+                  onClick={onSubmitCreateChannel}>
                   생성
                 </ButtonWrapper>
               </div>

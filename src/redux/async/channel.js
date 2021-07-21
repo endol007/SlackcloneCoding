@@ -14,7 +14,6 @@ export const getChannels = createAsyncThunk(
       { userId: data.userId },
       { headers }
     );
-    console.log("getChannels", response.data.result);
     return response.data.result;
   }
 );
@@ -52,7 +51,10 @@ export const getOneChannel = createAsyncThunk(
 export const getOneChannelUsers = createAsyncThunk(
   "channel/getOneChannelUsers",
   async (data, thunkAPI) => {
-    const response = await axios.get(`/channels/${data}/user`, {
+    const channel = thunkAPI.getState().channel.channelList;
+    const index = channel.findIndex((p) => p.id == data)
+    const channelID = channel[index].channelId
+    const response = await axios.get(`/channels/${channelID}/users`, {
       headers,
     });
     console.log("response", response.data.result);
@@ -92,7 +94,7 @@ export const getchannelsUsers = createAsyncThunk(
   "channel/getchannelsUsers",
   async (data, thunkAPI) => {
     const response = await axios.get(`/channels/allUsers`, {headers: headers});
-    console.log(response.data);
+
     return response.data.result
   }
 );

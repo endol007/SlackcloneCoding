@@ -19,7 +19,6 @@ const Channels = (props) => {
   const dispatch = useDispatch();
   const { channel } = useParams();
   const { channelList } = useSelector((state) => state.channel);
-
   const [socket] = useSocket(channel);
   const currentUser = useSelector((state) => state.user.currentUser);
   const { currentChannel } = useSelector((state) => state.channel);
@@ -57,17 +56,16 @@ const Channels = (props) => {
 
   useEffect(() => {
     dispatch(getOneChannel(channel));
-    dispatch(getOneChannelUsers(channel));
     dispatch(getchannelsUsers());
     dispatch(getChannels());
   }, []);
+  
+  useEffect(() => {
+    dispatch(getOneChannelUsers(channel));
+  }, [channel]);
 
 
   useEffect(() => {
-    // if (channelList && channelList[idx]) {
-    //   dispatch(getOneChannel({ channelId: channelList[idx] }));
-    //   dispatch(getOneChannelUsers({ channelId: channelList[idx] }));
-    // }
     socket?.on("message", onMessage);
     return () => {
       socket?.off("message", onMessage);

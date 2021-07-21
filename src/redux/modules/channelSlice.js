@@ -13,7 +13,7 @@ const initialState = {
   channelList: [],
   currentChannel: null,
   currentChannelUsers: null,
-  getOneChannelUsers: [],
+  getOneChannelUsers: null,
   sendMsg: [],
   isLoading: false,
   isDone: false,

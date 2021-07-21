@@ -13,7 +13,6 @@ export const getDmUsers = createAsyncThunk(
       { userId: data.userId },
       { headers }
     );
-    console.log("getDmUsers", response.data.result);
     return response.data.result;
   }
 );
