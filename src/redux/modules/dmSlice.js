@@ -4,7 +4,7 @@ import { createDM, getDMChat, sendDM, addDMChat} from "../async/dm";
 const initialState = {
   // dmList: null,
   currentDM: null,
-  dmChat: null,
+  dmChat: [],
   isLoading: false,
   isDone: false,
   isError: false,
@@ -20,7 +20,7 @@ const dmSlice = createSlice({
         state.currentDM = action.payload[0];
       })
       .addCase(getDMChat.pending, (state, action) => {
-        state.dmChat = null;
+        state.dmChat = [];
       })
       .addCase(getDMChat.fulfilled, (state, action) => {
         state.dmChat = action.payload;  //채팅기록 상태에 등록
