@@ -12,7 +12,7 @@ import { getChannels } from "../redux/async/channel";
 const ChannelList = ({ currentUser }) => {
   const dispatch = useDispatch();
   const { channel } = useParams();
-  const [socket] = useSocket(channel);
+  // const [socket] = useSocket(channel);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [collapse, setCollapse] = useState(true);
   const { channelList } = useSelector((state) => state.channel);
@@ -21,14 +21,14 @@ const ChannelList = ({ currentUser }) => {
     if (currentUser) {
       dispatch(getChannels({ userId: currentUser.id }));
     }
-  }, [currentUser]);
+  }, [getChannels, currentUser]);
 
-  useEffect(() => {
-    socket?.on("channel", onMessage);
-    return () => {
-      socket?.off("channel", onMessage);
-    };
-  }, [socket]);
+  // useEffect(() => {
+  //   socket?.on("channel", onMessage);
+  //   return () => {
+  //     socket?.off("channel", onMessage);
+  //   };
+  // }, [socket]);
 
   const onMessage = (data) => {
     console.log("message", data);

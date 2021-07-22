@@ -19,7 +19,7 @@ const Channels = (props) => {
   const dispatch = useDispatch();
   const { channel } = useParams();
   const { channelList } = useSelector((state) => state.channel);
-  const [socket] = useSocket(channel);
+  // const [socket] = useSocket(channel);
   const currentUser = useSelector((state) => state.user.currentUser);
   const { currentChannel } = useSelector((state) => state.channel);
   const [chat, setChat] = useState();
@@ -29,16 +29,16 @@ const Channels = (props) => {
     dispatch(getOneChannel(channel));
   }, [channel]);
 
-  useEffect(() => {
-    socket?.on("message", onMessage);
-    return () => {
-      socket?.off("message", onMessage);
-    };
-  }, [socket]);
+  // useEffect(() => {
+  //   socket?.on("message", onMessage);
+  //   return () => {
+  //     socket?.off("message", onMessage);
+  //   };
+  // }, [socket]);
 
-  const onMessage = (data) => {
-    console.log("message", data);
-  };
+  // const onMessage = (data) => {
+  //   console.log("message", data);
+  // };
 
   const onChangeChat = useCallback((e) => {
     setChat(e.target.value);

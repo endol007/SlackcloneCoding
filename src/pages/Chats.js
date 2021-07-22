@@ -1,34 +1,30 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-// import { useParams } from "react-router";
 import ChatHeader from "../components/ChatHeader";
 import ChatBox from "../components/ChatBox";
 import ChatList from "../components/ChatList";
-import useSocket from "../useSocket";
-import { sendDM } from "../redux/async/dm";
+import { socket_chat } from "../socket/socket";
+import { getDMChat } from "../redux/async/dm"
 
 const Chats = (props) => {
   const dispatch = useDispatch();
-  // const { dmId } = useParams();
   const [chat, setChat] = useState("");
   const { currentUser } = useSelector((state) => state.user);
-  const { currentDM } = useSelector((state) => state.dm);
-  const [socket, disconnect] = useSocket(currentDM?.dmsId);
+  const { currentDM, dmChat} = useSelector((state) => state.dm);
+  const [socketData, setSocketData] = useState([]);
   const { getchannelsUsers } = useSelector((state)=> state.channel);
   const index = getchannelsUsers?.findIndex((p) => p.id === currentDM?.otherUserId);
-  useEffect(() => {
-    socket?.on("dm", onMessage);
-    return () => {
-      socket?.off("dm", onMessage);
-    };
-  }, [socket]);
 
   useEffect(() => {
-    return () => {
-      disconnect();
-    };
-  }, [currentDM?.dmsId, disconnect]);
+    if (currentDM) {
+      socket_chat.on("receive", (data)=> {
+        setSocketData(data)
+        console.log(data)
+        dispatch(getDMChat({ dmsId: currentDM.dmsId, userId: currentUser.id, data:"qwe"}));
+      })
+    }
+  }, [socket_chat, socketData, dmChat]);
 
   const onMessage = (data) => {
     if (data.SenderId === Number(currentDM?.dmsId)) {
@@ -46,21 +42,18 @@ const Chats = (props) => {
       userId: currentUser.id,
       chat: chat,
     };
-    console.log(socket);
-    if (socket) {
-      socket.emit("dm", dmChatData);
+
+      socket_chat.emit("chat", dmChatData);
       console.log(dmChatData);
-    }
-    // dispatch(sendDM(dmChatData));
     setChat("");
-  }, []);
+  }, [socket_chat, chat]);
 
   return (
     <React.Fragment>
       <ChatHeader
         current={currentDM}
         currentUsers={currentUser}
-        _title={getchannelsUsers[index]?.nickname}
+        _title={getchannelsUsers ?  getchannelsUsers[index]?.nickname: "None" }
       ></ChatHeader>
       <ChatsWrap width="100%" display="flex">
         <ChatList></ChatList>

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 const DM = ({ dm, currentUser }) => {
   const dispatch = useDispatch();
   const { currentDM } = useSelector((state) => state.dm);
+  
   const createDirectMessage = () => {
     if(currentUser){
       dispatch(createDM({ userId: currentUser.id, otherUserId: dm.id }));
