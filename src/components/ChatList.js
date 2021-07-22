@@ -1,37 +1,48 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import gravatar from "gravatar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getDMChat } from "../redux/async/dm";
 
 const ChatList = ({ chatData }) => {
+  const dispatch = useDispatch();
+  const { currentDM, dmChat } = useSelector((state) => state.dm);
   const { currentUser } = useSelector((state) => state.user);
-  const {getchannelsUsers} = useSelector((state) => state.user);
   
+
+  useEffect(() => {
+    if (currentDM) {
+      dispatch(
+        getDMChat({ dmsId: currentDM[0]?.dmsId, userId: currentUser.id })
+      );
+    }
+  }, [currentDM]);
   return (
     <React.Fragment>
       <ChatListWrap>
-        {chatData?.map((p, idx) => {
-          return (
-            <ChatListBox>
-              <ChatListBoxInfo>
-                <ChatListUserImageWrap>
-                  <UserImage
-                    src={gravatar.url(currentUser.email, {
-                      s: "40px",
-                      d: "retro",
-                    })}
-                    alt={currentUser.nickname}
-                  ></UserImage>
-                </ChatListUserImageWrap>
-                <ChatListUserInfo>
-                  <text>{p.userId}</text> <span>{chatData.createdAt}</span>
-                  <br />
-                  <div>{p.chat}</div>
-                </ChatListUserInfo>
-              </ChatListBoxInfo>
-            </ChatListBox>
-          );
-        })}
+        {chatData ||
+          dmChat?.map((p, idx) => {
+            return (
+              <ChatListBox>
+                <ChatListBoxInfo>
+                  <ChatListUserImageWrap>
+                    <UserImage
+                      src={gravatar.url(currentUser.email, {
+                        s: "40px",
+                        d: "retro",
+                      })}
+                      alt={currentUser.nickname}
+                    ></UserImage>
+                  </ChatListUserImageWrap>
+                  <ChatListUserInfo>
+                    <text>{p.userId}</text> <span>{chatData.createdAt}</span>
+                    <br />
+                    <div>{p.chat}</div>
+                  </ChatListUserInfo>
+                </ChatListBoxInfo>
+              </ChatListBox>
+            );
+          })}
       </ChatListWrap>
     </React.Fragment>
   );

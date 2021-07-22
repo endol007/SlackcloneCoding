@@ -9,7 +9,7 @@ const DMList = ({currentUser}) => {
   const [collapse, setCollapse] = useState(true);
   // const { dmList } = useSelector((state) => state.dm);
   const { getchannelsUsers } = useSelector((state) => state.channel);
-
+  
   const toggleCollapse = useCallback(() => {
     setCollapse((prev) => !prev);
   }, []);

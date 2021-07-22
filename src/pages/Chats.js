@@ -1,27 +1,22 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { useParams } from "react-router";
+// import { useParams } from "react-router";
 import ChatHeader from "../components/ChatHeader";
 import ChatBox from "../components/ChatBox";
 import ChatList from "../components/ChatList";
 import useSocket from "../useSocket";
-import { sendDM, getDMChat } from "../redux/async/dm";
+import { sendDM } from "../redux/async/dm";
 
 const Chats = (props) => {
   const dispatch = useDispatch();
-  const { dmId } = useParams();
-  const { currentDM } = useSelector((state) => state.dm)
+  // const { dmId } = useParams();
   const [chat, setChat] = useState("");
   const { currentUser } = useSelector((state) => state.user);
-  const { dmChat } = useSelector((state) => state.dm);
-  const [socket, disconnect] = useSocket(dmId);
-
-  // useEffect(() => {
-  //   if (dmList) {
-  //     setCurrentDM(dmList.find((dm) => dm.dmId === dmId));
-  //   }
-  // }, [dmList]);
+  const { currentDM } = useSelector((state) => state.dm);
+  const [socket, disconnect] = useSocket(currentDM?.dmsId);
+  const { getchannelsUsers } = useSelector((state)=> state.channel);
+  const index = getchannelsUsers?.findIndex((p) => p.id === currentDM?.otherUserId);
   useEffect(() => {
     socket?.on("dm", onMessage);
     return () => {
@@ -33,10 +28,10 @@ const Chats = (props) => {
     return () => {
       disconnect();
     };
-  }, [dmId, disconnect]);
+  }, [currentDM?.dmsId, disconnect]);
 
   const onMessage = (data) => {
-    if (data.SenderId === Number(dmId)) {
+    if (data.SenderId === Number(currentDM?.dmsId)) {
       console.log("전달 받은 데이터", data);
     }
   };
@@ -47,27 +42,32 @@ const Chats = (props) => {
 
   const onSubmitChat = useCallback((e) => {
     const dmChatData = {
-      dmsId: dmId,
+      dmsId: currentDM?.dmsId,
       userId: currentUser.id,
       chat: chat,
     };
+    console.log(socket);
     if (socket) {
       socket.emit("dm", dmChatData);
+      console.log(dmChatData);
     }
-    dispatch(sendDM(dmChatData));
+    // dispatch(sendDM(dmChatData));
     setChat("");
   }, []);
 
   return (
     <React.Fragment>
-      <ChatHeader current={currentDM} currentUsers={currentUser}></ChatHeader>
+      <ChatHeader
+        current={currentDM}
+        currentUsers={currentUser}
+        _title={getchannelsUsers[index]?.nickname}
+      ></ChatHeader>
       <ChatsWrap width="100%" display="flex">
-        <ChatList chatData={dmChat}></ChatList>
+        <ChatList></ChatList>
         <ChatBox
           chat={chat}
           onChangeChat={onChangeChat}
           onSubmitForm={onSubmitChat}
-          placeholder={`# ${currentDM?.otherUserId}에게 메시지 보내기`}
         ></ChatBox>
       </ChatsWrap>
     </React.Fragment>

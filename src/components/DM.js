@@ -11,16 +11,7 @@ const DM = ({ dm, currentUser }) => {
     if(currentUser){
       dispatch(createDM({ userId: currentUser.id, otherUserId: dm.id }));
       }
-      console.log(currentDM);
-    // dispatch(getDMChat(currentDM.dmsId));
   }
-  // useEffect(() => {
-  //   if(currentUser){
-  //   // dispatch(getDMList({ userId: currentUser.id }));
-  //   dispatch(createDM({ userId: currentUser.id, otherUserId: dmId }));
-  //   }
-  //   // dispatch(getDMChat({ dmsId: dmId, userId: currentUser.id }));
-  // }, []);
   
   return (
     <NavLinkWrapper
