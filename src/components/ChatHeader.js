@@ -5,7 +5,7 @@ import gravatar from "gravatar";
 import { useSelector } from "react-redux";
 
 const ChatHeader = ({ current, currentUsers, _title }) => {
-  const {getOneChannelUsers} = useSelector((state) => state.channel);
+  const { getOneChannelUsers } = useSelector((state) => state.channel);
   const [modalOpen, setModalOpen] = React.useState(false);
   const openModal = () => {
     setModalOpen(true);
@@ -29,7 +29,7 @@ const ChatHeader = ({ current, currentUsers, _title }) => {
           <ChannelInfoModal
             open={modalOpen}
             close={closeModal}
-            // header={current?.OtherUser.nickname}
+            header={current?.OtherUser.nickname}
             currentId={current?.id}
           ></ChannelInfoModal>
         </Wrap>

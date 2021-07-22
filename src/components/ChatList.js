@@ -8,9 +8,15 @@ const ChatList = ({ chatData }) => {
   const dispatch = useDispatch();
   const { currentDM } = useSelector((state) => state.dm);
   const { currentUser } = useSelector((state) => state.user);
-  useEffect(()=> {
+  useEffect(() => {
     if (currentDM) {
-      dispatch(getDMChat({ dmsId: currentDM.dmsId, userId: currentUser.id, data:"abc" }));
+      dispatch(
+        getDMChat({
+          dmsId: currentDM.dmsId,
+          userId: currentUser.id,
+          data: "abc",
+        })
+      );
     }
   }, [currentDM]);
 
@@ -18,28 +24,33 @@ const ChatList = ({ chatData }) => {
     <React.Fragment>
       <ChatListWrap>
         {chatData?.map((p, idx) => {
-            return (
-              <ChatListBox>
-                <ChatListBoxInfo>
-                  <ChatListUserImageWrap>
-                    <UserImage
-                      src={gravatar.url(currentUser.email, {
-                        s: "40px",
-                        d: "retro",
-                      })}
-                      alt={currentUser.nickname}
-                    ></UserImage>
-                  </ChatListUserImageWrap>
-                  <ChatListUserInfo>
-                    <text>{p.userId}</text> <span></span>
-                    <br />
-                    <div>{p.chat}</div>
-                  </ChatListUserInfo>
-                </ChatListBoxInfo>
-              </ChatListBox>
-            );
-          })}
-          {}
+          return (
+            <ChatListBox>
+              <ChatListBoxInfo>
+                <ChatListUserImageWrap>
+                  <UserImage
+                    src={gravatar.url(currentUser.email, {
+                      s: "40px",
+                      d: "retro",
+                    })}
+                    alt={currentUser.nickname}
+                  ></UserImage>
+                </ChatListUserImageWrap>
+                <ChatListUserInfo>
+                  <text>
+                    {p.userId === p.Dm.User.id
+                      ? p.Dm.User.nickname
+                      : p.Dm.OtherUser.nickname}
+                  </text>{" "}
+                  <span></span>
+                  <br />
+                  <div>{p.chat}</div>
+                </ChatListUserInfo>
+              </ChatListBoxInfo>
+            </ChatListBox>
+          );
+        })}
+        {}
       </ChatListWrap>
     </React.Fragment>
   );
@@ -47,8 +58,8 @@ const ChatList = ({ chatData }) => {
 
 const ChatListWrap = styled.div`
   height: 75vh;
-  display: grid;
-  grid-template-rows: 10% 90%;
+  padding: 8px 10px;
+  flex-direction: rows;
   overflow-y: scroll;
 `;
 const ChatListBox = styled.div`
