@@ -9,13 +9,11 @@ import Chats from "./Chats";
 import { getUser } from "../redux/async/user";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configureStore";
-import { getDMChat } from "../redux/async/dm";
 import { getChannels, getchannelsUsers } from "../redux/async/channel";
-import { socket_workspace, socket_chat } from "../socket/socket";
+import { socket_workspace} from "../socket/socket";
 
 const Workspace = (props) => {
   const dispatch = useDispatch();
-  const { currentDM } =useSelector((state) => state.dm)
   const { currentUser } = useSelector((state)=> state.user);
 
   useEffect(() => {

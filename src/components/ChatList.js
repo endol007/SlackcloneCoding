@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import gravatar from "gravatar";
 import { useSelector, useDispatch } from "react-redux";
 import { getDMChat } from "../redux/async/dm";
-import { socket_chat } from "../socket/socket";
 
 const ChatList = ({ chatData }) => {
   const dispatch = useDispatch();
-  const { currentDM, dmChat } = useSelector((state) => state.dm);
+  const { currentDM } = useSelector((state) => state.dm);
   const { currentUser } = useSelector((state) => state.user);
   useEffect(()=> {
     if (currentDM) {
-      
       dispatch(getDMChat({ dmsId: currentDM.dmsId, userId: currentUser.id, data:"abc" }));
     }
   }, [currentDM]);
+
   return (
     <React.Fragment>
       <ChatListWrap>
-        {chatData ||
-          dmChat?.map((p, idx) => {
+        {chatData?.map((p, idx) => {
             return (
               <ChatListBox>
                 <ChatListBoxInfo>
@@ -41,6 +39,7 @@ const ChatList = ({ chatData }) => {
               </ChatListBox>
             );
           })}
+          {}
       </ChatListWrap>
     </React.Fragment>
   );

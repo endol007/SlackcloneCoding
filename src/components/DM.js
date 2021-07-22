@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import {createDM, getDMChat} from "../redux/async/dm";
-import { useDispatch, useSelector } from "react-redux"; 
+import {createDM } from "../redux/async/dm";
+import { useDispatch } from "react-redux"; 
 
 const DM = ({ dm, currentUser }) => {
   const dispatch = useDispatch();
-  const { currentDM } = useSelector((state) => state.dm);
   
   const createDirectMessage = () => {
     if(currentUser){

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 const ChatBox = ({ chat, onChangeChat, placeholder, onSubmitForm }) => {
-  // const { dmChat } = useSelector((state) => state.dm);
 
   return (
     <React.Fragment>

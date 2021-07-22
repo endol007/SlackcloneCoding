@@ -64,3 +64,10 @@ export const sendDM = createAsyncThunk(
     return response.data;
   }
 );
+
+export const addDMChat = createAsyncThunk(
+  "channel/addDMChat",
+  async (data, thunkAPI) => {
+    return data;
+  }
+);

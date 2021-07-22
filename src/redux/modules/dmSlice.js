@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createDM, getDMChat, sendDM} from "../async/dm";
+import { createDM, getDMChat, sendDM, addDMChat} from "../async/dm";
 
 const initialState = {
   // dmList: null,
@@ -32,6 +32,9 @@ const dmSlice = createSlice({
       })
       .addCase(getDMChat.fulfilled, (state, action) => {
         state.dmChat = action.payload;
+      })
+      .addCase(addDMChat.fulfilled, (state, action) => {
+        state.dmChat.push(action.payload);
       })
       .addCase(sendDM.fulfilled, (state, action) => {
         // 채팅 전송

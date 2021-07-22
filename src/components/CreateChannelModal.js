@@ -4,8 +4,6 @@ import styled from "styled-components";
 import Input from "../elements/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { createChannel} from "../redux/async/channel";
-import {history} from "../redux/configureStore";
-import { createDM } from "../redux/async/dm";
 
 const CreateChannelModal = (props) => {
   const dispatch = useDispatch();
@@ -43,7 +41,6 @@ const CreateChannelModal = (props) => {
   };
 
   const onSubmitCreateChannel = (e) => {
-    // e.preventDefault();
     if (channelTitle.trim() === "") {
       alert("채널명은 필수 입력사항입니다.");
       return;
@@ -54,12 +51,6 @@ const CreateChannelModal = (props) => {
       userList: channelUsers,
       userId: currentUser.id,
     };
-    // dispatch(
-    //   createDM({
-    //     userId: currentUser.id,
-    //     otherUserId: channelUsers,
-    //   })
-    // );
     dispatch(createChannel(createData));
   };
 

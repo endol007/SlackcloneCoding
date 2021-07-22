@@ -3,14 +3,9 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import {
-  getChannels,
   getOneChannel,
   sendMessageChannel,
-  getOneChannelUsers,
-  getchannelsUsers,
 } from "../redux/async/channel";
-import { getUser } from "../redux/async/user";
-import useSocket from "../useSocket";
 import ChatHeader from "../components/ChatHeader";
 import ChatList from "../components/ChatList";
 import ChatBox from "../components/ChatBox";
@@ -19,7 +14,6 @@ const Channels = (props) => {
   const dispatch = useDispatch();
   const { channel } = useParams();
   const { channelList } = useSelector((state) => state.channel);
-  // const [socket] = useSocket(channel);
   const currentUser = useSelector((state) => state.user.currentUser);
   const { currentChannel } = useSelector((state) => state.channel);
   const [chat, setChat] = useState();
@@ -28,17 +22,6 @@ const Channels = (props) => {
   useEffect(() => {
     dispatch(getOneChannel(channel));
   }, [channel]);
-
-  // useEffect(() => {
-  //   socket?.on("message", onMessage);
-  //   return () => {
-  //     socket?.off("message", onMessage);
-  //   };
-  // }, [socket]);
-
-  // const onMessage = (data) => {
-  //   console.log("message", data);
-  // };
 
   const onChangeChat = useCallback((e) => {
     setChat(e.target.value);

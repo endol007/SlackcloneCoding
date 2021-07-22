@@ -3,24 +3,9 @@ import ChannelInfoModal from "./ChannelInfoModal";
 import styled from "styled-components";
 import gravatar from "gravatar";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
 
 const ChatHeader = ({ current, currentUsers, _title }) => {
   const {getOneChannelUsers} = useSelector((state) => state.channel);
-  const {channel} = useParams();
-  // const currentDM = { // current
-  //   id: 1,
-  //   User: {
-  //     id: 4,
-  //     email: "sean@gamil.com",
-  //     nickname: "sean",
-  //   },
-  //   OtherUser: {
-  //     id: 2,
-  //     email: "sparta@gmail.com",
-  //     nickname: "sparta",
-  //   },
-  // };
   const [modalOpen, setModalOpen] = React.useState(false);
   const openModal = () => {
     setModalOpen(true);

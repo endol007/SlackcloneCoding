@@ -14,13 +14,6 @@ const DMList = ({currentUser}) => {
     setCollapse((prev) => !prev);
   }, []);
 
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     // dispatch(getDMList());
-  //     dispatch(getDMList({ userId: currentUser.id }));
-  //   }
-  // }, [currentUser]);
-
   return (
     <>
       <h2 style={{ paddingRight: "16px" }}>

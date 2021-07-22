@@ -5,32 +5,23 @@ import ChatHeader from "../components/ChatHeader";
 import ChatBox from "../components/ChatBox";
 import ChatList from "../components/ChatList";
 import { socket_chat } from "../socket/socket";
-import { getDMChat } from "../redux/async/dm"
+import { addDMChat } from "../redux/async/dm"
 
 const Chats = (props) => {
   const dispatch = useDispatch();
   const [chat, setChat] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const { currentDM, dmChat} = useSelector((state) => state.dm);
-  const [socketData, setSocketData] = useState([]);
   const { getchannelsUsers } = useSelector((state)=> state.channel);
   const index = getchannelsUsers?.findIndex((p) => p.id === currentDM?.otherUserId);
 
   useEffect(() => {
-    if (currentDM) {
       socket_chat.on("receive", (data)=> {
-        setSocketData(data)
-        console.log(data)
-        dispatch(getDMChat({ dmsId: currentDM.dmsId, userId: currentUser.id, data:"qwe"}));
+        console.log("socketON", data);
+        dispatch(addDMChat(data));
       })
-    }
-  }, [socket_chat, socketData, dmChat]);
-
-  const onMessage = (data) => {
-    if (data.SenderId === Number(currentDM?.dmsId)) {
-      console.log("전달 받은 데이터", data);
-    }
-  };
+    console.log("asdasd");
+  }, [socket_chat]);
 
   const onChangeChat = useCallback((e) => {
     setChat(e.target.value);
@@ -56,7 +47,7 @@ const Chats = (props) => {
         _title={getchannelsUsers ?  getchannelsUsers[index]?.nickname: "None" }
       ></ChatHeader>
       <ChatsWrap width="100%" display="flex">
-        <ChatList></ChatList>
+        <ChatList chatData={dmChat}></ChatList>
         <ChatBox
           chat={chat}
           onChangeChat={onChangeChat}

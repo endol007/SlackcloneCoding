@@ -1,9 +1,8 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector} from "react-redux";
 import styled from "styled-components";
 import "./modal.css";
 import gravatar from "gravatar";
-import { getOneChannelUsers } from "../redux/async/channel";
 
 const ChannelInfoModal = (props) => {
   

@@ -4,7 +4,6 @@ import { ArrowDropDown, ArrowDropUp } from "@styled-icons/material-outlined";
 import { Add } from "@styled-icons/fluentui-system-filled";
 import Channel from "./Channel";
 import CreateChannelModal from "./CreateChannelModal";
-import useSocket from "../useSocket";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getChannels } from "../redux/async/channel";
@@ -12,7 +11,6 @@ import { getChannels } from "../redux/async/channel";
 const ChannelList = ({ currentUser }) => {
   const dispatch = useDispatch();
   const { channel } = useParams();
-  // const [socket] = useSocket(channel);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [collapse, setCollapse] = useState(true);
   const { channelList } = useSelector((state) => state.channel);
@@ -22,18 +20,6 @@ const ChannelList = ({ currentUser }) => {
       dispatch(getChannels({ userId: currentUser.id }));
     }
   }, [getChannels, currentUser]);
-
-  // useEffect(() => {
-  //   socket?.on("channel", onMessage);
-  //   return () => {
-  //     socket?.off("channel", onMessage);
-  //   };
-  // }, [socket]);
-
-  const onMessage = (data) => {
-    console.log("message", data);
-  };
-
   const openModal = () => {
     setModalOpen(true);
   };
