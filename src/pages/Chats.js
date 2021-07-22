@@ -15,7 +15,7 @@ const Chats = (props) => {
   const { getchannelsUsers } = useSelector((state)=> state.channel);
   const index = getchannelsUsers?.findIndex((p) => p.id === currentDM?.otherUserId);
 
-  useEffect(() => {
+  useEffect(() => {   //소켓 연결되고 채팅데이터 받아왔을때 새로운 채팅 불러오기
       socket_chat.on("receive", (data)=> {
         console.log("socketON", data);
         dispatch(addDMChat(data));
@@ -23,7 +23,7 @@ const Chats = (props) => {
     console.log("asdasd");
   }, [socket_chat]);
 
-  const onChangeChat = useCallback((e) => {
+  const onChangeChat = useCallback((e) => { //채팅 값 받아오기
     setChat(e.target.value);
   }, []);
 
@@ -34,8 +34,8 @@ const Chats = (props) => {
       chat: chat,
     };
 
-      socket_chat.emit("chat", dmChatData);
-      console.log(dmChatData);
+      socket_chat.emit("chat", dmChatData); // 소켓으로 채팅 데이터 보내기
+      
     setChat("");
   }, [socket_chat, chat]);
 

@@ -64,7 +64,7 @@ export const sendDM = createAsyncThunk(
     return response.data;
   }
 );
-
+//채팅 실시간 리듀서 반영
 export const addDMChat = createAsyncThunk(
   "channel/addDMChat",
   async (data, thunkAPI) => {

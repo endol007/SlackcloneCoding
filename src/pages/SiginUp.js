@@ -14,15 +14,15 @@ const SignUp = (props) => {
   const [password, setPassword] = React.useState();
 
   const email_double_check = () => {
-    if (email === "") {
+    if (email === "") {      //아이디 공란 체크
       window.alert("이메일을 입력해주세요!!");
       return;
     }
-    if (!emailCheck(email)) {
+    if (!emailCheck(email)) {   // 아이디 이메일 형식 체크
       window.alert("이메일 형식으로 입력해주세요!!");
       return;
     }
-    dispatch(dupCheckUser(email));
+    dispatch(dupCheckUser(email));  //아이디 중복체크
   };
 
   const signupdata = {
@@ -36,11 +36,11 @@ const SignUp = (props) => {
       window.alert("아이디, 패스워드, 닉네임을 모두 입력해주세요!");
       return;
     }
-    if (!pwdReg(password)) {
+    if (!pwdReg(password)) {   
       window.alert("패스워드를 8자 이상 입력해주세요");
       return;
     }
-    dispatch(signUp(signupdata));
+    dispatch(signUp(signupdata));  //회원가입 디스패치
   };
 
   return (

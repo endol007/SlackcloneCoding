@@ -31,7 +31,7 @@ const ChatList = ({ chatData }) => {
                     ></UserImage>
                   </ChatListUserImageWrap>
                   <ChatListUserInfo>
-                    <text>{p.userId}</text> <span></span>
+                    <text>{p.userId}</text> <span>{p.createdAt}</span>
                     <br />
                     <div>{p.chat}</div>
                   </ChatListUserInfo>
@@ -39,7 +39,6 @@ const ChatList = ({ chatData }) => {
               </ChatListBox>
             );
           })}
-          {}
       </ChatListWrap>
     </React.Fragment>
   );
@@ -47,8 +46,8 @@ const ChatList = ({ chatData }) => {
 
 const ChatListWrap = styled.div`
   height: 75vh;
-  display: grid;
-  grid-template-rows: 10% 90%;
+  padding: 8px 10px;
+  flex-direction: rows;
   overflow-y: scroll;
 `;
 const ChatListBox = styled.div`

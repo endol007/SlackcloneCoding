@@ -19,19 +19,19 @@ const Workspace = (props) => {
   useEffect(() => {
     dispatch(getUser());
     dispatch(getchannelsUsers());
-  }, []);
+  }, []); // 유저정보 및 각 채널별 유저 리스트
 
   useEffect(()=> {
     if(currentUser){
-    socket_workspace.on("main", (data)=> {
-      dispatch((getChannels({userId: currentUser.id})))
-    })
-  }
-  }, [socket_workspace, currentUser]);
+      socket_workspace.on("main", (data)=> {
+        dispatch((getChannels({userId: currentUser.id})))
+      })
+    }
+  }, [socket_workspace, currentUser]); // 채널에 사용자가 추가됬을 때 바로 반영되도록 소켓통신
 
   return (
     <>
-      {sessionStorage.getItem("access_token") ? (
+      {sessionStorage.getItem("access_token") ? ( // access_token이 있을때만 접속가능
         <React.Fragment>
           <Header currentUser={currentUser} />
           <WorkspaceWrapper>
@@ -59,7 +59,7 @@ const Workspace = (props) => {
           </WorkspaceWrapper>
         </React.Fragment>
       ) : (
-        history.push("/")
+        history.push("/")      // 토큰 없으면 로그인페이지로
       )}
     </>
   );

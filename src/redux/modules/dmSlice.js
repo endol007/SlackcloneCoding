@@ -16,29 +16,17 @@ const dmSlice = createSlice({
   reducers: {},
   extraReducers: (builder) =>
     builder
-      // .addCase(getDMList.pending, (state, action) => {
-      //   // DM 목록
-      //   state.dmList = null;
-      // })
-      // .addCase(getDMList.fulfilled, (state, action) => {
-      //   state.dmList = action.payload;
-      // })
       .addCase(createDM.fulfilled, (state, action) => {
         state.currentDM = action.payload[0];
       })
       .addCase(getDMChat.pending, (state, action) => {
-        // 채팅 기록
         state.dmChat = null;
       })
       .addCase(getDMChat.fulfilled, (state, action) => {
-        state.dmChat = action.payload;
+        state.dmChat = action.payload;  //채팅기록 상태에 등록
       })
       .addCase(addDMChat.fulfilled, (state, action) => {
-        state.dmChat.push(action.payload);
-      })
-      .addCase(sendDM.fulfilled, (state, action) => {
-        // 채팅 전송
-        state.dmChat.unshift(action.payload);
+        state.dmChat.push(action.payload); //새로운 채팅 채팅리스트에 추가
       })
       // 공통
       .addMatcher(

@@ -50,7 +50,7 @@ export const getOneChannel = createAsyncThunk(
     return response.data.result;
   }
 );
-
+//채널에 등록된 사용자 조회
 export const getOneChannelUsers = createAsyncThunk(
   "channel/getOneChannelUsers",
   async (data, thunkAPI) => {
@@ -74,7 +74,7 @@ export const exitChannel = createAsyncThunk(
     return response.data;
   }
 );
-
+//게시글 저장
 export const sendMessageChannel = createAsyncThunk(
   "channel/sendMessageChannel",
   async (data, thunkAPI) => {
@@ -91,7 +91,7 @@ export const sendMessageChannel = createAsyncThunk(
     return chats;
   }
 );
-
+//전체 사용자 조회
 export const getchannelsUsers = createAsyncThunk(
   "channel/getchannelsUsers",
   async (data, thunkAPI) => {

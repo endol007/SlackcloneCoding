@@ -9,15 +9,16 @@ import { history } from "../redux/configureStore";
 
 const Login = (props) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const session = sessionStorage.getItem("access_token");
+  const [email, setEmail] = useState();    //아이디 상태값 저장
+  const [password, setPassword] = useState();  // 비밀번호 상태값 저장
+  const session = sessionStorage.getItem("access_token"); // 세션 저장
+  
   const loginInput = {
     email: email,
     password: password,
   };
 
-  const login = () => {
+  const login = () => {    // 로그인 함수
     if (email === "" || password === "") {
       window.alert("아이디 혹은 패스워드를 입력하세요");
       return;
@@ -29,7 +30,7 @@ const Login = (props) => {
     if (session) {
       history.push("/workspace");
     }
-  }, [session]);
+  }, [session]);  //세션을 가지고 있으면 로그인페이지로 안넘어 오도록 처리
 
   return (
     <Grid is_center>

@@ -12,7 +12,7 @@ const DMList = ({currentUser}) => {
   
   const toggleCollapse = useCallback(() => {
     setCollapse((prev) => !prev);
-  }, []);
+  }, []);    //dm목록 열고 닫기
 
   return (
     <>

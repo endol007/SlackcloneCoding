@@ -13,7 +13,7 @@ const ChatHeader = ({ current, currentUsers, _title }) => {
   const closeModal = () => {
     setModalOpen(false);
   };
-  //{current?.OtherUser.nickname}
+  
   return (
     <React.Fragment>
       <ChatHeaderBox>
@@ -29,7 +29,6 @@ const ChatHeader = ({ current, currentUsers, _title }) => {
           <ChannelInfoModal
             open={modalOpen}
             close={closeModal}
-            // header={current?.OtherUser.nickname}
             currentId={current?.id}
           ></ChannelInfoModal>
         </Wrap>

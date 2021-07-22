@@ -10,7 +10,6 @@ import { getChannels } from "../redux/async/channel";
 
 const ChannelList = ({ currentUser }) => {
   const dispatch = useDispatch();
-  const { channel } = useParams();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [collapse, setCollapse] = useState(true);
   const { channelList } = useSelector((state) => state.channel);
@@ -19,7 +18,8 @@ const ChannelList = ({ currentUser }) => {
     if (currentUser) {
       dispatch(getChannels({ userId: currentUser.id }));
     }
-  }, [getChannels, currentUser]);
+  }, [getChannels, currentUser]); //등록된 채널 정보
+
   const openModal = () => {
     setModalOpen(true);
   };

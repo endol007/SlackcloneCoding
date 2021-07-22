@@ -31,10 +31,9 @@ const channelSlice = createSlice({
         state.channelList = null;
       })
       .addCase(getChannels.fulfilled, (state, action) => {
-        state.channelList = action.payload;
+        state.channelList = action.payload;   //채널리스트
       })
       .addCase(createChannel.fulfilled, (state, action) => {
-        // state.channelList.push(action.payload);
         window.location.reload();
       })
       .addCase(getOneChannel.pending, (state, action) => {
@@ -44,16 +43,16 @@ const channelSlice = createSlice({
         state.currentChannel = action.payload;
       })
       .addCase(getOneChannelUsers.pending, (state, action) => {
-        state.getOneChannelUsers = null;
+        state.getOneChannelUsers = null; 
       })
       .addCase(getOneChannelUsers.fulfilled, (state, action) => {
-        state.getOneChannelUsers = action.payload;
+        state.getOneChannelUsers = action.payload; //채널에 등록된 사용자 리스트
       })
       .addCase(getchannelsUsers.fulfilled, (state, action) => {
-        state.getchannelsUsers = action.payload;
+        state.getchannelsUsers = action.payload; //전체 사용자 등록
       })
       .addCase(sendMessageChannel.fulfilled, (state, action) => {
-        state.currentChannel.push(action.payload);
+        state.currentChannel.push(action.payload); //게시글 상태에 등록
       })
       .addCase(exitChannel.fulfilled, (state, action) => {
         state.currentChannel = null;

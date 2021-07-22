@@ -25,13 +25,13 @@ const CreateChannelModal = (props) => {
   const checkedMember = () => {
     let member_length = document.getElementsByName("member").length;
     let membersChecked = [];
-    if (document.getElementsByName("case")[0].checked === true) {
+    if (document.getElementsByName("case")[0].checked === true) { //클릭시 전체 인원을 채널에 추가
       getchannelsUsers.forEach((user) => {
         membersChecked.push(user.id);
       });
     } else {
       for (var i = 0; i < member_length; i++) {
-        if (document.getElementsByName("member")[i].checked === true) {
+        if (document.getElementsByName("member")[i].checked === true) { //클릭한 인원들만 채널에 추가
           let target = document.getElementsByName("member")[i].value;
           membersChecked.push(target);
         }
