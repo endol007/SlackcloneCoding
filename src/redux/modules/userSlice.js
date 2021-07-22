@@ -21,23 +21,23 @@ const userSlice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(getUser.pending, (state, action) => {
-        // state.currentUser = null;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.currentUser = action.payload;
       })
       .addCase(dupCheckUser.fulfilled, (state, action) => {
         // 이메일 중복 체크
-        if (action.payload) {
+        if (action.payload===true) {
           alert("사용 가능한 이메일입니다.");
+        }else{
+          alert("이미 가입된 아이디입니다")
         }
       })
       .addCase(dupCheckUser.rejected, (state, action) => {
         alert(action.error.message);
       })
       .addCase(signUp.fulfilled, (state, action) => {
-        // 회원 가입
-        window.location.href = "/";
+        window.location.href = "/";  //회원가입 성공하면 로그인페이지로
       })
       .addCase(logIn.pending, (state, action) => {
         // 로그인

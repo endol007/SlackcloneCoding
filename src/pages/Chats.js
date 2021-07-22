@@ -17,10 +17,8 @@ const Chats = (props) => {
 
   useEffect(() => {   //소켓 연결되고 채팅데이터 받아왔을때 새로운 채팅 불러오기
       socket_chat.on("receive", (data)=> {
-        console.log("socketON", data);
         dispatch(addDMChat(data));
       })
-    console.log("asdasd");
   }, [socket_chat]);
 
   const onChangeChat = useCallback((e) => { //채팅 값 받아오기

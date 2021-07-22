@@ -51,7 +51,6 @@ const Workspace = (props) => {
                 />
                 <Route
                   path="/workspace/chat/:dmId"
-                  // render={() => <Chats currentUser={currentUser} />}
                   component={Chats}
                 />
               </Switch>

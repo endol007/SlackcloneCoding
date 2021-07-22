@@ -31,7 +31,6 @@ export const createChannel = createAsyncThunk(
     const response = await axios.post("/channels", createdData, {
       headers: headers,
     });
-    console.log(response.data);
     return createdData;
   }
 );
@@ -46,7 +45,6 @@ export const getOneChannel = createAsyncThunk(
     const response = await axios.get(`/channels/${channelId}`, {
       headers: headers,
     });
-    console.log("response", response.data.result);
     return response.data.result;
   }
 );
@@ -70,7 +68,6 @@ export const exitChannel = createAsyncThunk(
     const response = await axios.delete(`/channels/${data.channelId}`, {
       headers: headers,
     });
-    console.log("response", response.data);
     return response.data;
   }
 );

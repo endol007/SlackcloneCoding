@@ -20,7 +20,6 @@ export const dupCheckUser = createAsyncThunk(
   "user/dupCheckUser",
   async (data, thunkAPI) => {
     const response = await axios.post("/users/dupCheck", { email: data });
-    console.log("response", response.data.ok);
     return response.data.ok;
   }
 );
@@ -35,7 +34,6 @@ export const signUp = createAsyncThunk(
       nickname: data.nickname,
     };
     const response = await axios.post("/users/createAccount", newUser);
-    console.log("회원 가입", response.data);
     return newUser;
   }
 );
@@ -46,6 +44,5 @@ export const logIn = createAsyncThunk("user/logIn", async (data, thunkAPI) => {
     email: data.email,
     password: data.password,
   });
-  console.log("로그인", response.data.result);
   return response.data.result;
 });

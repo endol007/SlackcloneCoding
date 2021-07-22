@@ -40,7 +40,7 @@ const Channels = (props) => {
     dispatch(sendMessageChannel(ChannelMsgData)); //게시글 정보 디스패치
   };
   const index = channelList?.findIndex((p) => p.id == channel);
-  const channel_title = channelList[index].Channel.title;
+  const channel_title = channelList[index]?.Channel.title;
 
   return (
     <React.Fragment>
