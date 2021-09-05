@@ -1,5 +1,5 @@
 # SlackClone
-[시연영상 링크](https://www.youtube.com/watch?v=EWZuECDrffc)
+[시연영상 링크](https://www.youtube.com/watch?v=EWZuECDrffc) <br/>
 슬랙이라는 서비스를 참고하여 실시간으로 게시글 올리기 및 실시간 채팅을 할수 있는 서비스
 
 ## 1.제작기간 & 참여인원
